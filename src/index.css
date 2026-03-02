@@ -1,0 +1,76 @@
+.topNav {
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #001f3f;
+}
+.topNav .container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.left-links {
+  display: flex;
+}
+.left-links li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+.left-links li a {
+  text-decoration: none;
+  color: white;
+}
+.right-links {
+  display: flex;
+}
+.right-links li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+.right-links li a {
+  text-decoration: none;
+  color: white;
+}
+.mainNav {
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #003569;
+}
+.mainNav .container{
+    display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  margin-top: 10px;
+}
+.nav-links{
+    display: flex;
+}
+.nav-links li{
+    list-style-type: none;
+}
+.nav-links li a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: white;
+    font-size: larger;
+}
+.nav-links li a:hover{
+    color: rgb(208, 208, 208);
+    font-size:large;
+    transition: 0.2s;
+}
+.client-area {
+  background-color: #00bfff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.client-area:hover {
+  background-color: #009bcf;
+}
