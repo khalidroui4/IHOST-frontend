@@ -25,18 +25,18 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-links-wrapper">
                     <ul className="navbar-links">
-                        <li><a href="/" className="active">Home</a></li>
-                        <li><a href="/">Hosting</a></li>
-                        <li><a href="/">Domains</a></li>
+                        <li><a href="/" className="active">Accueil</a></li>
+                        <li><a href="/">Hébergement</a></li>
+                        <li><a href="/">Domaines</a></li>
                         <li><a href="/">Email & Collaboration</a></li>
-                        <li><a href="/">Security</a></li>
+                        <li><a href="/">Sécurité</a></li>
                         <li><a href="/">Web & Marketing</a></li>
-                        <li><a href="/">Company</a></li>
+                        <li><a href="/">Entreprise</a></li>
                     </ul>
                 </div>
                 <div className={`navbar-action ${scrolled ? 'hidden' : ''}`}>
                     <Link to="/signup" className="btn-client-area">
-                        Client Area <ArrowUpRight size={16} strokeWidth={3} />
+                        Espace Client <ArrowUpRight size={16} strokeWidth={3} />
                     </Link>
                 </div>
             </div>

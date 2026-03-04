@@ -1,0 +1,57 @@
+.not-found-container {
+  height: 87vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(0deg, #080C2F 0%, #0D2042 34%, #274875 67%, #3F80B0 100%);
+}
+
+.not-found-title {
+  font-size: 8rem;
+  font-family: "Righteous", cursive;
+  margin: 0;
+  line-height: 1;
+  background: linear-gradient(180deg, #192591 0%, #1d468d 34%, #3a68a9 67%, #4995cb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.not-found-subtitle {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.not-found-text {
+  color: gray;
+  max-width: 500px;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.btn-home {
+  background-color: #e0f2fe;
+  color: black;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(4, 119, 234, 0.3);
+}
+
+.btn-home:hover {
+  background: rgba(0, 95, 191, 0.736);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgb(4, 119, 234);
+}
