@@ -1,0 +1,211 @@
+.footer {
+    background-color: #0B1F3A;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-top {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 6rem;
+    margin: 20px 0; 
+}
+
+.footer-company {
+    min-width: 350px;
+    max-width: 450px;
+}
+
+.footer-logo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1E6BFF;
+    margin-bottom: 1.5rem;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    color: #4B5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.footer-social a {
+    display: flex;
+    border-radius: 50%;
+    padding: 10px 13px;
+    background-color: rgb(227, 239, 246);
+    color: #1E6BFF;
+}
+
+.footer-social:hover a {
+    background-color: #1E6BFF;
+    color: #F5F7FA;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.4);
+    transition: all 0.4s ease;
+}
+
+
+.footer-links-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-nav-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1E6BFF;
+    margin-bottom: 2rem;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #bae6fd;
+    width: fit-content;
+}
+
+.footer-nav-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-nav-links a {
+    color: #0B1F3A;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.footer-nav-links a:hover {
+    color: #1E6BFF;
+}
+
+.footer-nav-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.footer-nav-link-dropdown {
+    color: #0B1F3A;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.footer-nav-link-dropdown:hover,
+.footer-nav-item:hover .footer-nav-link-dropdown {
+    color: #1E6BFF;
+}
+
+.footer-dropdown-menu {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    left: 0;
+    background-color: white;
+    box-shadow: 0 -10px 25px -5px rgba(0, 0, 0, 0.1), 0 -5px 10px -5px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: max-content;
+    max-width: 650px;
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.footer-nav-item:hover .footer-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.footer-bottom {
+    border-top: 1px solid #1E6BFF;
+    background-color: rgb(227, 239, 246);
+    padding: 1.5rem 0;
+}
+
+.footer-bottom p {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    color: #0B1F3A;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.footer-social {
+    color: #1E6BFF;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    padding: 10px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1E6BFF;
+
+}
+.footer-social:hover {
+    color: white;
+    background-color: #1E6BFF;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.4);
+    transition: all 0.4s ease;
+    border-color: #1E6BFF;
+    
+}
+.font-tech {
+    font-size: 2rem; 
+    font-weight: 700;
+    margin-bottom: 2rem; 
+    letter-spacing: -2px; 
+}
+.footer-link {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+.footer-link:hover {
+    color: #1E6BFF;
+    transform: translateY(-5px);
+    transition: all 0.4s ease;
+    border-color: #1E6BFF;
+}
+.footer-bottom {
+    padding: 4rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0 0;
+    color: #0B1F3A;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.6;
+    margin-top: 2rem;
+    background-color: #0b1f3a;
+}

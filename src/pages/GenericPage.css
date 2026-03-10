@@ -1,0 +1,92 @@
+.generic-page-container,
+.legal-page-container {
+    padding: 10rem 1.5rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 70vh;
+}
+
+.generic-header,
+.legal-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.generic-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #e0f2fe;
+    color: #3b82f6;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.generic-header h1,
+.legal-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.generic-header p,
+.legal-header p {
+    font-size: 1.15rem;
+    color: #4B5563;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.generic-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+}
+
+.generic-card-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.generic-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+}
+
+.generic-card p {
+    color: #4B5563;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.btn-return {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #1E6BFF;
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-return:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
