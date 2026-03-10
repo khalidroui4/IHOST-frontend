@@ -358,6 +358,12 @@ h4,
 .section-premium {
     padding: 8rem 0;
     position: relative;
+    background: linear-gradient(to right,
+            rgba(12, 36, 70) 0%,
+            rgba(14, 47, 103) 25%,
+            rgba(17, 62, 142) 50%,
+            rgba(21, 73, 170) 75%,
+            rgba(21, 80, 188) 100%);
 }
 
 
@@ -367,6 +373,7 @@ h4,
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    
 }
 
 .hover-lift {
@@ -384,4 +391,60 @@ h4,
 
 .bg-light {
     background: #F5F7FA;
+}
+
+/* HUD Tech Edges */
+.hud-edge {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    z-index: 10000;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+.hud-edge-tl {
+    top: 20px;
+    left: 20px;
+    border-top: 3px solid #1E6BFF;
+    border-left: 3px solid #1E6BFF;
+}
+
+.hud-edge-tr {
+    top: 20px;
+    right: 20px;
+    border-top: 3px solid #1E6BFF;
+    border-right: 3px solid #1E6BFF;
+}
+
+.hud-edge-bl {
+    bottom: 20px;
+    left: 20px;
+    border-bottom: 3px solid #1E6BFF;
+    border-left: 3px solid #1E6BFF;
+}
+
+.hud-edge-br {
+    bottom: 20px;
+    right: 20px;
+    border-bottom: 3px solid #1E6BFF;
+    border-right: 3px solid #1E6BFF;
+}
+
+.hud-edge::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+
+.hud-edge-tl::after { top: -4.5px; left: -4.5px; box-shadow: 0 0 10px #1E6BFF; }
+.hud-edge-tr::after { top: -4.5px; right: -4.5px; box-shadow: 0 0 10px #1E6BFF; }
+.hud-edge-bl::after { bottom: -4.5px; left: -4.5px; box-shadow: 0 0 10px #1E6BFF; }
+.hud-edge-br::after { bottom: -4.5px; right: -4.5px; box-shadow: 0 0 10px #1E6BFF; }
+
+@media (max-width: 768px) {
+    .hud-edge { display: none; }
 }

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, EyeOff } from 'lucide-react';
 // Redux imports removed
 import PageTransition from "../pageTransition";
+import PasswordStrength from '../components/security/PasswordStrength';
+import Captcha from '../components/security/Captcha';
 import '../styles/auth.css';
 
 const Auth = () => {
@@ -13,6 +16,7 @@ const Auth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const [isLogin, setIsLogin] = useState(location.pathname === '/signIn');
+    const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
         first_name: '',
@@ -46,9 +50,16 @@ const Auth = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const [isCaptchaVerified, setIsCaptchaVerified] = useState(true); // Default true for login, will update for signup
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!isLogin && !isCaptchaVerified) {
+            setError({ message: "Veuillez vérifier le CAPTCHA." });
+            return;
+        }
         setLoading(true);
+        // ... rest of submit logic
         // Simulate network request for frontend demo
         setTimeout(() => {
             setLoading(false);
@@ -139,7 +150,22 @@ const Auth = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label>Mot de passe :</label>
-                                                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                                                <div className="password-input-wrapper">
+                                                    <input 
+                                                        type={showPassword ? "text" : "password"} 
+                                                        name="password" 
+                                                        value={formData.password} 
+                                                        onChange={handleChange} 
+                                                        required 
+                                                    />
+                                                    <button 
+                                                        type="button" 
+                                                        className="password-toggle"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                    >
+                                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <button type="submit" className="btn-auth-submit" disabled={loading}>
@@ -181,14 +207,32 @@ const Auth = () => {
                                                 <label>Email :</label>
                                                 <input type="email" name="email" value={formData.email} onChange={handleChange} required />
                                             </div>
-                                            <div className="form-group">
-                                                <label>Mot de passe :</label>
-                                                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                                            </div>
+                                              <div className="form-group">
+                                                  <label>Mot de passe :</label>
+                                                  <div className="password-input-wrapper">
+                                                      <input 
+                                                          type={showPassword ? "text" : "password"} 
+                                                          name="password" 
+                                                          value={formData.password} 
+                                                          onChange={handleChange} 
+                                                          required 
+                                                      />
+                                                      <button 
+                                                          type="button" 
+                                                          className="password-toggle"
+                                                          onClick={() => setShowPassword(!showPassword)}
+                                                      >
+                                                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                      </button>
+                                                  </div>
+                                                  {formData.password && <PasswordStrength password={formData.password} />}
+                                              </div>
 
-                                            <button type="submit" className="btn-auth-submit" disabled={loading}>
-                                                {loading ? 'Inscription...' : 'REJOINDRE'}
-                                            </button>
+                                             <Captcha onVerify={setIsCaptchaVerified} />
+
+                                             <button type="submit" className="btn-auth-submit" style={{ marginTop: '2rem' }} disabled={loading || (!isLogin && !isCaptchaVerified)}>
+                                                 {loading ? 'Inscription...' : 'REJOINDRE'}
+                                             </button>
                                         </form>
                                         <p className="auth-terms">En rejoignant, vous acceptez <Link to="/legal/conditions">les Conditions</Link> et <Link to="/legal/confidentialite">la Politique de Confidentialité</Link></p>
                                     </motion.div>

@@ -1,0 +1,174 @@
+/* BrandProtection.css */
+.marketing-page .hero-background-orange {
+    background: linear-gradient(135deg, #0B1F3A 0%, #EA580C 100%);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.marketing-page .hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+    z-index: 0;
+}
+
+.marketing-page .hero-text-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.marketing-page .hero-title {
+    font-size: 3.8rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.marketing-page .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.marketing-page .section-padding {
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+.marketing-page .section-header-container {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.marketing-page .section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.marketing-page .section-subtitle {
+    font-size: 1.25rem;
+    color: #4B5563;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.marketing-page .brand-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+}
+
+.marketing-page .brand-card {
+    padding: 4rem 2.5rem;
+    background: white;
+    border-radius: 40px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.marketing-page .brand-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+}
+
+.marketing-page .brand-card-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0B1F3A;
+    margin-bottom: 1.2rem;
+}
+
+.marketing-page .brand-card-desc {
+    font-size: 1.05rem;
+    color: #4B5563;
+    line-height: 1.8;
+}
+
+.marketing-page .legal-container {
+    background: #0B1F3A;
+    padding: 6rem;
+    border-radius: 48px;
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.marketing-page .legal-content {
+    flex: 1.2;
+}
+
+.marketing-page .legal-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+
+.marketing-page .legal-description {
+    font-size: 1.25rem;
+    opacity: 0.8;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+}
+
+.marketing-page .legal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.marketing-page .legal-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.marketing-page .legal-visual-wrapper {
+    flex: 1;
+}
+
+.marketing-page .legal-visual-card {
+    padding: 5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.marketing-page .cta-container {
+    background: linear-gradient(135deg, #0B1F3A 0%, #EA580C 100%);
+    border-radius: 40px;
+    padding: 6rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+@media (max-width: 1024px) {
+    .marketing-page .legal-visual-wrapper {
+        display: none;
+    }
+}

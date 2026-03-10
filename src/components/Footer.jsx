@@ -16,10 +16,10 @@ const Footer = () => {
                             Infrastructure cloud souveraine de haute performance. Nous concevons le socle technologique des entreprises leaders au Maroc et à l'international.
                         </p>
                         <div style={{ display: 'flex', gap: '1.5rem' }}>
-                            <a href="mailto:rouibaa.khalid05@gmail.com" className='footer-social' ><Mail size={20} /></a>
-                            <a href="https://www.instagram.com/khalid_roui4/" className='footer-social' ><Instagram size={20} /></a>
-                            <a href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" className='footer-social' ><Linkedin size={20} /></a>
-                            <a href="https://github.com/khalidroui4" className='footer-social' ><Github size={20} /></a>
+                            <a href="mailto:rouibaa.khalid05@gmail.com" className='footer-social' target="blank"><Mail size={20} /></a>
+                            <a href="https://www.instagram.com/khalid_roui4/" className='footer-social' target="blank"><Instagram size={20} /></a>
+                            <a href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" className='footer-social' target="blank"><Linkedin size={20} /></a>
+                            <a href="https://github.com/khalidroui4" className='footer-social' target="blank"><Github size={20} /></a>
                         </div>
                     </div>
 
@@ -30,7 +30,7 @@ const Footer = () => {
                             <Link to="/securite/ev" className="footer-link">Sécurité Réseau</Link>
                             <Link to="/hebergement/cloud" className="footer-link">Cloud Architecture</Link>
                             <Link to="/entreprise/datacenters" className="footer-link">Data Centers</Link>
-                            <Link to="/signup" className="footer-link">Console de Gestion</Link>
+                            <Link to="/client/dashboard" className="footer-link">Console de Gestion</Link>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@ const Footer = () => {
                         © 2026 IHOST TECHNOLOGY SYSTEMS. 
                     </div>
                     <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>
-                        Made by <a href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" className='footer-link'>Mohamed-Khalid Rouibaa</a>
+                        Made by <a href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" target="blank" className='footer-link'>Mohamed-Khalid Rouibaa</a>
                     </div>
                 </div>
             </div>

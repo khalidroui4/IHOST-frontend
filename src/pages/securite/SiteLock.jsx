@@ -3,20 +3,21 @@ import { Shovel, ShieldCheck, Cog, Search, Activity, Trash2, ArrowRight, Zap, Ch
 import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
+import './SiteLock.css';
 
 const SiteLock = () => {
     return (
         <PageTransition>
             <div className="security-page">
                 <section className="hero">
-                    <div className="hero-background" style={{ background: 'linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%)', position: 'relative', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <div className="hero-background hero-background-gradient">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/security-hero.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/security-hero.png)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Garde du Corps de Votre Site</h1>
-                                <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Votre agent de sécurité virtuel 24/7. Détectez, bloquez et supprimez automatiquement les malwares dissimulés avant qu'ils ne paralysent votre activité.</p>
+                            <div className="hero-text-container">
+                                <h1 className="font-tech hero-title">Garde du Corps de Votre Site</h1>
+                                <p className="hero-description">Votre agent de sécurité virtuel 24/7. Détectez, bloquez et supprimez automatiquement les malwares dissimulés avant qu'ils ne paralysent votre activité.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
                                     <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>Activer SiteLock <ArrowRight size={20} /></Link>
                                 </div>
@@ -27,50 +28,31 @@ const SiteLock = () => {
                     </div>
                 </section>
 
-                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section className="section-premium bg-white section-padding">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Le Processus de Nettoyage Intelligent</h2>
                             <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Un cycle de sécurité proactif et autonome pour une sérénité numérique totale.</p>
                         </div>
-                        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+                        <div className="process-grid">
                             {[
                                 { icon: Search, title: "Scan de Précision", desc: "Analyse quotidienne de l'intégralité de vos fichiers, CMS (WP, Joomla) et bases de données pour débusquer les backdoors.", color: "#1E6BFF" },
                                 { icon: Activity, title: "Détection de Failles", desc: "Identification proactive des injections SQL et XSS avant que les robots ne les exploitent.", color: "#eab308" },
                                 { icon: Trash2, title: "Remédiation SMART", desc: "Télécharge, assainit et remet en ligne vos fichiers compromis automatiquement, sans interruption de service.", color: "#10b981" }
                             ].map((item, idx) => (
-                                <div key={idx} style={{
-                                    textAlign: 'center',
-                                    padding: '4rem 2.5rem',
-                                    background: 'white',
-                                    borderRadius: '32px',
-                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                    border: '1px solid rgba(11, 31, 58, 0.1)',
-                                    borderTop: `6px solid ${item.color}`,
-                                    transition: 'all 0.3s ease-in-out'
-                                }} className="hover-lift">
-                                    <div style={{
-                                        width: '90px',
-                                        height: '90px',
-                                        background: `${item.color}10`,
-                                        color: item.color,
-                                        borderRadius: '24px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        margin: '0 auto 2.5rem'
-                                    }}>
+                                <div key={idx} className="process-card hover-lift" style={{ borderTop: `6px solid ${item.color}` }}>
+                                    <div className="process-icon-wrapper" style={{ background: `${item.color}10`, color: item.color }}>
                                         <item.icon size={45} />
                                     </div>
-                                    <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>{item.title}</h3>
-                                    <p style={{ fontSize: '1.1rem', color: '#4B5563', lineHeight: '1.8' }}>{item.desc}</p>
+                                    <h3 className="process-card-title">{item.title}</h3>
+                                    <p className="process-card-desc">{item.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section className="section-premium bg-light section-padding">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi choisir SiteLock via IHOST ?</h2>
@@ -87,41 +69,27 @@ const SiteLock = () => {
 
                 <section style={{ padding: '6rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
-                        <div style={{
-                            background: '#F5F7FA',
-                            padding: '5rem',
-                            borderRadius: '40px',
-                            border: '1px solid rgba(11, 31, 58, 0.1)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5rem'
-                        }}>
-                            <div style={{ flex: 1 }}>
-                                <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0B1F3A', marginBottom: '1.5rem' }}>Prêt pour le combat ?</h2>
-                                <p style={{ fontSize: '1.2rem', color: '#4B5563', lineHeight: '1.8', marginBottom: '2.5rem' }}>
+                        <div className="mss-card-container">
+                            <div className="mss-content">
+                                <h2 className="mss-title">Prêt pour le combat ?</h2>
+                                <p className="mss-description">
                                     Les attaques automatisées ne dorment jamais. Offrez-vous la technologie qui a déjà protégé plus de 12 millions de sites à travers le monde.
                                 </p>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div className="mss-checklist">
                                     {[
                                         "Audit initial gratuit",
                                         "Pare-feu applicatif (WAF)",
                                         "Réparation automatique SMART",
                                         "Rapports détaillés quotidiens"
                                     ].map((item, i) => (
-                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, color: '#0B1F3A' }}>
+                                        <div key={i} className="mss-check-item">
                                             <CheckCircle2 size={20} color="#10b981" /> {item}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <div style={{ flex: 1, textAlign: 'center' }}>
-                                <div style={{
-                                    background: 'white',
-                                    padding: '4rem',
-                                    borderRadius: '32px',
-                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                    display: 'inline-block'
-                                }}>
+                            <div className="mss-visual-wrapper">
+                                <div className="mss-visual-card">
                                     <ShieldCheck size={60} color="#1E6BFF" style={{ marginBottom: '1.5rem' }} />
                                     <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1rem' }}>Sérénité Garantie</h3>
                                     <p style={{ color: '#4B5563', marginBottom: '2rem' }}>Activation et scan initial en moins de 10 min.</p>
@@ -134,14 +102,7 @@ const SiteLock = () => {
 
                 <section className="cta-split" style={{ padding: '6rem 0' }}>
                     <div className="container-luxe">
-                        <div style={{
-                            background: 'linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%)',
-                            borderRadius: '32px',
-                            padding: '5rem',
-                            color: 'white',
-                            textAlign: 'center',
-                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-                        }}>
+                        <div className="cta-container">
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Ne devenez pas une statistique</h2>
                             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
                                 Chaque seconde, un site est piraté. Soyez celui qui possède la meilleure forteresse.

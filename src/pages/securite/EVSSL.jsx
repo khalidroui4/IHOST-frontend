@@ -3,19 +3,20 @@ import { Award, Building2, SearchCheck, CheckCircle2, ArrowRight, ShieldCheck, Z
 import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
+import './EVSSL.css';
 
 const EVSSL = () => {
     return (
         <PageTransition>
             <div className="security-page">
                 <section className="hero">
-                    <div className="hero-background" style={{ background: 'linear-gradient(135deg, #0B1F3A 0%, #0EA5E9 100%)', position: 'relative', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <div className="hero-background hero-background-blue">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>AUDIT D'IDENTITÉ &amp; VALIDATION ÉTENDUE</h1>
-                                <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Établissez le plus haut niveau de confiance numérique. Soumettez votre organisation à un protocole de vérification rigoureux pour arborer le sceau d'authenticité suprême.</p>
+                            <div className="hero-text-container">
+                                <h1 className="font-tech hero-title">AUDIT D'IDENTITÉ &amp; VALIDATION ÉTENDUE</h1>
+                                <p className="hero-description">Établissez le plus haut niveau de confiance numérique. Soumettez votre organisation à un protocole de vérification rigoureux pour arborer le sceau d'authenticité suprême.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
                                     <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>INITIALISER L'AUDIT EV <ArrowRight size={20} /></Link>
                                 </div>
@@ -26,58 +27,39 @@ const EVSSL = () => {
                     </div>
                 </section>
 
-                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section className="section-premium bg-white section-padding">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Le Standard d'Or de la Confiance</h2>
                             <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Un protocole de validation strict conçu pour les institutions financières et les leaders du e-commerce mondial.</p>
                         </div>
-                        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-                            <div className="tech-border" style={{
-                                display: 'flex',
-                                gap: '5rem',
-                                alignItems: 'center',
-                                background: 'white',
-                                padding: '5rem',
-                                borderRadius: '4px',
-                                transition: 'all 0.3s ease-in-out',
-                                position: 'relative'
-                            }}>
+                        <div className="audit-container">
+                            <div className="tech-border audit-card">
                                 <div className="pattern-grid-tech" style={{ opacity: 0.03, pointerEvents: 'none' }} />
 
                                 <div style={{ flex: 1.5, position: 'relative', zIndex: 2 }}>
-                                    <div style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '0.75rem',
-                                        color: '#22C55E',
-                                        marginBottom: '1.5rem',
-                                        fontSize: '0.8rem',
-                                        fontWeight: 800,
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '1.5px'
-                                    }}>
+                                    <div className="audit-badge">
                                         <CheckCircle2 size={18} /> IDENTITÉ VÉRIFIÉE PROTOCOLE EV
                                     </div>
-                                    <h3 className="font-tech" style={{ fontSize: '2.5rem', color: '#0B1F3A', marginBottom: '1.5rem', fontWeight: 700 }}>VÉRIFICATION MULTI-COUCHE</h3>
-                                    <p style={{ color: '#4B5563', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '2.5rem' }}>
+                                    <h3 className="font-tech audit-title">VÉRIFICATION MULTI-COUCHE</h3>
+                                    <p className="audit-desc">
                                         Avant l'émission, nos experts procèdent à une analyse exhaustive de votre existence légale, physique et opérationnelle. Ce processus rend toute usurpation techniquement impossible.
                                     </p>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                    <div className="audit-checklist">
                                         {[
                                             "Audit d'existence légale",
                                             "Validation de structure physique",
                                             "Protocole d'appel direct",
                                             "Garantie SSL de 1.5M$"
                                         ].map((item, idx) => (
-                                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontWeight: 700, color: '#0B1F3A', fontSize: '0.9rem' }}>
+                                            <div key={idx} className="audit-check-item">
                                                 <ShieldCheck size={20} color="#2563EB" /> {item}
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                <div style={{ flex: 1, display: 'none', md: 'flex', justifyContent: 'center', position: 'relative', zIndex: 2 }}>
-                                    <div className="glass-card" style={{ padding: '3rem', border: '1px solid #2563EB' }}>
+                                <div className="audit-visual-wrapper">
+                                    <div className="glass-card audit-visual-card">
                                         <Building2 size={120} style={{ color: '#2563EB' }} />
                                     </div>
                                 </div>
@@ -86,7 +68,7 @@ const EVSSL = () => {
                     </div>
                 </section>
 
-                <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section className="section-premium bg-light section-padding">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Avantages Stratégiques</h2>
@@ -103,20 +85,12 @@ const EVSSL = () => {
 
                 <section style={{ padding: '8rem 0', background: 'white' }}>
                     <div className="container-luxe">
-                        <div className="bg-tech-dark" style={{
-                            padding: '6rem',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6rem',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            border: '1px solid rgba(255,255,255,0.05)'
-                        }}>
+                        <div className="bg-tech-dark vip-card-container">
                             <div className="pattern-grid-tech" style={{ opacity: 0.1 }} />
 
-                            <div style={{ flex: 1.2, position: 'relative', zIndex: 10 }}>
-                                <h2 className="font-tech" style={{ fontSize: '3.5rem', color: 'white', marginBottom: '2rem', textTransform: 'uppercase' }}>ACCOMPAGNEMENT VIP</h2>
-                                <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.6)', lineHeight: '1.8', marginBottom: '4rem' }}>
+                            <div className="vip-content">
+                                <h2 className="font-tech vip-title">ACCOMPAGNEMENT VIP</h2>
+                                <p className="vip-description">
                                     Le processus de validation EV demande une précision extrême. Nos consultants vous assistent dans la préparation de chaque document pour une émission prioritaire.
                                 </p>
                                 <div style={{ display: 'flex', gap: '1.5rem' }}>
@@ -130,19 +104,11 @@ const EVSSL = () => {
 
                 <section style={{ padding: '8rem 0' }}>
                     <div className="container-luxe">
-                        <div className="glass-card" style={{
-                            padding: '6rem',
-                            textAlign: 'center',
-                            background: 'linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%)',
-                            color: 'white',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            border: '1px solid #2563EB'
-                        }}>
+                        <div className="glass-card cta-glass-card">
                             <div className="pattern-grid-tech" style={{ opacity: 0.1 }} />
                             <div style={{ position: 'relative', zIndex: 1 }}>
-                                <h2 className="font-tech" style={{ fontSize: '4rem', fontWeight: 700, marginBottom: '2.5rem', textTransform: 'uppercase' }}>SÉCURISEZ VOTRE CROISSANCE</h2>
-                                <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.6)', marginBottom: '4.5rem', maxWidth: '800px', margin: '0 auto 4.5rem' }}>
+                                <h2 className="font-tech cta-glass-title">SÉCURISEZ VOTRE CROISSANCE</h2>
+                                <p className="cta-glass-description">
                                     Donnez à votre organisation la stature numérique qu'elle mérite. Activez le protocole de validation étendue aujourd'hui.
                                 </p>
                                 <Link to="/contact" className="btn btn-primary" style={{

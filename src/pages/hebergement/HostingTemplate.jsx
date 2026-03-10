@@ -138,6 +138,43 @@ const HostingTemplate = ({ data }) => {
                                 </div>
                             ))}
                         </div>
+
+                        {/* Pricing Comparison Table (Mobile hidden for simplicity in this template) */}
+                        <div className="pricing-comparison" style={{ marginTop: '6rem', overflowX: 'auto', display: 'none', lg: 'block' }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', background: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                                <thead>
+                                    <tr style={{ background: '#F8FAFC', borderBottom: '2px solid #E2E8F0' }}>
+                                        <th style={{ padding: '2rem', fontSize: '1.2rem', color: '#0B1F3A' }}>Caractéristiques</th>
+                                        {data.plans.map((plan, i) => (
+                                            <th key={i} style={{ padding: '2rem', fontSize: '1.2rem', color: '#0B1F3A', textAlign: 'center' }}>
+                                                {plan.name}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* Dynamically extract features for comparison could be complex, using a static sample for consistency */}
+                                    <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
+                                        <td style={{ padding: '1.5rem 2rem', fontWeight: 600 }}>Performance</td>
+                                        {data.plans.map((plan, i) => (
+                                            <td key={i} style={{ padding: '1.5rem 2rem', textAlign: 'center' }}>{i === 0 ? 'Standard' : i === 1 ? 'High' : 'Ultimate'}</td>
+                                        ))}
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
+                                        <td style={{ padding: '1.5rem 2rem', fontWeight: 600 }}>Support Technique</td>
+                                        {data.plans.map((plan, i) => (
+                                            <td key={i} style={{ padding: '1.5rem 2rem', textAlign: 'center' }}>{i === 2 ? 'Prioritaire 24/7' : 'Standard 24/7'}</td>
+                                        ))}
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
+                                        <td style={{ padding: '1.5rem 2rem', fontWeight: 600 }}>Sauvegardes</td>
+                                        {data.plans.map((plan, i) => (
+                                            <td key={i} style={{ padding: '1.5rem 2rem', textAlign: 'center' }}>{i === 0 ? 'Hebdomadaire' : 'Quotidienne'}</td>
+                                        ))}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 

@@ -3,7 +3,7 @@ import {
     DollarSign, Search, ShieldCheck, Crown, Users, Mail, Briefcase,
     Layout, ShieldAlert, Lock, Database, Award, Code, Activity,
     Cpu, Network, TrendingUp, Megaphone, Target, Info, Handshake,
-    FileText, Newspaper, Rss, LayoutTemplate
+    FileText, Newspaper, Rss, LayoutTemplate, PhoneCall
 } from 'lucide-react';
 
 export const navData = [
@@ -14,6 +14,7 @@ export const navData = [
             { title: 'Hébergement Cloud', desc: "Optez pour la puissance d'un serveur dédié sans tracas.", icon: Cloud, href: '/hebergement/cloud' },
             { title: 'Hébergement E-Commerce', desc: 'Votre boutique en ligne optimisée.', icon: ShoppingCart, href: '/hebergement/ecommerce' },
             { title: 'Hébergement Multi-sites', desc: 'Gérez plusieurs sites web complètement.', icon: Layers, href: '/hebergement/multisites' },
+            { title: 'Tous nos Tarifs', desc: 'Comparez nos solutions et tarifs.', icon: DollarSign, href: '/pricing' },
         ]
     },
     {
@@ -76,6 +77,7 @@ export const navData = [
             { title: 'Presse', desc: 'Communiqués et ressources médias.', icon: Rss, href: '/entreprise/press' },
             { title: 'Certifications', desc: 'Nos normes de sécurité et qualité.', icon: Award, href: '/entreprise/certifications' },
             { title: 'Documents Légaux', desc: 'Conditions et politiques.', icon: FileText, href: '/entreprise/legal' },
+            { title: 'Contact', desc: 'Besoin d\'aide ? Contactez-nous.', icon: PhoneCall, href: '/contact' },
         ]
     }
 ];

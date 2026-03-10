@@ -82,8 +82,8 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className={`navbar-action ${scrolled ? 'nav-hidden' : ''}`}>
-                    <Link to="/signup" className="btn-client-area">
-                        Espace Client <ArrowUpRight size={16} strokeWidth={3} />
+                    <Link to="/signUp" className="btn-client-area">
+                        S'inscrire <ArrowUpRight size={16} strokeWidth={3} />
                     </Link>
                 </div>
             </div>

@@ -1,0 +1,30 @@
+.contact-page {
+    background: #F8FAFC;
+    min-height: 100vh;
+}
+
+.contact-content-section {
+    position: relative;
+    z-index: 5;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: #1E6BFF;
+    box-shadow: 0 0 0 4px rgba(30, 107, 255, 0.1);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem !important;
+    }
+}

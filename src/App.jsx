@@ -11,10 +11,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Terms from "./pages/legal/Terms";
 import Privacy from "./pages/legal/Privacy";
+import Pricing from "./pages/Pricing";
 import AcceptableUse from "./pages/legal/AcceptableUse";
 import ReportProblem from "./pages/legal/ReportProblem";
 import HostingTemplate from "./pages/hebergement/HostingTemplate";
 import { hostingData } from "./data/hostingData";
+import { ToastProvider } from "./context/ToastContext";
 
 // Domaines Pages
 import RegisterDomain from "./pages/domaines/RegisterDomain";
@@ -62,6 +64,10 @@ import Blog from "./pages/entreprise/Blog";
 import Press from "./pages/entreprise/Press";
 import Certifications from "./pages/entreprise/Certifications";
 import LegalDocuments from "./pages/entreprise/LegalDocuments";
+import Contact from "./pages/entreprise/Contact";
+
+
+import Chatbot from "./components/chatbot/Chatbot";
 
 import { useLocation } from "react-router-dom";
 
@@ -71,14 +77,16 @@ function App() {
   const showNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
-    <>
+    <ToastProvider>
       {showNavbar && <Navbar />}
       <AnimatePresence mode="wait">
         <Routes>
+          {/* ... existing routes ... */}
           <Route path="/" element={<Home />} />
           <Route path="/signUp" element={<Auth />} />
           <Route path="/signIn" element={<Auth />} />
           <Route path="/welcome" element={<Welcome />} />
+          <Route path="/pricing" element={<Pricing />} />
 
           <Route path="/legal/conditions" element={<Terms />} />
           <Route path="/legal/confidentialite" element={<Privacy />} />
@@ -137,6 +145,12 @@ function App() {
           <Route path="/entreprise/press" element={<Press />} />
           <Route path="/entreprise/certifications" element={<Certifications />} />
           <Route path="/entreprise/legal" element={<LegalDocuments />} />
+          <Route path="/entreprise/contact" element={<Contact />} />
+          <Route path="/contact" element={<Contact />} />
+
+          
+
+          
 
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -144,8 +158,14 @@ function App() {
       <ScrollToTop />
       <BackButton />
       {showNavbar && <Footer />}
-    </>
-
+      <Chatbot />
+      
+      {/* Global Tech Edges */}
+      <div className="hud-edge hud-edge-tl"></div>
+      <div className="hud-edge hud-edge-tr"></div>
+      <div className="hud-edge hud-edge-bl"></div>
+      <div className="hud-edge hud-edge-br"></div>
+    </ToastProvider>
   );
 }
 
