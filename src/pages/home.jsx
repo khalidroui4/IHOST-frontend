@@ -185,8 +185,8 @@ const Home = () => {
                                     "Support 24/7 (Ticket/Chat)"
                                 ]}
                                 highlight={false}
-                                buttonText="CHOISIR CE PLAN"
-                                buttonLink="/hebergement/mutualise"
+                                buttonText="Ajouter au panier"
+                                addToCartMode={true}
                             />
 
                             <TechPricingCard
@@ -202,8 +202,8 @@ const Home = () => {
                                 ]}
                                 highlight={true}
                                 badge="HAUT RENDEMENT"
-                                buttonText="DÉPLOYER MAINTENANT"
-                                buttonLink="/hebergement/cloud"
+                                buttonText="Ajouter au panier"
+                                addToCartMode={true}
                             />
 
                             <TechPricingCard
@@ -219,8 +219,8 @@ const Home = () => {
                                     "Dedicated IP (IPv4/IPv6)"
                                 ]}
                                 highlight={false}
-                                buttonText="CHOISIR CE PLAN"
-                                buttonLink="/hebergement/ecommerce"
+                                buttonText="Ajouter au panier"
+                                addToCartMode={true}
                             />
                         </div>
                     </div>

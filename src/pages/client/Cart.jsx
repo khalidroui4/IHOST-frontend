@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, clearCart } from '../../store/slices/cartSlice';
+import { fetchCart, removeFromCart, clearCart } from '../../store/slices/cartSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingCart, ArrowRight } from 'lucide-react';
 
@@ -8,6 +8,10 @@ const Cart = () => {
     const { items: cart, total: cartTotal } = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(fetchCart());
+    }, [dispatch]);
 
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -34,7 +38,7 @@ const Cart = () => {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                                     <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E6BFF' }}>{item.price} DH</span>
                                     <button
-                                        onClick={() => dispatch(removeFromCart(item.idService))}
+                                        onClick={() => dispatch(removeFromCart(item.idCart))}
                                         style={{ background: '#fef2f2', border: '1px solid #fecaca', width: '36px', height: '36px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ef4444', transition: 'all 0.15s' }}
                                         onMouseEnter={e => e.currentTarget.style.background = '#fee2e2'}
                                         onMouseLeave={e => e.currentTarget.style.background = '#fef2f2'}

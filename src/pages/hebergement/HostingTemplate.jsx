@@ -106,8 +106,8 @@ const HostingTemplate = ({ data }) => {
                                     features={plan.features}
                                     highlight={plan.highlight}
                                     badge={plan.badge}
-                                    buttonText={plan.highlight ? 'Commander maintenant' : 'Choisir cette offre'}
-                                    buttonLink="/signup"
+                                    buttonText="Ajouter au panier"
+                                    addToCartMode={true}
                                 />
                             ))}
                         </div>

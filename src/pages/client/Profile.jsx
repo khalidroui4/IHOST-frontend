@@ -1,202 +1,314 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../store/slices/authSlice';
+import { logout, updateUserProfile, updateUserAvatar, updateUserPassword, updateUserEmail } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Camera, Loader2, AlertCircle } from 'lucide-react';
+
+const InputField = ({ label, value, onChange, type = 'text', placeholder = '', hint = '', readOnly = false }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1 }}>
+        <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>{label}</label>
+        <input
+            type={type}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            style={{
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                border: '1.5px solid #e2e8f0',
+                background: readOnly ? '#f8fafc' : '#fff',
+                fontSize: '0.9rem',
+                color: '#0B1F3A',
+                outline: 'none',
+                transition: 'border-color 0.2s',
+                cursor: readOnly ? 'default' : 'text'
+            }}
+            onFocus={e => !readOnly && (e.target.style.borderColor = '#1E6BFF')}
+            onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
+        />
+        {hint && <small style={{ color: '#94a3b8', fontSize: '0.78rem' }}>{hint}</small>}
+    </div>
+);
+
+const AlertBanner = ({ type, message, onClose }) => (
+    <div style={{
+        display: 'flex', alignItems: 'center', gap: '0.75rem',
+        background: type === 'success' ? '#ecfdf5' : '#fef2f2',
+        color: type === 'success' ? '#059669' : '#dc2626',
+        border: `1px solid ${type === 'success' ? '#bbf7d0' : '#fecaca'}`,
+        padding: '0.9rem 1.2rem', borderRadius: '10px', fontSize: '0.9rem', fontWeight: 500
+    }}>
+        {type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+        <span style={{ flex: 1 }}>{message}</span>
+        <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontWeight: 700, fontSize: '1rem', padding: '0 4px' }}>✕</button>
+    </div>
+);
 
 const ClientProfile = () => {
-    const { user } = useSelector(state => state.auth);
+    const { user, isLoading } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const fileRef = useRef();
 
     const [activeTab, setActiveTab] = useState('edit_profile');
+    const [flash, setFlash] = useState(null);
+
+    // Edit Profile form state
+    const [form, setForm] = useState({
+        first_name: user?.first_name || '',
+        last_name: user?.last_name || '',
+        username: user?.username || '',
+        location: user?.location || '',
+        website: user?.website || '',
+        bio: user?.bio || '',
+        interests: user?.interests || '',
+        instagram: user?.instagram || '',
+        twitter: user?.twitter || '',
+    });
+
+    // Email settings state
+    const [emailForm, setEmailForm] = useState({ email: user?.email || '' });
+
+    // Password state
+    const [passForm, setPassForm] = useState({ old_password: '', new_password: '', confirm_password: '' });
+
+    // Avatar local preview
+    const [avatarPreview, setAvatarPreview] = useState(user?.avatar ? `http://localhost${user.avatar}` : null);
+
+    const showFlash = (type, message) => {
+        setFlash({ type, message });
+        setTimeout(() => setFlash(null), 5000);
+    };
+
+    const handleAvatarChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setAvatarPreview(URL.createObjectURL(file));
+        const fd = new FormData();
+        fd.append('avatar', file);
+        const result = await dispatch(updateUserAvatar(fd));
+        if (updateUserAvatar.fulfilled.match(result)) {
+            showFlash('success', 'Photo de profil mise à jour !');
+        } else {
+            showFlash('error', result.payload?.message || 'Erreur lors du téléchargement.');
+        }
+    };
+
+    const handleProfileSubmit = async (e) => {
+        e.preventDefault();
+        const result = await dispatch(updateUserProfile(form));
+        if (updateUserProfile.fulfilled.match(result)) {
+            showFlash('success', 'Profil mis à jour avec succès !');
+        } else {
+            showFlash('error', result.payload?.message || 'Erreur interne. Réessayez.');
+        }
+    };
+
+    const handleEmailSubmit = async (e) => {
+        e.preventDefault();
+        const result = await dispatch(updateUserEmail(emailForm));
+        if (updateUserEmail.fulfilled.match(result)) {
+            showFlash('success', 'Email mis à jour avec succès !');
+        } else {
+            showFlash('error', result.payload?.message || 'Erreur lors de la mise à jour de l\'email.');
+        }
+    };
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        if (passForm.new_password !== passForm.confirm_password) {
+            showFlash('error', 'Les nouveaux mots de passe ne correspondent pas.');
+            return;
+        }
+        if (passForm.new_password.length < 8) {
+            showFlash('error', 'Le nouveau mot de passe doit contenir au moins 8 caractères.');
+            return;
+        }
+        const result = await dispatch(updateUserPassword({ old_password: passForm.old_password, new_password: passForm.new_password }));
+        if (updateUserPassword.fulfilled.match(result)) {
+            showFlash('success', 'Mot de passe changé avec succès !');
+            setPassForm({ old_password: '', new_password: '', confirm_password: '' });
+        } else {
+            showFlash('error', result.payload?.message || 'Erreur lors du changement de mot de passe.');
+        }
+    };
+
+    const tabs = [
+        { id: 'edit_profile', label: 'Edit profile' },
+        { id: 'email_settings', label: 'Email settings' },
+        { id: 'change_password', label: 'Change password' },
+    ];
+
+    const avatarInitial = user?.first_name ? user.first_name.charAt(0).toUpperCase() :
+        user?.nameU ? user.nameU.charAt(0).toUpperCase() : 'U';
 
     return (
         <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '140px', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '4rem', paddingBottom: '4rem' }}>
-                
-                {/* SETTINGS SIDEBAR */}
-                <div style={{ width: '220px', flexShrink: 0 }}>
-                    <h2 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Account settings</h2>
-                    
+            <div style={{ paddingTop: '140px', minHeight: '100vh', maxWidth: '1100px', margin: '0 auto', display: 'flex', gap: '4rem', paddingBottom: '4rem', paddingLeft: '2rem', paddingRight: '2rem' }}>
+
+                {/* SIDEBAR */}
+                <div style={{ width: '200px', flexShrink: 0 }}>
+                    <h2 style={{ fontSize: '1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Account settings</h2>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                        {[
-                            { id: 'edit_profile', label: 'Edit profile' },
-                            { id: 'email_settings', label: 'Email settings' },
-                            { id: 'change_password', label: 'Change password' },
-                            { id: 'applications', label: 'Applications' }
-                        ].map(tab => (
+                        {tabs.map(tab => (
                             <li key={tab.id}>
-                                <button 
-                                    onClick={() => setActiveTab(tab.id)}
-                                    style={{ 
-                                        background: 'none', border: 'none', padding: 0, 
-                                        color: activeTab === tab.id ? '#1E6BFF' : '#64748b', 
+                                <button
+                                    onClick={() => { setActiveTab(tab.id); setFlash(null); }}
+                                    style={{
+                                        background: 'none', border: 'none', padding: 0,
+                                        color: activeTab === tab.id ? '#1E6BFF' : '#64748b',
                                         fontWeight: activeTab === tab.id ? 700 : 500,
-                                        fontSize: '0.95rem', cursor: 'pointer', textAlign: 'left',
-                                        transition: 'color 0.2s', textDecoration: activeTab === tab.id ? 'underline' : 'none',
+                                        fontSize: '0.92rem', cursor: 'pointer', textAlign: 'left',
+                                        textDecoration: activeTab === tab.id ? 'underline' : 'none',
                                         textUnderlineOffset: '4px'
                                     }}
-                                >
-                                    {tab.label}
-                                </button>
+                                >{tab.label}</button>
                             </li>
                         ))}
-
-                        <div style={{ margin: '1rem 0', height: '1px', background: '#e2e8f0' }}></div>
-
+                        <div style={{ margin: '0.5rem 0', height: '1px', background: '#e2e8f0' }} />
                         <li>
-                            <button 
-                                onClick={() => {
-                                    if(window.confirm('Are you sure you want to log out?')) {
-                                        dispatch(logout());
-                                        navigate('/');
-                                    }
-                                }}
-                                style={{ 
-                                    background: 'none', border: 'none', padding: 0, 
-                                    color: '#64748b', fontSize: '0.95rem', cursor: 'pointer', textAlign: 'left',
-                                }}
-                            >
+                            <button onClick={() => { if (window.confirm('Log out?')) { dispatch(logout()); navigate('/'); } }}
+                                style={{ background: 'none', border: 'none', padding: 0, color: '#64748b', fontSize: '0.92rem', cursor: 'pointer' }}>
                                 Log out
-                            </button>
-                        </li>
-                        <li>
-                            <button 
-                                onClick={() => alert('Contacting support deletion...')}
-                                style={{ 
-                                    background: 'none', border: 'none', padding: 0, 
-                                    color: '#ef4444', fontSize: '0.95rem', cursor: 'pointer', textAlign: 'left',
-                                }}
-                            >
-                                Close account
                             </button>
                         </li>
                     </ul>
                 </div>
 
-                {/* MAIN CONTENT AREA */}
-                <div style={{ flex: 1, maxWidth: '800px' }}>
-                    
+                {/* MAIN CONTENT */}
+                <div style={{ flex: 1, maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+
+                    {/* Flash message */}
+                    {flash && <AlertBanner type={flash.type} message={flash.message} onClose={() => setFlash(null)} />}
+
+                    {/* ── EDIT PROFILE TAB ── */}
                     {activeTab === 'edit_profile' && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                            
-                            {/* Header row */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.5rem' }}>
-                                <h1 style={{ color: '#0B1F3A', fontWeight: 800, fontSize: '1.5rem', margin: 0 }}>Edit profile</h1>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#ecfdf5', color: '#10b981', padding: '0.4rem 0.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600 }}>
-                                    <CheckCircle2 size={16} /> Account Confirmed
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>
+                                <h1 style={{ color: '#0B1F3A', fontWeight: 800, fontSize: '1.4rem', margin: 0 }}>Edit Profile</h1>
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#ecfdf5', color: '#10b981', padding: '0.4rem 0.8rem', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 600 }}>
+                                    <CheckCircle2 size={15} /> Account Confirmed
                                 </span>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }}>
-                                {/* Avatar column */}
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.8rem' }}>
-                                    <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#111827', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2.5rem', fontWeight: 800, overflow: 'hidden' }}>
-                                        {user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')}
+                            <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'flex-start' }}>
+                                {/* Avatar */}
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+                                    <div
+                                        onClick={() => fileRef.current.click()}
+                                        style={{ width: '110px', height: '110px', borderRadius: '50%', background: avatarPreview ? 'transparent' : '#0B1F3A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2.5rem', fontWeight: 800, overflow: 'hidden', cursor: 'pointer', position: 'relative', border: '3px solid #e2e8f0', transition: 'border-color 0.2s' }}
+                                        onMouseEnter={e => e.currentTarget.style.borderColor = '#1E6BFF'}
+                                        onMouseLeave={e => e.currentTarget.style.borderColor = '#e2e8f0'}
+                                    >
+                                        {avatarPreview
+                                            ? <img src={avatarPreview} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            : avatarInitial
+                                        }
+                                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '35px' }}>
+                                            <Camera size={16} color="white" />
+                                        </div>
                                     </div>
-                                    <button style={{ background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', fontSize: '0.85rem', cursor: 'pointer' }}>
-                                        Change profile image
-                                    </button>
+                                    <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarChange} />
+                                    <small style={{ color: '#94a3b8', fontSize: '0.75rem', textAlign: 'center' }}>Click to change</small>
                                 </div>
 
-                                {/* Main edit fields form */}
-                                <form style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }} onSubmit={(e) => e.preventDefault()}>
-                                    
-                                    <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                            <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>First name</label>
-                                            <input defaultValue={user?.first_name || user?.name || ''} style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                        </div>
-                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                            <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Last name</label>
-                                            <input defaultValue={user?.last_name || ''} style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                        </div>
+                                {/* Form */}
+                                <form onSubmit={handleProfileSubmit} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <InputField label="First name" value={form.first_name} onChange={e => setForm({ ...form, first_name: e.target.value })} />
+                                        <InputField label="Last name" value={form.last_name} onChange={e => setForm({ ...form, last_name: e.target.value })} />
                                     </div>
-
+                                    <InputField label="Username" value={form.username} onChange={e => setForm({ ...form, username: e.target.value })} hint={`ihost.ma/@${form.username || 'user'}`} />
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <InputField label="Location" value={form.location} placeholder="Casablanca, Maroc" onChange={e => setForm({ ...form, location: e.target.value })} />
+                                        <InputField label="Website" value={form.website} placeholder="https://" onChange={e => setForm({ ...form, website: e.target.value })} />
+                                    </div>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                        <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Email</label>
-                                        <input defaultValue={user?.email || ''} style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
+                                        <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Bio</label>
+                                        <textarea
+                                            rows={3}
+                                            value={form.bio}
+                                            onChange={e => setForm({ ...form, bio: e.target.value })}
+                                            maxLength={250}
+                                            placeholder="Tell us about yourself..."
+                                            style={{ padding: '0.75rem 1rem', borderRadius: '8px', border: '1.5px solid #e2e8f0', background: '#fff', fontSize: '0.9rem', color: '#0B1F3A', outline: 'none', resize: 'vertical' }}
+                                            onFocus={e => (e.target.style.borderColor = '#1E6BFF')}
+                                            onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
+                                        />
+                                        <span style={{ fontSize: '0.75rem', color: '#94a3b8', alignSelf: 'flex-end' }}>{form.bio.length}/250</span>
                                     </div>
-
-                                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                                        <div style={{ flex: 1 }}>
-                                            <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '0.5rem' }}>Badge</h3>
-                                            <p style={{ margin: 0, fontSize: '0.9rem', color: '#64748b' }}>You don't have any badges yet :(</p>
-                                        </div>
-                                        <div style={{ flex: 2, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                            <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Username (only letters, numbers, and underscores)</label>
-                                            <input defaultValue={user?.username || ''} style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                            <small style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ihost.ma/@{user?.username || 'user'}</small>
-                                        </div>
+                                    <InputField label="Interests (comma-separated)" value={form.interests} placeholder="web, hosting, cloud..." onChange={e => setForm({ ...form, interests: e.target.value })} />
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <InputField label="Instagram" value={form.instagram} placeholder="username" onChange={e => setForm({ ...form, instagram: e.target.value })} hint="@ihost_ma may feature you" />
+                                        <InputField label="X (Twitter)" value={form.twitter} placeholder="username" onChange={e => setForm({ ...form, twitter: e.target.value })} hint="@ihost_ma may feature you" />
                                     </div>
-
-                                    {/* ABOUT SECTION */}
-                                    <div style={{ marginTop: '2rem' }}>
-                                        <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>About</h3>
-                                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Location</label>
-                                                <input style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                            </div>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Personal site/portfolio</label>
-                                                <input placeholder="https://" style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                            </div>
-                                        </div>
-
-                                        <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Bio</label>
-                                                <textarea rows={4} style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none', resize: 'vertical' }}></textarea>
-                                                <span style={{ fontSize: '0.75rem', color: '#94a3b8', alignSelf: 'flex-end' }}>250</span>
-                                            </div>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Interests (maximum 5)</label>
-                                                <input placeholder="add a tag" style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                                <small style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.5rem', lineHeight: '1.4' }}>Your interests are generated from the types of photos you like, collect, and contribute.</small>
-                                            </div>
-                                        </div>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid #e2e8f0', paddingTop: '1.25rem' }}>
+                                        <button
+                                            type="submit"
+                                            disabled={isLoading}
+                                            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.95rem', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
+                                        >
+                                            {isLoading && <Loader2 size={16} className="spin" />}
+                                            Update Profile
+                                        </button>
                                     </div>
-
-                                    {/* SOCIAL SECTION */}
-                                    <div style={{ marginTop: '2rem' }}>
-                                        <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Social</h3>
-                                        <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>Instagram username</label>
-                                                <div style={{ display: 'flex', border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
-                                                    <span style={{ padding: '0.8rem', background: '#f1f5f9', color: '#475569', borderRight: '1px solid #cbd5e1' }}>@</span>
-                                                    <input style={{ flex: 1, padding: '0.8rem', border: 'none', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                                </div>
-                                                <small style={{ color: '#94a3b8', fontSize: '0.8rem' }}>So that we can feature you on @ihost_ma</small>
-                                            </div>
-                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#475569' }}>X (Twitter) username</label>
-                                                <div style={{ display: 'flex', border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
-                                                    <span style={{ padding: '0.8rem', background: '#f1f5f9', color: '#475569', borderRight: '1px solid #cbd5e1' }}>@</span>
-                                                    <input style={{ flex: 1, padding: '0.8rem', border: 'none', fontSize: '0.95rem', color: '#0B1F3A', outline: 'none' }} />
-                                                </div>
-                                                <small style={{ color: '#94a3b8', fontSize: '0.8rem' }}>So that we can feature you on @ihost_ma</small>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '3rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
-                                        <button className="btn btn-primary" style={{ padding: '0.8rem 2rem' }}>Update account</button>
-                                    </div>
-
                                 </form>
                             </div>
-
                         </div>
                     )}
-                    
-                    {activeTab !== 'edit_profile' && (
-                        <div style={{ padding: '3rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                            <h2 style={{ color: '#0B1F3A', fontWeight: 800 }}>Component Pending</h2>
-                            <p style={{ color: '#64748b' }}>This section is currently under construction.</p>
+
+                    {/* ── EMAIL SETTINGS TAB ── */}
+                    {activeTab === 'email_settings' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                            <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>
+                                <h1 style={{ color: '#0B1F3A', fontWeight: 800, fontSize: '1.4rem', margin: 0 }}>Email Settings</h1>
+                                <p style={{ color: '#64748b', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Update the email address associated with your account.</p>
+                            </div>
+
+                            <form onSubmit={handleEmailSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '480px' }}>
+                                <InputField label="Current Email" value={user?.email || ''} readOnly />
+                                <InputField
+                                    label="New Email Address"
+                                    type="email"
+                                    value={emailForm.email}
+                                    onChange={e => setEmailForm({ email: e.target.value })}
+                                    placeholder="nouvelle@email.com"
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.95rem', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
+                                >
+                                    {isLoading && <Loader2 size={16} />}
+                                    Update Email
+                                </button>
+                            </form>
+                        </div>
+                    )}
+
+                    {/* ── CHANGE PASSWORD TAB ── */}
+                    {activeTab === 'change_password' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                            <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>
+                                <h1 style={{ color: '#0B1F3A', fontWeight: 800, fontSize: '1.4rem', margin: 0 }}>Change Password</h1>
+                                <p style={{ color: '#64748b', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Choose a strong password of at least 8 characters.</p>
+                            </div>
+
+                            <form onSubmit={handlePasswordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '480px' }}>
+                                <InputField label="Current Password" type="password" value={passForm.old_password} onChange={e => setPassForm({ ...passForm, old_password: e.target.value })} />
+                                <InputField label="New Password" type="password" value={passForm.new_password} onChange={e => setPassForm({ ...passForm, new_password: e.target.value })} hint="At least 8 characters" />
+                                <InputField label="Confirm New Password" type="password" value={passForm.confirm_password} onChange={e => setPassForm({ ...passForm, confirm_password: e.target.value })} />
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '10px', fontWeight: 700, fontSize: '0.95rem', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
+                                >
+                                    {isLoading && <Loader2 size={16} />}
+                                    Change Password
+                                </button>
+                            </form>
                         </div>
                     )}
 

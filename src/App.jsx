@@ -69,6 +69,7 @@ import Contact from "./pages/entreprise/Contact";
 
 import Chatbot from "./components/chat/Chatbot";
 import ClientLayout from "./components/client/ClientLayout";
+import AdminLayout from "./components/admin/AdminLayout";
 
 import { useLocation } from "react-router-dom";
 
@@ -184,12 +185,14 @@ function App() {
             <Route path="profile" element={<ClientProfile />} />
           </Route>
 
-          {/* Admin Routes */}
-          <Route path="/admin/dashboard" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/users" element={<ProtectedRoute requireAdmin><AdminUsers /></ProtectedRoute>} />
-          <Route path="/admin/orders" element={<ProtectedRoute requireAdmin><AdminOrders /></ProtectedRoute>} />
-          <Route path="/admin/services" element={<ProtectedRoute requireAdmin><AdminServices /></ProtectedRoute>} />
-          <Route path="/admin/support" element={<ProtectedRoute requireAdmin><AdminSupport /></ProtectedRoute>} />
+          {/* Admin Routes — nested under AdminLayout */}
+          <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="support" element={<AdminSupport />} />
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>

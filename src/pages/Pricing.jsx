@@ -74,8 +74,8 @@ const Pricing = () => {
                                                 features={plan.features}
                                                 highlight={pIdx === 1}
                                                 badge={pIdx === 1 ? 'Populaire' : null}
-                                                buttonText="Choisir cette offre"
-                                                buttonLink={cat.link}
+                                                buttonText="Ajouter au panier"
+                                                addToCartMode={true}
                                             />
                                         ))}
                                     </div>

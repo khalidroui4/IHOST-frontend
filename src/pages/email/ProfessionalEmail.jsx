@@ -103,8 +103,8 @@ const ProfessionalEmail = () => {
                                     features={plan.features.map(f => f.label)}
                                     highlight={plan.highlight}
                                     badge={plan.badge}
-                                    buttonText="SÉLECTIONNER"
-                                    buttonLink="/signup"
+                                    buttonText="Ajouter au panier"
+                                    addToCartMode={true}
                                 />
                             ))}
                         </div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '../../store/slices/orderSlice';
+import { fetchDomains } from '../../store/slices/domainSlice';
+import { fetchSubscriptions } from '../../store/slices/subscriptionSlice';
+import { fetchInvoices } from '../../store/slices/invoiceSlice';
 import { Link } from 'react-router-dom';
 import {
     LayoutDashboard, Globe, Server, CreditCard, Bell,
@@ -12,39 +15,33 @@ const ClientDashboard = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const { items: orders } = useSelector(state => state.orders);
-    const { items: cartItems } = useSelector(state => state.cart);
+    const { items: domains } = useSelector(state => state.domains);
+    const { items: subscriptions } = useSelector(state => state.subscriptions);
+    const { items: invoices } = useSelector(state => state.invoices);
+    const { items: notifications } = useSelector(state => state.notifications);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (user) dispatch(fetchOrders(user.id));
-        const t = setTimeout(() => setIsLoading(false), 500);
-        return () => clearTimeout(t);
+        if (user?.id) {
+            Promise.all([
+                dispatch(fetchOrders(user.id)),
+                dispatch(fetchDomains(user.id)),
+                dispatch(fetchSubscriptions(user.id)),
+                dispatch(fetchInvoices(user.id))
+            ]).finally(() => setIsLoading(false));
+        }
     }, [dispatch, user]);
 
     const firstName = user?.name?.split(' ')[0] || user?.first_name || 'Client';
 
+    const activeSubscriptions = subscriptions.filter(s => s.statusSub === 'active' || s.statusSub === 'active');
+    const unpaidInvoices = invoices.filter(i => i.statusFacture !== 'paid');
+
     const stats = [
-        { label: 'Services Actifs', value: '2', icon: Server, color: '#3b82f6', bg: '#eff6ff', accent: '#3b82f6' },
-        { label: 'Domaines', value: '1', icon: Globe, color: '#8b5cf6', bg: '#f5f3ff', accent: '#8b5cf6' },
+        { label: 'Services Actifs', value: activeSubscriptions.length || '0', icon: Server, color: '#3b82f6', bg: '#eff6ff', accent: '#3b82f6' },
+        { label: 'Domaines', value: domains.length || '0', icon: Globe, color: '#8b5cf6', bg: '#f5f3ff', accent: '#8b5cf6' },
         { label: 'Commandes', value: orders.length || '0', icon: ShoppingCart, color: '#10b981', bg: '#ecfdf5', accent: '#10b981' },
-        { label: 'Factures Impayées', value: '0', icon: CreditCard, color: '#ef4444', bg: '#fef2f2', accent: '#ef4444' },
-    ];
-
-    const demoServices = [
-        { name: 'Hébergement Mutualisé Pro', host: 'web-cluster-ihost.ma', specs: '20 GB SSD', status: 'active', expires: '01 Nov 2026', color: '#3b82f6' },
-        { name: 'VPS Cloud Performance', host: 'vps-99234.ihost.ma', specs: '4 vCore · 8 GB RAM', status: 'active', expires: '15 Jul 2026', color: '#8b5cf6' },
-    ];
-
-    const demoDomains = [
-        { name: 'mon-projet.ma', expires: '14 Apr 2026', status: 'expiring', daysLeft: 21 },
-        { name: 'ihost-store.com', expires: '03 Dec 2026', status: 'active', daysLeft: 254 },
-    ];
-
-    const timeline = [
-        { label: 'Connexion réussie', time: "Aujourd'hui, 06:02", icon: Shield, color: '#1E6BFF' },
-        { label: 'Paiement reçu — Hébergement Pro', time: 'Hier, 14:30', icon: CheckCircle2, color: '#10b981' },
-        { label: 'Ticket #1482 — Réponse reçue', time: '21 Mars 2026', icon: Bell, color: '#f59e0b' },
-        { label: 'Commande #8823 créée', time: '15 Mars 2026', icon: ShoppingCart, color: '#8b5cf6' },
+        { label: 'Factures Impayées', value: unpaidInvoices.length || '0', icon: CreditCard, color: '#ef4444', bg: '#fef2f2', accent: '#ef4444' },
     ];
 
     /* ─── Shared Styles ─── */
@@ -60,7 +57,7 @@ const ClientDashboard = () => {
                 <div style={{ position: 'relative', zIndex: 1 }}>
                     <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem', fontWeight: 600, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '1px' }}>Tableau de Bord</p>
                     <h2 style={{ margin: '0 0 0.4rem 0', fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.5px' }}>
-                        Bonjour, <span style={{ color: '#60a5fa' }}>{firstName}</span> 👋
+                        Bonjour, <span style={{ color: '#60a5fa' }}>{firstName}</span>  
                     </h2>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#cbd5e1', maxWidth: '440px' }}>
                         Bienvenue dans votre espace client IHOST. Gérez vos services et infrastructures en toute simplicité.
@@ -97,43 +94,45 @@ const ClientDashboard = () => {
                 {/* Services Table */}
                 <div style={{ ...card, padding: '1.75rem', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                        <h3 style={sectionTitle}>Mes Services</h3>
+                        <h3 style={sectionTitle}>Mes Services Récents</h3>
                         <Link to="/client/services" style={{ fontSize: '0.82rem', fontWeight: 600, color: '#1E6BFF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                             Tout voir <ChevronRight size={14} />
                         </Link>
                     </div>
                     {isLoading ? (
-                        <p style={{ color: '#94a3b8', textAlign: 'center', padding: '2rem 0', fontSize: '0.9rem' }}>Chargement...</p>
+                        <p style={{ color: '#94a3b8', textAlign: 'center', padding: '2rem 0', fontSize: '0.9rem' }}>Chargement des services...</p>
+                    ) : subscriptions.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '2rem', borderRadius: '12px', border: '1px dashed #e2e8f0', background: '#fafafa' }}>
+                            <Server size={32} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
+                            <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#64748b' }}>Vous n'avez pas encore de services actifs.</p>
+                            <Link to="/pricing" style={{ color: '#1E6BFF', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                                Parcourir nos offres <ArrowUpRight size={13} />
+                            </Link>
+                        </div>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {demoServices.map((s) => (
-                                <div key={s.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.25rem', borderRadius: '12px', background: '#f8fafc', border: '1px solid #f1f5f9', transition: 'background 0.15s' }}
+                            {subscriptions.slice(0, 3).map((s) => (
+                                <div key={s.idSub} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.25rem', borderRadius: '12px', background: '#f8fafc', border: '1px solid #f1f5f9', transition: 'background 0.15s' }}
                                     onMouseEnter={e => e.currentTarget.style.background = '#f1f5f9'}
                                     onMouseLeave={e => e.currentTarget.style.background = '#f8fafc'}
                                 >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: `linear-gradient(135deg, ${s.color}, ${s.color}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
+                                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: `linear-gradient(135deg, #3b82f6, #0043C0)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
                                             <Server size={20} />
                                         </div>
                                         <div>
-                                            <p style={{ margin: 0, fontWeight: 700, color: '#0B1F3A', fontSize: '0.9rem' }}>{s.name}</p>
-                                            <p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>{s.host} · {s.specs}</p>
+                                            <p style={{ margin: 0, fontWeight: 700, color: '#0B1F3A', fontSize: '0.9rem' }}>{s.nameService}</p>
+                                            <p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>{s.descriptionS?.substring(0, 40)}...</p>
                                         </div>
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: '#ecfdf5', color: '#10b981', fontSize: '0.72rem', fontWeight: 700, padding: '0.25rem 0.6rem', borderRadius: '9999px' }}>
-                                            <CheckCircle2 size={11} strokeWidth={3} /> Actif
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: s.statusSub === 'active' ? '#ecfdf5' : '#fef2f2', color: s.statusSub === 'active' ? '#10b981' : '#ef4444', fontSize: '0.72rem', fontWeight: 700, padding: '0.25rem 0.6rem', borderRadius: '9999px', textTransform: 'capitalize' }}>
+                                            {s.statusSub === 'active' && <CheckCircle2 size={11} strokeWidth={3} />} {s.statusSub}
                                         </span>
-                                        <p style={{ margin: '0.3rem 0 0', fontSize: '0.72rem', color: '#94a3b8' }}>Expire le {s.expires}</p>
+                                        <p style={{ margin: '0.3rem 0 0', fontSize: '0.72rem', color: '#94a3b8' }}>Expire le {s.endDate}</p>
                                     </div>
                                 </div>
                             ))}
-                            <div style={{ textAlign: 'center', padding: '1rem', borderRadius: '10px', border: '1.5px dashed #e2e8f0', background: '#fafafa' }}>
-                                <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', color: '#94a3b8' }}>Besoin de plus de puissance ?</p>
-                                <Link to="/pricing" style={{ color: '#1E6BFF', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                                    Voir le catalogue <ArrowUpRight size={13} />
-                                </Link>
-                            </div>
                         </div>
                     )}
                 </div>
@@ -147,42 +146,45 @@ const ClientDashboard = () => {
                             <h3 style={{ ...sectionTitle, marginBottom: 0 }}>Domaines</h3>
                             <Link to="/client/domains" style={{ fontSize: '0.8rem', fontWeight: 600, color: '#1E6BFF', textDecoration: 'none' }}>Gérer</Link>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                            {demoDomains.map(d => (
-                                <div key={d.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 0.9rem', borderRadius: '10px', background: d.status === 'expiring' ? '#fff7ed' : '#f8fafc', border: `1px solid ${d.status === 'expiring' ? '#fed7aa' : '#f1f5f9'}` }}>
-                                    <div>
-                                        <p style={{ margin: 0, fontWeight: 700, fontSize: '0.85rem', color: '#0B1F3A' }}>{d.name}</p>
-                                        <p style={{ margin: 0, fontSize: '0.72rem', color: d.status === 'expiring' ? '#ea580c' : '#94a3b8' }}>
-                                            {d.status === 'expiring' ? `⚠ Expire dans ${d.daysLeft} jours` : `Expire le ${d.expires}`}
-                                        </p>
-                                    </div>
-                                    {d.status === 'expiring' && (
-                                        <Link to="/client/domains" style={{ fontSize: '0.72rem', fontWeight: 700, color: '#ea580c', textDecoration: 'none', background: '#ffedd5', padding: '0.25rem 0.6rem', borderRadius: '6px' }}>
-                                            Renouveler
-                                        </Link>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                        {domains.length === 0 ? (
+                            <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Aucun domaine enregistré.</p>
+                        ) : (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                {domains.slice(0, 3).map(d => {
+                                    const isExpiring = new Date(d.expirationDate) < new Date(new Date().setDate(new Date().getDate() + 30));
+                                    return (
+                                        <div key={d.idDomaine} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 0.9rem', borderRadius: '10px', background: isExpiring ? '#fff7ed' : '#f8fafc', border: `1px solid ${isExpiring ? '#fed7aa' : '#f1f5f9'}` }}>
+                                            <div>
+                                                <p style={{ margin: 0, fontWeight: 700, fontSize: '0.85rem', color: '#0B1F3A' }}>{d.domainName}</p>
+                                                <p style={{ margin: 0, fontSize: '0.72rem', color: isExpiring ? '#ea580c' : '#94a3b8' }}>
+                                                    {isExpiring ? `⚠ Expire bientôt` : `Expire le ${new Date(d.expirationDate).toLocaleDateString()}`}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
 
                     {/* Activity Timeline */}
                     <div style={{ ...card, padding: '1.5rem', flex: 1 }}>
-                        <h3 style={sectionTitle}>Activité Récente</h3>
-                        <div style={{ position: 'relative', paddingLeft: '1.25rem', borderLeft: '2px solid #e5eaf0', marginLeft: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-                            {timeline.map((t, i) => {
-                                const Icon = t.icon;
-                                return (
+                        <h3 style={sectionTitle}>Notifications</h3>
+                        {notifications.length === 0 ? (
+                            <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Aucune notification récente.</p>
+                        ) : (
+                            <div style={{ position: 'relative', paddingLeft: '1.25rem', borderLeft: '2px solid #e5eaf0', marginLeft: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+                                {notifications.slice(0, 4).map((n, i) => (
                                     <div key={i} style={{ position: 'relative' }}>
-                                        <div style={{ position: 'absolute', left: '-1.55rem', top: '0.15rem', width: '12px', height: '12px', borderRadius: '50%', background: t.color, border: '2px solid white', boxShadow: `0 0 0 3px ${t.color}30` }} />
-                                        <p style={{ margin: '0 0 0.1rem 0', fontSize: '0.85rem', fontWeight: 600, color: '#0B1F3A' }}>{t.label}</p>
+                                        <div style={{ position: 'absolute', left: '-1.55rem', top: '0.15rem', width: '12px', height: '12px', borderRadius: '50%', background: '#1E6BFF', border: '2px solid white', boxShadow: `0 0 0 3px rgba(30,107,255,0.2)` }} />
+                                        <p style={{ margin: '0 0 0.1rem 0', fontSize: '0.85rem', fontWeight: 600, color: '#0B1F3A' }}>{n.message}</p>
                                         <span style={{ fontSize: '0.72rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                                            <Clock size={11} /> {t.time}
+                                            <Clock size={11} /> {new Date(n.createdAt).toLocaleString()}
                                         </span>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                 </div>

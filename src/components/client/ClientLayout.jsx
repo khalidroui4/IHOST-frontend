@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
+import { fetchCart } from '../../store/slices/cartSlice';
+import { fetchNotifications } from '../../store/slices/notificationSlice';
 import {
     LayoutDashboard, Server, Globe, ShoppingCart, CreditCard,
     HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
@@ -55,6 +57,13 @@ const ClientLayout = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
 
+    useEffect(() => {
+        if (user?.id) {
+            dispatch(fetchCart());
+            dispatch(fetchNotifications(user.id));
+        }
+    }, [dispatch, user]);
+
     const handleLogout = () => {
         dispatch(logout());
         navigate('/');
@@ -69,10 +78,7 @@ const ClientLayout = () => {
                 {/* Logo */}
                 <div style={{ padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
                     <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                        <Shield size={22} color="#1E6BFF" strokeWidth={2.5} />
-                        <span style={{ color: 'white', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '-0.5px' }}>
-                            IHOST<span style={{ color: '#1E6BFF' }}>.</span>
-                        </span>
+                        <img src='/logo.jpeg' alt="logo" style={{ width: '160px', height: '80px',margin:'auto' }} />
                     </Link>
                 </div>
 
@@ -185,8 +191,12 @@ const ClientLayout = () => {
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f6fb'}
                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                         >
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
-                                {user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'}
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0, overflow: 'hidden' }}>
+                                {user?.avatar ? (
+                                    <img src={`http://localhost${user.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                ) : (
+                                    user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'
+                                )}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
                                 <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0B1F3A' }}>{user?.name?.split(' ')[0] || user?.first_name || 'Client'}</span>

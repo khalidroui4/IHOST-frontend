@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '../../store/slices/orderSlice';
-import PageTransition from '../../pageTransition';
-
 const AdminOrders = () => {
     const dispatch = useDispatch();
     const { items: orders, isLoading } = useSelector(state => state.orders);
@@ -28,8 +26,7 @@ const AdminOrders = () => {
     };
 
     return (
-        <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Commandes</h1>
                 
                 {isLoading ? (
@@ -78,9 +75,7 @@ const AdminOrders = () => {
                         </table>
                     </div>
                 )}
-            </div>
-        </PageTransition>
-    );
-};
+        </div>
+    );};
 
 export default AdminOrders;

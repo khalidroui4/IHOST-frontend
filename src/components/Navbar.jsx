@@ -123,18 +123,31 @@ const Navbar = () => {
                                     onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
                                     title="Mon compte"
                                 >
-                                    <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800 }}>
-                                        {user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')}
-                                    </span>
+                                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, overflow: 'hidden' }}>
+                                        {user?.avatar ? (
+                                            <img src={`http://localhost${user.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : (
+                                            user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')
+                                        )}
+                                    </div>
                                     <span>{user?.name?.split(' ')[0] || user?.first_name || 'Mon compte'}</span>
                                     <ChevronDown size={14} />
                                 </button>
 
                                 {profileDropdown && (
                                     <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, background: '#0B1F3A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '14px', minWidth: '220px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', zIndex: 200, overflow: 'hidden', padding: '0.5rem' }}>
-                                        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.4rem' }}>
-                                            <p style={{ margin: 0, fontWeight: 700, color: 'white', fontSize: '0.9rem' }}>{user?.name || user?.first_name || 'Utilisateur'}</p>
-                                            <p style={{ margin: 0, fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{isAdmin ? 'Administrateur' : 'Client'}</p>
+                                        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: 800, overflow: 'hidden', flexShrink: 0 }}>
+                                                {user?.avatar ? (
+                                                    <img src={`http://localhost${user.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                ) : (
+                                                    user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')
+                                                )}
+                                            </div>
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                <p style={{ margin: 0, fontWeight: 700, color: 'white', fontSize: '0.9rem' }}>{user?.name || user?.first_name || 'Utilisateur'}</p>
+                                                <p style={{ margin: 0, fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{isAdmin ? 'Administrateur' : 'Client'}</p>
+                                            </div>
                                         </div>
                                         <Link
                                             to={isAdmin ? '/admin/dashboard' : '/client/dashboard'}

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTickets, sendMessage } from '../../store/slices/supportSlice';
-import PageTransition from '../../pageTransition';
-
 const AdminSupport = () => {
     const dispatch = useDispatch();
     const { tickets, isLoading } = useSelector(state => state.support);
@@ -22,8 +20,7 @@ const AdminSupport = () => {
     };
 
     return (
-        <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '2rem' }}>Support Administratif</h1>
                 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem' }}>
@@ -93,9 +90,7 @@ const AdminSupport = () => {
                         })()}
                     </div>
                 </div>
-            </div>
-        </PageTransition>
-    );
-};
+        </div>
+    );};
 
 export default AdminSupport;

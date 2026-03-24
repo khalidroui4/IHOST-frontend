@@ -15,7 +15,7 @@ function Signup() {
                                 <p>if you don't have an account create one and join us</p>
                             </div>
                             <div className="auth-image-footer">
-                                <span>You already have an Account ?</span>
+                                <span>You already have an Account ?</span> 
                                 <Link to="/signIn" className="btn-auth-link">Login Here</Link>
                             </div>
                         </div>

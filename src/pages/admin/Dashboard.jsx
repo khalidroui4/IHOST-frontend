@@ -4,7 +4,6 @@ import { fetchOrders } from '../../store/slices/orderSlice';
 import { fetchUsers } from '../../store/slices/userSlice';
 import { fetchTickets } from '../../store/slices/supportSlice';
 import { Link } from 'react-router-dom';
-import PageTransition from '../../pageTransition';
 
 const AdminDashboard = () => {
     const dispatch = useDispatch();
@@ -19,8 +18,7 @@ const AdminDashboard = () => {
     }, [dispatch]);
 
     return (
-        <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '0.5rem' }}>Espace Administrateur</h1>
                 <p style={{ color: '#6B7280', fontSize: '1.2rem', marginBottom: '3rem' }}>Vue d'ensemble de la plateforme</p>
 
@@ -49,8 +47,7 @@ const AdminDashboard = () => {
                         <Link to="/admin/services" style={{ color: '#8B5CF6', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
                     </div>
                 </div>
-            </div>
-        </PageTransition>
+        </div>
     );
 };
 

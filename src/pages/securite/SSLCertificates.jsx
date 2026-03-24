@@ -104,8 +104,8 @@ const SSLCertificates = () => {
                                     features={plan.features}
                                     highlight={plan.highlight}
                                     badge={plan.badge}
-                                    buttonText="Choisir ce Plan"
-                                    buttonLink="/signup"
+                                    buttonText="Ajouter au panier"
+                                    addToCartMode={true}
                                 />
                             ))}
                         </div>

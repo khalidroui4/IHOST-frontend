@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../store/slices/userSlice';
-import PageTransition from '../../pageTransition';
-
 const AdminUsers = () => {
     const dispatch = useDispatch();
     const { list: users, isLoading } = useSelector(state => state.users);
@@ -12,8 +10,7 @@ const AdminUsers = () => {
     }, [dispatch]);
 
     return (
-        <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Utilisateurs</h1>
                 
                 {isLoading ? (
@@ -52,8 +49,7 @@ const AdminUsers = () => {
                         </table>
                     </div>
                 )}
-            </div>
-        </PageTransition>
+        </div>
     );
 };
 

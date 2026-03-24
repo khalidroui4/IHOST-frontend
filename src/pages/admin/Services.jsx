@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServices } from '../../store/slices/serviceSlice';
-import PageTransition from '../../pageTransition';
-
 const AdminServices = () => {
     const dispatch = useDispatch();
     const { items: services, isLoading } = useSelector(state => state.services);
@@ -28,8 +26,7 @@ const AdminServices = () => {
     };
 
     return (
-        <PageTransition>
-            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                     <h1 style={{ color: '#0B1F3A', fontWeight: 800 }}>Catalogue des Services</h1>
                     <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">+ Nouveau Service</button>
@@ -87,9 +84,7 @@ const AdminServices = () => {
                         </table>
                     </div>
                 )}
-            </div>
-        </PageTransition>
-    );
-};
+        </div>
+    );};
 
 export default AdminServices;

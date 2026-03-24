@@ -74,7 +74,6 @@ const Auth = () => {
                     password: formData.password
                 })).unwrap();
                 
-                // Switch to login on successful registration
                 handleSwitch(true);
             }
         } catch (err) {
@@ -126,7 +125,7 @@ const Auth = () => {
                                             <p>Si vous n'avez pas encore de compte, créez-en un et rejoignez-nous.</p>
                                         </div>
                                         <div className="auth-image-footer">
-                                            <span>Vous avez déjà un compte ?</span>
+                                            <span>Vous avez déjà un compte ?</span><br />
                                             <button onClick={() => handleSwitch(true)} className="btn-auth-link">Se connecter ici</button>
                                         </div>
                                     </motion.div>
@@ -158,12 +157,12 @@ const Auth = () => {
                                         {localError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{localError.message || 'Error occurred'}</div>}
                                         {authError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{authError}</div>}
 
-                                        <form className="auth-form signin-form" onSubmit={handleSubmit}>
-                                            <div className="form-group">
+                                        <form className="auth-form-main signin-form" onSubmit={handleSubmit}>
+                                            <div className="auth-form-group">
                                                 <label>Email :</label>
-                                                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                                                <input type="email" name="email" value={formData.email} onChange={handleChange} className="auth-input" required />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="auth-form-group">
                                                 <label>Mot de passe :</label>
                                                 <div className="password-input-wrapper">
                                                     <input 
@@ -171,6 +170,7 @@ const Auth = () => {
                                                         name="password" 
                                                         value={formData.password} 
                                                         onChange={handleChange} 
+                                                        className="auth-input"
                                                         required 
                                                     />
                                                     <button 
@@ -204,26 +204,26 @@ const Auth = () => {
                                         {localError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{localError.errors ? Object.values(localError.errors).flat()[0] : (localError.message || 'Error occurred')}</div>}
                                         {authError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{authError}</div>}
 
-                                        <form className="auth-form" onSubmit={handleSubmit}>
-                                            <div className="form-row">
-                                                <div className="form-group half">
+                                        <form className="auth-form-main" onSubmit={handleSubmit}>
+                                            <div className="auth-form-row">
+                                                <div className="auth-form-group half">
                                                     <label>Prénom :</label>
-                                                    <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} required />
+                                                    <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} className="auth-input" required />
                                                 </div>
-                                                <div className="form-group half">
+                                                <div className="auth-form-group half">
                                                     <label>Nom :</label>
-                                                    <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} required />
+                                                    <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} className="auth-input" required />
                                                 </div>
                                             </div>
-                                            <div className="form-group">
+                                            <div className="auth-form-group">
                                                 <label>Nom d'utilisateur :</label>
-                                                <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+                                                <input type="text" name="username" value={formData.username} onChange={handleChange} className="auth-input" required />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="auth-form-group">
                                                 <label>Email :</label>
-                                                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                                                <input type="email" name="email" value={formData.email} onChange={handleChange} className="auth-input" required />
                                             </div>
-                                              <div className="form-group">
+                                              <div className="auth-form-group">
                                                   <label>Mot de passe :</label>
                                                   <div className="password-input-wrapper">
                                                       <input 
@@ -231,6 +231,7 @@ const Auth = () => {
                                                           name="password" 
                                                           value={formData.password} 
                                                           onChange={handleChange} 
+                                                          className="auth-input"
                                                           required 
                                                       />
                                                       <button 

@@ -10,7 +10,7 @@ function Signin() {
                 <div className="auth-container reverse">
                     <div className="auth-left auth-form-side">
                         <div className="auth-form-container">
-                            <h1 className="auth-title">Welcome back to IHOST</h1>
+                                <h1 className="auth-title">Welcome back to IHOST</h1>
                             <p className="auth-subtitle">We're happy you came back to IHOST</p>
 
                             <form className="auth-form signin-form">
