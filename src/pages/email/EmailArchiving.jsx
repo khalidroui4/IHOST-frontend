@@ -12,7 +12,7 @@ const EmailArchiving = () => {
                     <div className="hero-background" style={{ background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)', position: 'relative', border: '1px solid rgba(255,255,255,0.1)' }}>
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/email-hero.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
+                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/cloud_archive.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Mémoire Digitale Infaillible</h1>
@@ -120,8 +120,8 @@ const EmailArchiving = () => {
                                         <Search size={16} color="#4B5563" style={{ marginRight: '0.5rem' }} />
                                         <span style={{ color: '#4B5563', fontSize: '0.9rem' }}>De: jean@partner.com | Avant: 2021...</span>
                                     </div>
-                                    <div style={{ fontSize: '0.95rem', color: '#4B5563' }}>
-                                        👉 Indexation automatique des textes DANS les PDFs, images et documents joints.
+                                    <div style={{ fontSize: '0.95rem', color: '#4B5563', display: 'flex', alignItems: 'center' }}>
+                                        <ArrowRight size={16} color="#1E6BFF" style={{ marginRight: '0.5rem' }} /> Indexation automatique des textes DANS les PDFs, images et documents joints.
                                     </div>
                                 </div>
                             </div>

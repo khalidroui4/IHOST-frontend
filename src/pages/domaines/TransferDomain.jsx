@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRightLeft, LockOpen, Key, CheckCircle2, CloudLightning, Shield, Layout, Headset, ArrowRight, Globe, Zap } from 'lucide-react';
+import { ArrowRightLeft, LockOpen, Key, CheckCircle2, CloudLightning, Shield, Layout, Headset, ArrowRight, Globe, Zap, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
@@ -79,8 +79,8 @@ const TransferDomain = () => {
                     Lancer le transfert <ArrowRight size={20} />
                 </button>
             </form>
-            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', marginTop: '1.5rem', textAlign: 'center', fontWeight: 500 }}>
-                💡 Le transfert ajoute automatiquement 1 an à la date d'expiration.
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', marginTop: '1.5rem', textAlign: 'center', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                <Lightbulb size={20} color="#FBBF24" /> Le transfert ajoute automatiquement 1 an à la date d'expiration.
             </p>
         </div>
     );
@@ -100,7 +100,7 @@ const TransferDomain = () => {
                         <div style={{
                             position: 'absolute',
                             inset: 0,
-                            backgroundImage: 'url(/domain-hero.png)',
+                            backgroundImage: 'url(/transfert_domain.avif)',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
@@ -110,24 +110,7 @@ const TransferDomain = () => {
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <div style={{
-                                    display: 'inline-flex',
-                                    gap: '1rem',
-                                    marginBottom: '2.5rem',
-                                    background: 'rgba(255,255,255,0.1)',
-                                    padding: '0.6rem 1.2rem',
-                                    borderRadius: '4px',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    backdropFilter: 'blur(5px)'
-                                }}>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#00C2FF' }}>
-                                        <Globe size={14} /> Network
-                                    </span>
-                                    <span style={{ width: '1px', background: 'rgba(255,255,255,0.2)' }} />
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#10b981' }}>
-                                        <Zap size={14} /> Performance
-                                    </span>
-                                </div>
+                                 
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Transférez & Économisez</h1>
                                 <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Ramenez vos domaines chez IHOST et profitez d'une interface de gestion simplifiée, de tarifs transparents et d'une année gratuite.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>

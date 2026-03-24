@@ -1,5 +1,5 @@
 .custom-navbar {
-    background-color: transparent;
+    background: transparent;
     transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: fixed;
     top: 0;
@@ -50,11 +50,11 @@
 }
 
 .navbar-links-wrapper {
-    background: rgba(255, 255, 255, 0.03);
+    background:#e3eff64b;
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    padding: 1rem;
     transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -84,8 +84,7 @@
     white-space: nowrap;
 }
 
-.navbar-links li a:hover,
-.navbar-links li a.active {
+.navbar-links li a:hover{
     color: white;
     background: rgba(255, 255, 255, 0.05);
 }
@@ -270,7 +269,6 @@
 
 .nav-dropdown-title {
     font-weight: 700;
-    color: #0B1F3A;
     font-size: 1rem;
     margin-bottom: 0.25rem;
     transition: color 0.2s;

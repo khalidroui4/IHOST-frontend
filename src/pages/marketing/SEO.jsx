@@ -13,7 +13,7 @@ const SEO = () => {
                     <div className="hero-background hero-background-orange">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/tech_marketing_hero.png)' }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/seo2.jfif)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">ALGORYTHMES &amp; VISIBILITÉ ORGANIQUE</h1>

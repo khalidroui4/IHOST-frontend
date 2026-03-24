@@ -13,7 +13,7 @@ const GoogleAds = () => {
                     <div className="hero-background hero-background-orange">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/marketing-hero.png)' }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/ads3.avif)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">Propulsez Vos Ventes Instantanément</h1>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff } from 'lucide-react';
-// Redux imports removed
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, registerUser } from '../store/slices/authSlice';
 import PageTransition from "../pageTransition";
 import PasswordStrength from '../components/security/PasswordStrength';
 import Captcha from '../components/security/Captcha';
@@ -11,9 +12,9 @@ import '../styles/auth.css';
 const Auth = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const dispatch = useDispatch();
+    const { isAuthenticated, user, isLoading, error: authError } = useSelector(state => state.auth);
+    const [localError, setLocalError] = useState(null);
 
     const [isLogin, setIsLogin] = useState(location.pathname === '/signIn');
     const [showPassword, setShowPassword] = useState(false);
@@ -35,14 +36,15 @@ const Auth = () => {
     }, [location.pathname]);
 
     useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/welcome');
+        if (isAuthenticated && user) {
+            const path = user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
+            navigate(path);
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, user, navigate]);
 
     const handleSwitch = (toLogin) => {
         setIsLogin(toLogin);
-        setError(null);
+        setLocalError(null);
         navigate(toLogin ? '/signIn' : '/signUp', { replace: true });
     };
 
@@ -52,20 +54,32 @@ const Auth = () => {
 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(true); // Default true for login, will update for signup
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLocalError(null);
         if (!isLogin && !isCaptchaVerified) {
-            setError({ message: "Veuillez vérifier le CAPTCHA." });
+            setLocalError({ message: "Veuillez vérifier le CAPTCHA." });
             return;
         }
-        setLoading(true);
-        // ... rest of submit logic
-        // Simulate network request for frontend demo
-        setTimeout(() => {
-            setLoading(false);
-            setIsAuthenticated(true);
-            navigate('/welcome', { state: { user: formData } });
-        }, 800);
+
+        try {
+            if (isLogin) {
+                await dispatch(loginUser({ email: formData.email, password: formData.password })).unwrap();
+            } else {
+                await dispatch(registerUser({
+                    first_name: formData.first_name,
+                    last_name: formData.last_name,
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password
+                })).unwrap();
+                
+                // Switch to login on successful registration
+                handleSwitch(true);
+            }
+        } catch (err) {
+            setLocalError(err);
+        }
     };
 
     return (
@@ -141,7 +155,8 @@ const Auth = () => {
                                         <h1 className="auth-title">Welcome back </h1>
                                         <p className="auth-subtitle">Nous sommes heureux de vous revoir sur IHOST</p>
 
-                                        {error && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{error.message || 'Error occurred'}</div>}
+                                        {localError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{localError.message || 'Error occurred'}</div>}
+                                        {authError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{authError}</div>}
 
                                         <form className="auth-form signin-form" onSubmit={handleSubmit}>
                                             <div className="form-group">
@@ -168,8 +183,8 @@ const Auth = () => {
                                                 </div>
                                             </div>
 
-                                            <button type="submit" className="btn-auth-submit" disabled={loading}>
-                                                {loading ? 'Connexion...' : 'Se connecter'}
+                                            <button type="submit" className="btn-auth-submit" disabled={isLoading}>
+                                                {isLoading ? 'Connexion...' : 'Se connecter'}
                                             </button>
                                         </form>
                                         <p className="auth-terms">En rejoignant, vous acceptez <Link to="/legal/conditions">les Conditions</Link> et <Link to="/legal/confidentialite">la Politique de Confidentialité</Link></p>
@@ -186,7 +201,8 @@ const Auth = () => {
                                         <h1 className="auth-title">Rejoignez IHOST</h1>
                                         <p className="auth-subtitle">CRÉEZ UN COMPTE ET REJOIGNEZ NOTRE SITE POUR VIVRE LA MEILLEURE EXPÉRIENCE AVEC NOUS</p>
 
-                                        {error && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{error.errors ? Object.values(error.errors).flat()[0] : (error.message || 'Error occurred')}</div>}
+                                        {localError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{localError.errors ? Object.values(localError.errors).flat()[0] : (localError.message || 'Error occurred')}</div>}
+                                        {authError && <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{authError}</div>}
 
                                         <form className="auth-form" onSubmit={handleSubmit}>
                                             <div className="form-row">
@@ -230,8 +246,8 @@ const Auth = () => {
 
                                              <Captcha onVerify={setIsCaptchaVerified} />
 
-                                             <button type="submit" className="btn-auth-submit" style={{ marginTop: '2rem' }} disabled={loading || (!isLogin && !isCaptchaVerified)}>
-                                                 {loading ? 'Inscription...' : 'REJOINDRE'}
+                                             <button type="submit" className="btn-auth-submit" style={{ marginTop: '2rem' }} disabled={isLoading || (!isLogin && !isCaptchaVerified)}>
+                                                 {isLoading ? 'Inscription...' : 'REJOINDRE'}
                                              </button>
                                         </form>
                                         <p className="auth-terms">En rejoignant, vous acceptez <Link to="/legal/conditions">les Conditions</Link> et <Link to="/legal/confidentialite">la Politique de Confidentialité</Link></p>

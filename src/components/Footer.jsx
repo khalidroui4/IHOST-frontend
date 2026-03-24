@@ -10,7 +10,9 @@ const Footer = () => {
                 <div className="footer-top">
                     <div className="footer-company">
                         <div className="font-tech">
-                            IHOST
+                            <Link to="/" style={{ display: 'inline-block' }}>
+                                <img src="/logo.jpeg" alt="IHOST Logo" style={{ height: '55px', objectFit: 'contain', marginBottom: '1rem' }} />
+                            </Link>
                         </div>
                         <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: '1.7', marginBottom: '2.5rem', fontSize: '1rem', maxWidth: '400px' }}>
                             Infrastructure cloud souveraine de haute performance. Nous concevons le socle technologique des entreprises leaders au Maroc et à l'international.
@@ -24,23 +26,32 @@ const Footer = () => {
                     </div>
 
                     <div className="footer-nav">
-                        <h4 className="font-tech" style={{ fontSize: '0.9rem', fontWeight: 800, color: '#00C2FF', marginBottom: '2rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Infrastructure</h4>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <Link to="/" className="footer-link">Accueil</Link>
-                            <Link to="/securite/ev" className="footer-link">Sécurité Réseau</Link>
-                            <Link to="/hebergement/cloud" className="footer-link">Cloud Architecture</Link>
-                            <Link to="/entreprise/datacenters" className="footer-link">Data Centers</Link>
-                            <Link to="/client/dashboard" className="footer-link">Console de Gestion</Link>
+                        <div className="footer-nav-heading">
+                            <h4 className="font-tech">Infrastructure</h4>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            <Link to="/hebergement/mutualise" className="footer-nav-link">Hébergement Mutualisé</Link>
+                            <Link to="/hebergement/cloud" className="footer-nav-link">Hébergement Cloud</Link>
+                            <Link to="/hebergement/ecommerce" className="footer-nav-link">Hébergement E-Commerce</Link>
+                            <Link to="/domaines/register" className="footer-nav-link">Register Domain</Link>
+                            <Link to="/email-collaboration/pro" className="footer-nav-link">Professional Email</Link>
+                            <Link to="/securite/ssl" className="footer-nav-link">SSL Certificates</Link>
+                            <Link to="/entreprise/datacenters" className="footer-nav-link">Data Centers</Link>
                         </div>
                     </div>
 
                     <div className="footer-nav">
-                        <h4 className="font-tech" style={{ fontSize: '0.9rem', fontWeight: 800, color: '#00C2FF', marginBottom: '2rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Compliance</h4>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <Link to="/legal/conditions" className="footer-link">Conditions Générales</Link>
-                            <Link to="/legal/confidentialite" className="footer-link">Confidentialité (RGPD)</Link>
-                            <Link to="/legal/utilisation-acceptable" className="footer-link">Usage Acceptable</Link>
-                            <Link to="/legal/signaler-probleme" className="footer-link">Report Vulnerability</Link>
+                        <div className="footer-nav-heading">
+                            <h4 className="font-tech">Compliance</h4>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            <Link to="/entreprise/about" className="footer-nav-link">À propos</Link>
+                            <Link to="/entreprise/partners" className="footer-nav-link">Partenaires</Link>
+                            <Link to="/entreprise/certifications" className="footer-nav-link">Certifications</Link>
+                            <Link to="/legal/conditions" className="footer-nav-link">Conditions Générales</Link>
+                            <Link to="/legal/confidentialite" className="footer-nav-link">Confidentialité (RGPD)</Link>
+                            <Link to="/legal/utilisation-acceptable" className="footer-nav-link">Usage Acceptable</Link>
+                            <Link to="/contact" className="footer-nav-link">Contact</Link>
                         </div>
                     </div>
                 </div>

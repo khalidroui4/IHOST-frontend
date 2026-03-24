@@ -3,6 +3,7 @@ import { ArrowUpRight, CheckCircle2, Globe, Zap, ArrowRight } from 'lucide-react
 import { Link, Navigate } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
+import TechPricingCard from '../../components/TechPricingCard';
 
 const HostingTemplate = ({ data }) => {
     if (!data) return <Navigate to="/" />;
@@ -17,24 +18,26 @@ const HostingTemplate = ({ data }) => {
                 <section className="hero">
                     <div className="hero-background"
                         style={{
-                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
+                            background: `linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)`,
                             position: 'relative',
-                            border: '1px solid rgba(255,255,255,0.1)'
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            overflow: 'hidden'
                         }}>
-                        <div className="pattern-grid-tech" />
-                        <div className="hero-overlay" />
+                       
                         <div style={{
                             position: 'absolute',
                             inset: 0,
-                            backgroundImage: 'url(/hosting-hero.png)',
+                            backgroundImage: `url(${data.hero.image || '/cloud server infrastructure.jpg'})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             opacity: 0.15,
-                            mixBlendMode: 'luminosity',
-                            zIndex: 0
+                            zIndex: 1
                         }} />
-                        <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
+                        {/* Grid pattern */}
+                        <div className="pattern-grid-tech" style={{ zIndex: 2 }} />
+                        {/* Content */}
+                        <div className="container-luxe hero-content" style={{ zIndex: 10, position: 'relative' }}>
                             <div style={{
                                 display: 'grid',
                                 gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -42,24 +45,6 @@ const HostingTemplate = ({ data }) => {
                                 alignItems: 'center'
                             }}>
                                 <div style={{ textAlign: 'left' }}>
-                                    <div style={{
-                                        display: 'inline-flex',
-                                        gap: '1rem',
-                                        marginBottom: '2.5rem',
-                                        background: 'rgba(255,255,255,0.1)',
-                                        padding: '0.6rem 1.2rem',
-                                        borderRadius: '4px',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                        backdropFilter: 'blur(5px)'
-                                    }}>
-                                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#00C2FF' }}>
-                                            <Globe size={14} /> Network
-                                        </span>
-                                        <span style={{ width: '1px', background: 'rgba(255,255,255,0.2)' }} />
-                                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#10b981' }}>
-                                            <Zap size={14} /> Performance
-                                        </span>
-                                    </div>
                                     <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem', lineHeight: '1.1' }}>{data.hero.title}</h1>
                                     <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>{data.hero.subtitle}</p>
                                     <div className="hero-buttons" style={{ justifyContent: 'flex-start', gap: '1.5rem' }}>
@@ -111,31 +96,19 @@ const HostingTemplate = ({ data }) => {
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Nos Offres et Tarifs</h2>
                             <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une tarification transparente et sans frais cachés, adaptée à chaque étape de votre croissance.</p>
                         </div>
-                        <div className="pricing-cards">
+                        <div className="pricing-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', maxWidth: '1100px', margin: '0 auto', alignItems: 'center' }}>
                             {data.plans.map((plan, index) => (
-                                <div key={index} className={`pricing-card ${plan.highlight ? 'popular' : ''}`}>
-                                    {plan.badge && <div className="popular-badge">{plan.badge}</div>}
-                                    <h3>{plan.name}</h3>
-
-                                    <div className="price">
-                                        <span className="from">A partir de</span>
-                                        <span className="amount">{plan.price}</span>
-                                        <span className="period">{plan.period}</span>
-                                    </div>
-
-                                    <ul className="features-list">
-                                        {plan.features.map((feature, fIndex) => (
-                                            <li key={fIndex}>
-                                                <CheckCircle2 size={18} color="#2563EB" />
-                                                <span>{feature}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    <Link to="/signup" className="btn-plan">
-                                        {plan.highlight ? 'Commencer maintenant' : 'Choisir ce plan'}
-                                    </Link>
-                                </div>
+                                <TechPricingCard
+                                    key={index}
+                                    name={plan.name}
+                                    price={plan.price}
+                                    period={plan.period}
+                                    features={plan.features}
+                                    highlight={plan.highlight}
+                                    badge={plan.badge}
+                                    buttonText={plan.highlight ? 'Commander maintenant' : 'Choisir cette offre'}
+                                    buttonLink="/signup"
+                                />
                             ))}
                         </div>
 

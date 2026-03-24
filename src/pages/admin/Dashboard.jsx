@@ -1,92 +1,53 @@
-import React from 'react';
-import { Users, Box, AlertTriangle, FileText, LifeBuoy, TrendingUp, ShieldCheck, Activity } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOrders } from '../../store/slices/orderSlice';
+import { fetchUsers } from '../../store/slices/userSlice';
+import { fetchTickets } from '../../store/slices/supportSlice';
+import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
-import './Dashboard.css';
 
 const AdminDashboard = () => {
-    const widgets = [
-        { label: 'Utilisateurs Totaux', value: '1,284', icon: Users, color: '#1E6BFF', trend: '+12%' },
-        { label: 'Services Actifs', value: '3,450', icon: Box, color: '#10b981', trend: '+5%' },
-        { label: 'Services Expirants', value: '42', icon: AlertTriangle, color: '#f59e0b', trend: '-2%' },
-        { label: 'Factures Impayées', value: '18', icon: FileText, color: '#ef4444', trend: '+8%' },
-        { label: 'Tickets Support', value: '7', icon: LifeBuoy, color: '#6366F1', trend: 'Nouveau' }
-    ];
+    const dispatch = useDispatch();
+    const { list: users } = useSelector(state => state.users);
+    const { items: orders } = useSelector(state => state.orders);
+    const { tickets } = useSelector(state => state.support);
+
+    useEffect(() => {
+        dispatch(fetchOrders());
+        dispatch(fetchUsers());
+        dispatch(fetchTickets());
+    }, [dispatch]);
 
     return (
         <PageTransition>
-            <div className="admin-dashboard">
-                <header className="admin-header">
-                    <h1>Tableau de Bord Admin</h1>
-                    <div className="admin-user-info">
-                        <ShieldCheck size={20} color="#10b981" />
-                        <span>Administrateur Principal</span>
+            <div className="container-luxe" style={{ paddingTop: '150px', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' }}>
+                <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '0.5rem' }}>Espace Administrateur</h1>
+                <p style={{ color: '#6B7280', fontSize: '1.2rem', marginBottom: '3rem' }}>Vue d'ensemble de la plateforme</p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+                    <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                        <h3 style={{ fontSize: '1.1rem', color: '#6B7280', fontWeight: 600 }}>Total Utilisateurs</h3>
+                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1E6BFF', margin: '1rem 0' }}>{users.length}</p>
+                        <Link to="/admin/users" style={{ color: '#1E6BFF', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
                     </div>
-                </header>
+                    
+                    <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                        <h3 style={{ fontSize: '1.1rem', color: '#6B7280', fontWeight: 600 }}>Commandes Globales</h3>
+                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#10B981', margin: '1rem 0' }}>{orders.length}</p>
+                        <Link to="/admin/orders" style={{ color: '#10B981', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
+                    </div>
 
-                <div className="admin-widgets-grid">
-                    {widgets.map((widget, i) => (
-                        <div key={i} className="admin-widget-card">
-                            <div className="widget-main">
-                                <div className="widget-info">
-                                    <span className="widget-label">{widget.label}</span>
-                                    <span className="widget-value">{widget.value}</span>
-                                </div>
-                                <div className="widget-icon" style={{ backgroundColor: `${widget.color}15`, color: widget.color }}>
-                                    <widget.icon size={24} />
-                                </div>
-                            </div>
-                            <div className="widget-footer">
-                                <span className={`trend ${widget.trend.startsWith('-') ? 'negative' : 'positive'}`}>
-                                    {widget.trend.startsWith('+') || widget.trend.startsWith('-') ? <TrendingUp size={14} /> : null}
-                                    {widget.trend}
-                                </span>
-                                <span className="trend-label">depuis le mois dernier</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                    <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                        <h3 style={{ fontSize: '1.1rem', color: '#6B7280', fontWeight: 600 }}>Tickets Support</h3>
+                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#F59E0B', margin: '1rem 0' }}>{tickets.length}</p>
+                        <Link to="/admin/support" style={{ color: '#F59E0B', fontWeight: 600, textDecoration: 'none' }}>Répondre &rarr;</Link>
+                    </div>
 
-                <div className="admin-sections-grid">
-                    <section className="admin-card">
-                        <div className="card-header">
-                            <h2>Activités Récentes du Système</h2>
-                            <Activity size={20} color="#64748B" />
-                        </div>
-                        <div className="admin-log-list">
-                            <div className="log-item">
-                                <span className="log-time">10:45</span>
-                                <span className="log-msg">Nouvel utilisateur inscrit: <strong>khalid_r</strong></span>
-                            </div>
-                            <div className="log-item">
-                                <span className="log-time">10:30</span>
-                                <span className="log-msg">Service #8829 activé manuellement</span>
-                            </div>
-                            <div className="log-item">
-                                <span className="log-time">09:15</span>
-                                <span className="log-msg">Tentative de connexion suspecte bloquée (IP: 192.168.1.1)</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="admin-card">
-                        <div className="card-header">
-                            <h2>Statut de l'Infrastructure</h2>
-                        </div>
-                        <div className="infra-status">
-                            <div className="infra-item">
-                                <span>Serveurs Web (Casablanca)</span>
-                                <span className="status-indicator online">En ligne</span>
-                            </div>
-                            <div className="infra-item">
-                                <span>Base de données (Cluster A)</span>
-                                <span className="status-indicator online">En ligne</span>
-                            </div>
-                            <div className="infra-item">
-                                <span>Service Mail (Exim)</span>
-                                <span className="status-indicator warning">Lenteur</span>
-                            </div>
-                        </div>
-                    </section>
+                    <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                        <h3 style={{ fontSize: '1.1rem', color: '#6B7280', fontWeight: 600 }}>Services</h3>
+                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#8B5CF6', margin: '1rem 0' }}>Catalogue</p>
+                        <Link to="/admin/services" style={{ color: '#8B5CF6', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
+                    </div>
                 </div>
             </div>
         </PageTransition>

@@ -3,6 +3,7 @@ import { ArrowUpRight, Search, ChevronDown, CheckCircle2, Zap, Shield, Headset, 
 import { Link } from 'react-router-dom';
 import PageTransition from '../pageTransition';
 import LuxeCard from '../components/LuxeCard';
+import TechPricingCard from '../components/TechPricingCard';
 
 const domainOptions = [
     '.ma', '.com', '.net', '.info', '.org',
@@ -26,39 +27,91 @@ const Home = () => {
     }, []);
 
     const domainSearchContent = (
-        <div className="glass-card" style={{
-            padding: '0.75rem',
-            borderRadius: '8px',
-            maxWidth: '700px',
-            margin: '0 auto',
-            border: '1px solid rgba(255,255,255,0.2)',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
-        }}>
-            <div style={{ display: 'flex', background: 'white', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ padding: '1rem', display: 'flex', alignItems: 'center', color: '#0B1F3A' }}>
-                    <Search size={20} />
-                </div>
+        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative' }}>
+            {/* Search Bar Pill */}
+            <div style={{
+                background: '#e3eff6',
+                borderRadius: '50px',
+                padding: '6px 6px 6px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
+                marginBottom: '2rem',
+                gap: '0.5rem',
+            }}>
+                <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} />
                 <input
                     type="text"
-                    placeholder="Vérifier la disponibilité (ex: monentreprise.ma)"
-                    style={{ flex: 1, border: 'none', outline: 'none', padding: '1rem', fontSize: '1rem', fontFamily: 'Inter' }}
+                    placeholder="exemple.ma"
+                    style={{ flex: 1, border: 'none', outline: 'none', padding: '0.75rem 0.5rem', fontSize: '1.05rem', color: '#1E6BFF', background: 'transparent', fontWeight: 600, minWidth: 0 }}
                 />
+                {/* Domain selector button */}
                 <div style={{ position: 'relative' }} ref={dropdownRef}>
                     <button
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        style={{ background: '#f8fafc', border: 'none', borderLeft: '1px solid #e2e8f0', color: '#0B1F3A', padding: '0 1.5rem', height: '100%', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                        style={{
+                            background: '#0B1F3A',
+                            border: 'none',
+                            outline: 'none',
+                            borderRadius: '50px',
+                            color: '#fff',
+                            padding: '0.75rem 1.4rem',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                            fontSize: '1rem',
+                            whiteSpace: 'nowrap',
+                            transition: 'background 0.2s ease'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = '#1E3A5F'}
+                        onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
                     >
-                        {selectedDomain} <ChevronDown size={14} />
+                        {selectedDomain} <ChevronDown size={15} />
                     </button>
                     {isDropdownOpen && (
-                        <ul style={{ position: 'absolute', top: '100%', right: 0, background: 'white', width: '120px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)', borderRadius: '4px', padding: '0.5rem', listStyle: 'none', zIndex: 100, border: '1px solid #e2e8f0' }}>
+                        <ul style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: 'calc(100% + 8px)',
+                            background: '#0B1F3A',
+                            width: '150px',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                            borderRadius: '16px',
+                            padding: '0.5rem',
+                            listStyle: 'none',
+                            zIndex: 500,
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            textAlign: 'left'
+                        }}>
                             {domainOptions.map(opt => (
-                                <li key={opt} onClick={() => { setSelectedDomain(opt); setIsDropdownOpen(false); }} style={{ padding: '0.6rem 1rem', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 600, color: selectedDomain === opt ? '#1E6BFF' : '#0B1F3A' }}>{opt}</li>
+                                <li
+                                    key={opt}
+                                    onClick={() => { setSelectedDomain(opt); setIsDropdownOpen(false); }}
+                                    style={{ padding: '0.6rem 1rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 600, color: selectedDomain === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)', borderRadius: '10px', transition: 'all 0.15s ease' }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(30,107,255,0.15)'; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = selectedDomain === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)'; }}
+                                >
+                                    {opt}
+                                </li>
                             ))}
                         </ul>
                     )}
                 </div>
-                <button className="btn btn-primary" style={{ borderRadius: 0, padding: '0 2.5rem' }}>RECHERCHER</button>
+            </div>
+
+            {/* Feature Highlights */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', alignItems: 'center', padding: '0 1rem', color: '#E2E8F0', fontSize: '1.05rem', fontWeight: 400 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Zap size={20} color="#FBBF24" fill="#FBBF24" /> Activation rapide
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Lock size={20} color="#FBBF24" fill="#FBBF24" /> Protection avancée
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <PhoneCall size={20} color="#A1A1AA" fill="#A1A1AA" /> Support 24/7
+                </div>
             </div>
         </div>
     );
@@ -88,28 +141,15 @@ const Home = () => {
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <div style={{
-                                    display: 'inline-flex',
-                                    gap: '1rem',
-                                    marginBottom: '2.5rem',
-                                    background: 'rgba(255,255,255,0.1)',
-                                    padding: '0.6rem 1.2rem',
-                                    borderRadius: '4px',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    backdropFilter: 'blur(5px)'
-                                }}>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#00C2FF' }}>
-                                        <Globe size={14} /> Network
-                                    </span>
-                                    <span style={{ width: '1px', background: 'rgba(255,255,255,0.2)' }} />
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#10b981' }}>
-                                        <Zap size={14} /> Performance
-                                    </span>
-                                </div>
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Hébergez votre projet en<br />toute confiance avec IHOST</h1>
                                 <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Solutions d'hébergement fiables, noms de domaine et<br />support technique pour particuliers et entreprises au Maroc.</p>
-                                <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
-                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>DÉCOUVRIR LES SOLUTIONS <ArrowRight size={20} /></Link>
+                                <div className="hero-buttons" style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+                                    <Link to="/signup" style={{ background: '#e3eff6', color: '#1E6BFF', padding: '1.2rem 2.5rem', borderRadius: '50px', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
+                                        Commencer maintenant <ArrowUpRight size={20} strokeWidth={2.5} />
+                                    </Link>
+                                    <Link to="/pricing" style={{ background: '#e3eff6', color: '#1E6BFF', padding: '1.2rem 2.5rem', borderRadius: '50px', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
+                                        Voir les offres <ArrowUpRight size={20} strokeWidth={2.5} />
+                                    </Link>
                                 </div>
                             </div>
                             <div style={{ marginTop: '4rem' }}>
@@ -122,8 +162,8 @@ const Home = () => {
                 <section className="section-premium ">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1rem', letterSpacing: '-1px' }}>Ingénierie de l'Hébergement</h2>
-                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.6)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Des plans structurés pour la scalabilité, conçus sur une infrastructure NVMe Gen4 redondante.</p>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1rem', letterSpacing: '-1px' }}>Nos Offres d’Hébergement</h2>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.6)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Des solutions adaptées à chaque type de projet</p>
                         </div>
                         <div style={{
                             display: 'grid',
@@ -132,128 +172,56 @@ const Home = () => {
                             maxWidth: '1250px',
                             margin: '0 auto'
                         }}>
-                            <div className="tech-border" style={{
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255, 255, 255, 0.1)',
-                                padding: '3.5rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                transition: 'all 0.3s ease-in-out'
-                            }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem' }}>
-                                    <CloudLightning size={32} color="#00C2FF" />
-                                </div>
-                                <h3 className="font-tech" style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>CLOUD STARTER</h3>
-                                <p style={{ color: 'rgba(255, 255, 255, 0.5)', marginBottom: '2.5rem', fontSize: '0.9rem' }}>Architecture mutualisée pour projets émergents.</p>
+                            <TechPricingCard
+                                name="CLOUD STARTER"
+                                desc="Architecture mutualisée pour projets émergents."
+                                price="39"
+                                period="DH / HT / MOIS"
+                                features={[
+                                    "1 Site Web (LVE Restricted)",
+                                    "10 GB Stockage (NVMe Gen4)",
+                                    "Email Pro (Exim/IMAP)",
+                                    "SSL Gratuit (Let's Encrypt)",
+                                    "Support 24/7 (Ticket/Chat)"
+                                ]}
+                                highlight={false}
+                                buttonText="CHOISIR CE PLAN"
+                                buttonLink="/hebergement/mutualise"
+                            />
 
-                                <div style={{ marginBottom: '3rem', background: 'rgba(255, 255, 255, 0.05)', padding: '2rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                                        <span style={{ fontSize: '3rem', fontWeight: 700, color: 'white', fontFamily: 'Space Grotesk' }}>39</span>
-                                        <span style={{ fontSize: '1rem', fontWeight: 700, color: 'rgba(255, 255, 255, 0.5)' }}>DH / HT / MOIS</span>
-                                    </div>
-                                </div>
+                            <TechPricingCard
+                                name="VPS PRO-X"
+                                price="129"
+                                period="DH / HT / MOIS"
+                                features={[
+                                    "4 vCore EPYC (Milan/Genoa)",
+                                    "8 GB DDR4 RAM (ECC Registered)",
+                                    "100 GB Stockage (Raid 10 NVMe)",
+                                    "Snapshot (Daily Backup)",
+                                    "Network (1 Gbps Port)"
+                                ]}
+                                highlight={true}
+                                badge="HAUT RENDEMENT"
+                                buttonText="DÉPLOYER MAINTENANT"
+                                buttonLink="/hebergement/cloud"
+                            />
 
-                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                    {[
-                                        { label: "1 Site Web", tech: "LVE Restricted" },
-                                        { label: "10 GB Stockage", tech: "NVMe Gen4" },
-                                        { label: "Email Pro", tech: "Exim/IMAP" },
-                                        { label: "SSL Gratuit", tech: "Let's Encrypt" },
-                                        { label: "Support 24/7", tech: "Ticket/Chat" }
-                                    ].map((feature, i) => (
-                                        <li key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '0.75rem' }}>
-                                            <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.8)' }}>{feature.label}</span>
-                                            <span style={{ fontSize: '0.7rem', color: '#00C2FF', fontWeight: 800, background: 'rgba(0, 194, 255, 0.1)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>{feature.tech}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link to="/hebergement/mutualise" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>CHOISIR CE PLAN</Link>
-                            </div>
-
-                            <div className="tech-border" style={{
-                                background: 'rgba(11, 31, 58, 0.6)',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid #1E6BFF',
-                                padding: '3.5rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                transition: 'all 0.3s ease-in-out',
-                                boxShadow: '0 0 40px rgba(30, 107, 255, 0.15)',
-                                position: 'relative',
-                                transform: 'scale(1.05)',
-                                zIndex: 10
-                            }}>
-                                <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: '#1E6BFF', color: 'white', padding: '0.4rem 1rem', fontSize: '0.75rem', fontWeight: 800, borderRadius: '4px', letterSpacing: '1px' }}>HAUT RENDEMENT</div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem' }}>
-                                    <Zap size={32} color="#1E6BFF" />
-                                </div>
-                                <h3 className="font-tech" style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>VPS PRO-X</h3>
-                                <div style={{ marginBottom: '3rem', background: 'rgba(30, 107, 255, 0.1)', padding: '2rem', border: '1px solid rgba(30, 107, 255, 0.2)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                                        <span style={{ fontSize: '3rem', fontWeight: 700, color: 'white', fontFamily: 'Space Grotesk' }}>129</span>
-                                        <span style={{ fontSize: '1rem', fontWeight: 700, color: 'rgba(255, 255, 255, 0.5)' }}>DH / HT / MOIS</span>
-                                    </div>
-                                </div>
-
-                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                    {[
-                                        { label: "4 vCore EPYC", tech: "Milan/Genoa" },
-                                        { label: "8 GB DDR4 RAM", tech: "ECC Registered" },
-                                        { label: "100 GB Stockage", tech: "Raid 10 NVMe" },
-                                        { label: "Snapshot", tech: "Daily Backup" },
-                                        { label: "Network", tech: "1 Gbps Port" }
-                                    ].map((feature, i) => (
-                                        <li key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem' }}>
-                                            <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.9)' }}>{feature.label}</span>
-                                            <span style={{ fontSize: '0.7rem', color: '#00C2FF', fontWeight: 800 }}>{feature.tech}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link to="/hebergement/cloud" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>DÉPLOYER MAINTENANT</Link>
-                            </div>
-
-                            <div className="tech-border" style={{
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255, 255, 255, 0.1)',
-                                padding: '3.5rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                transition: 'all 0.3s ease-in-out'
-                            }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem' }}>
-                                    <Shield size={32} color="#00C2FF" />
-                                </div>
-                                <h3 className="font-tech" style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.5rem', color: 'white' }}>BUSINESS CORE</h3>
-                                <p style={{ color: 'rgba(255, 255, 255, 0.5)', marginBottom: '2.5rem', fontSize: '0.9rem' }}>Solutions web complexes et E-commerce.</p>
-
-                                <div style={{ marginBottom: '3rem', background: 'rgba(255, 255, 255, 0.05)', padding: '2rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                                        <span style={{ fontSize: '3rem', fontWeight: 700, color: 'white', fontFamily: 'Space Grotesk' }}>99</span>
-                                        <span style={{ fontSize: '1rem', fontWeight: 700, color: 'rgba(255, 255, 255, 0.5)' }}>DH / HT / MOIS</span>
-                                    </div>
-                                </div>
-
-                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3.5rem 0', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                    {[
-                                        { label: "Unlimited Sites", tech: "Apache/Nginx" },
-                                        { label: "Unlimited Space", tech: "Pure NVMe" },
-                                        { label: "WAF Protection", tech: "BitNinja/Luxe" },
-                                        { label: "Daily Backups", tech: "JetBackup" },
-                                        { label: "Dedicated IP", tech: "IPv4/IPv6" }
-                                    ].map((feature, i) => (
-                                        <li key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '0.75rem' }}>
-                                            <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.8)' }}>{feature.label}</span>
-                                            <span style={{ fontSize: '0.7rem', color: '#1E6BFF', fontWeight: 800, background: 'rgba(30, 107, 255, 0.05)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>{feature.tech}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link to="/hebergement/ecommerce" className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', color: 'white', borderColor: 'rgba(255,255,255,0.3)' }}>CHOISIR CE PLAN</Link>
-                            </div>
+                            <TechPricingCard
+                                name="BUSINESS CORE"
+                                desc="Solutions web complexes et E-commerce."
+                                price="99"
+                                period="DH / HT / MOIS"
+                                features={[
+                                    "Unlimited Sites (Apache/Nginx)",
+                                    "Unlimited Space (Pure NVMe)",
+                                    "WAF Protection (BitNinja/Luxe)",
+                                    "Daily Backups (JetBackup)",
+                                    "Dedicated IP (IPv4/IPv6)"
+                                ]}
+                                highlight={false}
+                                buttonText="CHOISIR CE PLAN"
+                                buttonLink="/hebergement/ecommerce"
+                            />
                         </div>
                     </div>
                 </section>
@@ -261,8 +229,8 @@ const Home = () => {
                 <section className="section-premium">
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1rem', letterSpacing: '-1px' }}>Ingénierie de Performance</h2>
-                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.6)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Des technologies de pointe pour une rapidité d'exécution inégalée.</p>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi choisir IHOST ?</h2>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.6)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une infrastructure fiable, sécurisée et performante pour vos projets web.</p>
                         </div>
                         <div className="features-grid">
                             <LuxeCard variant="dark" icon={CloudLightning} title="Latence < 5ms" desc="Optimisation réseau directe au Maroc. Vos données circulent sur l'infrastructure la plus rapide du Royaume." />

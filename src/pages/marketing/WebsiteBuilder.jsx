@@ -13,7 +13,7 @@ const WebsiteBuilder = () => {
                     <div className="hero-background hero-background-pink">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/marketing-hero.png)' }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/webBuild.jfif)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">Créez Votre Site Web en Quelques Minutes</h1>

@@ -1,4 +1,14 @@
-/* Legal Page Layouts */
+.legal-page-wrapper {
+    background: linear-gradient(to right,
+            rgba(12, 36, 70, 0.95) 0%,
+            rgba(14, 47, 103, 0.95) 25%,
+            rgba(17, 62, 142, 0.95) 50%,
+            rgba(21, 73, 170, 0.95) 75%,
+            rgba(21, 80, 188, 0.95) 100%);
+    color: white;
+    min-height: 100vh;
+}
+
 .legal-page-container {
     padding: 10rem 1.5rem 4rem;
     max-width: 900px;
@@ -14,31 +24,32 @@
 .legal-header h1 {
     font-size: 3rem;
     font-weight: 800;
-    color: #0B1F3A;
+    color: #ffffff;
     margin-bottom: 1rem;
     letter-spacing: -1px;
 }
 
 .legal-header p {
     font-size: 1.15rem;
-    color: #4B5563;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
     max-width: 600px;
     margin: 0 auto;
 }
 
 .legal-content {
-    background: white;
+    background: rgba(11, 31, 58, 0.6);
+    backdrop-filter: blur(12px);
     border-radius: 24px;
     padding: 3rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(11, 31, 58, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .legal-content h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #0B1F3A;
+    color: #ffffff;
     margin: 2.5rem 0 1rem;
 }
 
@@ -49,18 +60,18 @@
 .legal-content h3 {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #0B1F3A;
+    color: #ffffff;
     margin: 1.5rem 0 1rem;
 }
 
 .legal-content p {
-    color: #475569;
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.8;
     margin-bottom: 1.5rem;
 }
 
 .legal-content ul {
-    color: #475569;
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.8;
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
@@ -68,4 +79,15 @@
 
 .legal-content li {
     margin-bottom: 0.5rem;
+}
+
+.legal-content a {
+    color: #00C2FF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.legal-content a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }

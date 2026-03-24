@@ -13,7 +13,7 @@ const CodeSigning = () => {
                     <div className="hero-background hero-background-blue">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/security-hero.png)' }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/code-signing.webp)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">Authenticité de Votre Code</h1>

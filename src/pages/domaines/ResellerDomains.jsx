@@ -20,7 +20,7 @@ const ResellerDomains = () => {
                         <div style={{
                             position: 'absolute',
                             inset: 0,
-                            backgroundImage: 'url(/domain-hero.png)',
+                            backgroundImage: 'url(/Profitable-Domain-Reseller-1024x574.webp)',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
@@ -30,24 +30,6 @@ const ResellerDomains = () => {
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <div style={{
-                                    display: 'inline-flex',
-                                    gap: '1rem',
-                                    marginBottom: '2.5rem',
-                                    background: 'rgba(255,255,255,0.1)',
-                                    padding: '0.6rem 1.2rem',
-                                    borderRadius: '4px',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    backdropFilter: 'blur(5px)'
-                                }}>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#00C2FF' }}>
-                                        <Globe size={14} /> Network
-                                    </span>
-                                    <span style={{ width: '1px', background: 'rgba(255,255,255,0.2)' }} />
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: '#10b981' }}>
-                                        <Zap size={14} /> Performance
-                                    </span>
-                                </div>
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Propulsez Votre Agence</h1>
                                 <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Devenez revendeur de domaines et offrez un service complet à vos clients. Prix de gros, marque blanche et automatisation totale via API.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>

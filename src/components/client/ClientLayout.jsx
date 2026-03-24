@@ -1,0 +1,209 @@
+import { useState } from 'react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../store/slices/authSlice';
+import {
+    LayoutDashboard, Server, Globe, ShoppingCart, CreditCard,
+    HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
+    Package, FileText
+} from 'lucide-react';
+
+const sidebarGroups = [
+    {
+        label: 'Général',
+        items: [
+            { path: '/client/dashboard', icon: LayoutDashboard, label: "Vue d'ensemble" },
+        ]
+    },
+    {
+        label: 'Gestion',
+        items: [
+            { path: '/client/services', icon: Server, label: 'Mes Services' },
+            { path: '/client/domains', icon: Globe, label: 'Domaines' },
+            { path: '/client/orders', icon: Package, label: 'Commandes' },
+        ]
+    },
+    {
+        label: 'Facturation',
+        items: [
+            { path: '/client/invoices', icon: FileText, label: 'Factures' },
+            { path: '/client/cart', icon: ShoppingCart, label: 'Panier' },
+        ]
+    },
+    {
+        label: 'Support',
+        items: [
+            { path: '/client/support', icon: HelpCircle, label: 'Tickets' },
+            { path: '/client/notifications', icon: Bell, label: 'Notifications' },
+        ]
+    },
+    {
+        label: 'Compte',
+        items: [
+            { path: '/client/profile', icon: User, label: 'Mon Profil' },
+        ]
+    }
+];
+
+const ClientLayout = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.auth);
+    const cartCount = useSelector(state => state.cart.items.length);
+    const notifCount = useSelector(state => state.notifications?.unread || 0);
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/');
+    };
+
+    return (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', background: '#f0f4f8', zIndex: 9999, overflow: 'hidden', fontFamily: 'Inter, system-ui, sans-serif' }}>
+            
+            {/* ═══════════ FIXED SIDEBAR ═══════════ */}
+            <aside style={{ width: '240px', background: '#0B1F3A', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
+                
+                {/* Logo */}
+                <div style={{ padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                    <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                        <Shield size={22} color="#1E6BFF" strokeWidth={2.5} />
+                        <span style={{ color: 'white', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '-0.5px' }}>
+                            IHOST<span style={{ color: '#1E6BFF' }}>.</span>
+                        </span>
+                    </Link>
+                </div>
+
+                {/* Nav Groups */}
+                <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    {sidebarGroups.map((group) => (
+                        <div key={group.label}>
+                            <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>
+                                {group.label}
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                {group.items.map((item) => {
+                                    const isActive = location.pathname === item.path;
+                                    const Icon = item.icon;
+                                    return (
+                                        <Link
+                                            key={item.path}
+                                            to={item.path}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '0.65rem',
+                                                padding: '0.6rem 0.75rem', borderRadius: '8px',
+                                                textDecoration: 'none', fontWeight: isActive ? 700 : 500,
+                                                fontSize: '0.875rem', transition: 'all 0.15s',
+                                                color: isActive ? '#ffffff' : 'rgba(255,255,255,0.55)',
+                                                background: isActive ? 'rgba(30,107,255,0.15)' : 'transparent',
+                                                borderLeft: isActive ? '3px solid #1E6BFF' : '3px solid transparent',
+                                            }}
+                                        >
+                                            <Icon size={17} />
+                                            <span>{item.label}</span>
+                                            {item.path === '/client/cart' && cartCount > 0 && (
+                                                <span style={{ marginLeft: 'auto', background: '#ef4444', color: 'white', fontSize: '0.65rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    {cartCount}
+                                                </span>
+                                            )}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </nav>
+
+                {/* Logout */}
+                <div style={{ padding: '1rem 0.75rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+                    <button
+                        onClick={handleLogout}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', width: '100%', padding: '0.6rem 0.75rem', borderRadius: '8px', background: 'transparent', border: 'none', color: '#f87171', fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                    >
+                        <LogOut size={17} />
+                        Déconnexion
+                    </button>
+                </div>
+            </aside>
+
+            {/* ═══════════ MAIN AREA ═══════════ */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+
+                {/* ── TOPBAR ── */}
+                <header style={{ height: '64px', background: 'white', borderBottom: '1px solid #e5eaf0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                    {/* Search */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: '#f3f6fb', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
+                        onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
+                        onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
+                    >
+                        <Search size={16} color="#94a3b8" />
+                        <input
+                            placeholder="Rechercher services, factures..."
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            style={{ background: 'transparent', border: 'none', outline: 'none', width: '100%', fontSize: '0.875rem', color: '#1e293b' }}
+                        />
+                    </div>
+
+                    {/* Right Side */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        {/* Notifications */}
+                        <Link to="/client/notifications" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
+                        >
+                            <Bell size={18} />
+                            {notifCount > 0 && (
+                                <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', color: 'white', fontSize: '0.6rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                                    {notifCount}
+                                </span>
+                            )}
+                        </Link>
+
+                        {/* Cart */}
+                        <Link to="/client/cart" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
+                        >
+                            <ShoppingCart size={18} />
+                            {cartCount > 0 && (
+                                <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', color: 'white', fontSize: '0.6rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+
+                        {/* Divider */}
+                        <div style={{ width: '1px', height: '24px', background: '#e5eaf0' }} />
+
+                        {/* User Avatar */}
+                        <Link to="/client/profile" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '10px', transition: 'background 0.15s' }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#f3f6fb'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
+                                {user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0B1F3A' }}>{user?.name?.split(' ')[0] || user?.first_name || 'Client'}</span>
+                                <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Client IHOST</span>
+                            </div>
+                            <ChevronRight size={14} color="#94a3b8" />
+                        </Link>
+                    </div>
+                </header>
+
+                {/* ── CONTENT (Outlet renders child pages here) ── */}
+                <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#f0f4f8' }}>
+                    <Outlet />
+                </main>
+            </div>
+        </div>
+    );
+};
+
+export default ClientLayout;

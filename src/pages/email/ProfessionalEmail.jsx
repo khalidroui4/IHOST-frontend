@@ -3,6 +3,7 @@ import { Mail, Globe, Smartphone, ShieldCheck, CheckCircle2, ArrowRight, Zap, Da
 import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
+import TechPricingCard from '../../components/TechPricingCard';
 
 const ProfessionalEmail = () => {
     const plans = [
@@ -58,7 +59,7 @@ const ProfessionalEmail = () => {
                     <div className="hero-background" style={{ background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)', position: 'relative', border: '1px solid rgba(255,255,255,0.1)' }}>
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/tech_domains_hero.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
+                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/email3.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>ARCHITECTURE DE COMMUNICATION PRO</h1>
@@ -92,45 +93,19 @@ const ProfessionalEmail = () => {
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Forfaits de Communication</h2>
                             <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Solutions scalables calibrées pour chaque étape de votre développement d'entreprise.</p>
                         </div>
-                        <div style={{ maxWidth: '1250px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
+                        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', alignItems: 'center' }}>
                             {plans.map((plan, index) => (
-                                <div key={index} className={plan.highlight ? "bg-tech-dark" : "tech-border"} style={{
-                                    background: plan.highlight ? '#0B1F3A' : 'white',
-                                    padding: '4rem 3rem',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    position: 'relative',
-                                    border: plan.highlight ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(11, 31, 58, 0.1)',
-                                    transition: 'all 0.3s ease-in-out'
-                                }}>
-                                    {plan.badge && (
-                                        <div style={{ position: 'absolute', top: 0, right: 0, background: '#00C2FF', color: '#0B1F3A', padding: '0.5rem 1.5rem', fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase' }}>
-                                            {plan.badge}
-                                        </div>
-                                    )}
-                                    <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between' }}>
-                                        <Mail size={32} color={plan.highlight ? '#00C2FF' : '#1E6BFF'} />
-                                        <span style={{ fontSize: '0.7rem', fontWeight: 900, color: plan.highlight ? 'rgba(255,255,255,0.3)' : '#6B7280' }}>{plan.id}</span>
-                                    </div>
-                                    <h3 className="font-tech" style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.5rem', color: plan.highlight ? 'white' : '#0B1F3A' }}>{plan.name}</h3>
-
-                                    <div style={{ marginBottom: '3rem', background: plan.highlight ? 'rgba(255,255,255,0.03)' : '#F8FAFC', padding: '2rem', border: plan.highlight ? '1px solid rgba(255,255,255,0.05)' : '1px solid #E2E8F0' }}>
-                                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                                            <span style={{ fontSize: '3rem', fontWeight: 700, color: plan.highlight ? 'white' : '#0B1F3A', fontFamily: 'Space Grotesk' }}>{plan.price}</span>
-                                            <span style={{ fontSize: '0.9rem', fontWeight: 700, color: plan.highlight ? 'rgba(255,255,255,0.4)' : '#6B7280' }}>{plan.period}</span>
-                                        </div>
-                                    </div>
-
-                                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3.5rem 0', flex: 1 }}>
-                                        {plan.features.map((feature, idx) => (
-                                            <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: plan.highlight ? '1px solid rgba(255,255,255,0.05)' : '1px solid #F1F5F9', paddingBottom: '0.75rem', marginBottom: '0.75rem' }}>
-                                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: plan.highlight ? 'rgba(255,255,255,0.8)' : '#0B1F3A' }}>{feature.label}</span>
-                                                <span style={{ fontSize: '0.65rem', color: plan.highlight ? '#00C2FF' : '#1E6BFF', fontWeight: 800, background: plan.highlight ? 'rgba(0, 194, 255, 0.1)' : 'rgba(30, 107, 255, 0.05)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>{feature.tech}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <button className={plan.highlight ? "btn btn-primary" : "btn btn-outline"} style={{ width: '100%', justifyContent: 'center' }}>SÉLECTIONNER</button>
-                                </div>
+                                <TechPricingCard
+                                    key={index}
+                                    name={plan.name}
+                                    price={plan.price}
+                                    period={plan.period}
+                                    features={plan.features.map(f => f.label)}
+                                    highlight={plan.highlight}
+                                    badge={plan.badge}
+                                    buttonText="SÉLECTIONNER"
+                                    buttonLink="/signup"
+                                />
                             ))}
                         </div>
                     </div>

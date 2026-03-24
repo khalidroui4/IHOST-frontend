@@ -1,0 +1,155 @@
+.pricing-card-modern {
+    background: #e3eff6;
+    border: 1px solid #f1f5f9;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease-in-out;
+    position: relative;
+    border-radius: 16px;
+    height: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.pricing-card-modern:not(.highlight):hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: #e2e8f0;
+}
+
+.pricing-card-modern.highlight {
+    border: 2px solid #3B82F6;
+    transform: scale(1.03);
+    z-index: 10;
+    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+    margin-top: -10px;
+    margin-bottom: -10px;
+    background-color: #c8e3f3;
+}
+
+.pricing-card-modern.highlight:hover {
+    transform: scale(1.05) translateY(-8px);
+    box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
+}
+
+.modern-card-badge {
+    position: absolute;
+    top: -14px;
+    left: 2rem;
+    background: #4A8CFF;
+    color: white;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.modern-card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modern-card-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: #0B1F3A;
+    font-family: 'Inter', sans-serif;
+}
+
+.modern-card-desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.modern-card-price-container {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.modern-price-from {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.modern-price-amount {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.modern-price-period {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-left: 0.5rem;
+}
+
+.modern-card-features-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.modern-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    text-align: left;
+    width: fit-content;
+}
+
+.modern-card-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.modern-check-icon {
+    flex-shrink: 0;
+    color: #0B1F3A;
+}
+
+.modern-feature-text {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.modern-card-footer {
+    margin-top: auto;
+}
+
+.modern-btn-choose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background: #0B1F3A;
+    color: white;
+    width: 100%;
+}
+
+.modern-btn-choose:hover {
+    background: #1e3a6a;
+    color: white;
+}

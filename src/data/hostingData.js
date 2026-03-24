@@ -6,7 +6,8 @@ export const hostingData = {
         hero: {
             title: 'Hébergement Web Mutualisé Rapide et Fiable',
             subtitle: 'La solution idéale pour lancer votre site web, blog ou projet professionnel avec des performances optimisées et un prix accessible.',
-            ctaText: 'Commencer maintenant'
+            ctaText: 'Commencer maintenant',
+            image: '/hebe_mutualise.webp'
         },
         benefits: [
             { icon: Zap, title: 'Performance optimisée', desc: 'Pour les petits et moyens sites web.' },
@@ -69,7 +70,8 @@ export const hostingData = {
         hero: {
             title: 'Hébergement Cloud Haute Performance',
             subtitle: 'Une infrastructure cloud moderne offrant puissance, flexibilité et disponibilité maximale pour vos applications.',
-            ctaText: 'Découvrir les offres'
+            ctaText: 'Découvrir les offres',
+            image: '/hebe-cloud2.png'
         },
         benefits: [
             { icon: Cloud, title: 'Scalez à l\'infini', desc: 'Infrastructure cloud scalable selon vos besoins.' },
@@ -126,7 +128,8 @@ export const hostingData = {
         hero: {
             title: 'Hébergement Optimisé pour E-Commerce',
             subtitle: 'Une plateforme puissante conçue pour les boutiques en ligne avec rapidité, sécurité et fiabilité.',
-            ctaText: 'Créer ma boutique'
+            ctaText: 'Créer ma boutique',
+            image: '/hebergement-ecommerce.jpg'
         },
         benefits: [
             { icon: ShoppingCart, title: 'Optimisé E-Commerce', desc: 'Pour WooCommerce, PrestaShop et Magento.' },
@@ -183,7 +186,8 @@ export const hostingData = {
         hero: {
             title: 'Hébergement Multi-Sites Flexible',
             subtitle: 'Gérez plusieurs sites web depuis un seul compte avec une solution performante et économique.',
-            ctaText: 'Voir les plans'
+            ctaText: 'Voir les plans',
+            image: '/multisites.webp'
         },
         benefits: [
             { icon: Layers, title: 'Gestion centralisée', desc: 'Contrôlez plusieurs sites depuis une interface unique.' },

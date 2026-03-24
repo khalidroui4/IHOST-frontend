@@ -67,14 +67,36 @@ import LegalDocuments from "./pages/entreprise/LegalDocuments";
 import Contact from "./pages/entreprise/Contact";
 
 
-import Chatbot from "./components/chatbot/Chatbot";
+import Chatbot from "./components/chat/Chatbot";
+import ClientLayout from "./components/client/ClientLayout";
 
 import { useLocation } from "react-router-dom";
 
+// Client Routes
+import ProtectedRoute from "./components/ProtectedRoute";
+import ClientDashboard from "./pages/client/Dashboard";
+import ClientServices from "./pages/client/Services";
+import ClientDomains from "./pages/client/Domains";
+import ClientOrders from "./pages/client/Orders";
+import ClientCart from "./pages/client/Cart";
+import ClientCheckout from "./pages/client/Checkout";
+import ClientInvoices from "./pages/client/Invoices";
+import ClientSupport from "./pages/client/Support";
+import ClientNotifications from "./pages/client/Notifications";
+import ClientProfile from "./pages/client/Profile";
+
+// Admin Routes
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminUsers from "./pages/admin/Users";
+import AdminOrders from "./pages/admin/Orders";
+import AdminServices from "./pages/admin/Services";
+import AdminSupport from "./pages/admin/Support";
+
 function App() {
   const location = useLocation();
+  const isClientRoute = location.pathname.startsWith('/client') || location.pathname.startsWith('/admin');
   const hideNavbarRoutes = ["/welcome"];
-  const showNavbar = !hideNavbarRoutes.includes(location.pathname);
+  const showNavbar = !hideNavbarRoutes.includes(location.pathname) && !isClientRoute;
 
   return (
     <ToastProvider>
@@ -148,23 +170,36 @@ function App() {
           <Route path="/entreprise/contact" element={<Contact />} />
           <Route path="/contact" element={<Contact />} />
 
-          
+          {/* Client Routes — nested under ClientLayout */}
+          <Route path="/client" element={<ProtectedRoute><ClientLayout /></ProtectedRoute>}>
+            <Route path="dashboard" element={<ClientDashboard />} />
+            <Route path="services" element={<ClientServices />} />
+            <Route path="domains" element={<ClientDomains />} />
+            <Route path="orders" element={<ClientOrders />} />
+            <Route path="cart" element={<ClientCart />} />
+            <Route path="checkout" element={<ClientCheckout />} />
+            <Route path="invoices" element={<ClientInvoices />} />
+            <Route path="support" element={<ClientSupport />} />
+            <Route path="notifications" element={<ClientNotifications />} />
+            <Route path="profile" element={<ClientProfile />} />
+          </Route>
 
-          
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute requireAdmin><AdminUsers /></ProtectedRoute>} />
+          <Route path="/admin/orders" element={<ProtectedRoute requireAdmin><AdminOrders /></ProtectedRoute>} />
+          <Route path="/admin/services" element={<ProtectedRoute requireAdmin><AdminServices /></ProtectedRoute>} />
+          <Route path="/admin/support" element={<ProtectedRoute requireAdmin><AdminSupport /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
-      <ScrollToTop />
-      <BackButton />
+      {!isClientRoute && <ScrollToTop />}
+      {!isClientRoute && <BackButton />}
       {showNavbar && <Footer />}
-      <Chatbot />
+      {!isClientRoute && <Chatbot />}
       
-      {/* Global Tech Edges */}
-      <div className="hud-edge hud-edge-tl"></div>
-      <div className="hud-edge hud-edge-tr"></div>
-      <div className="hud-edge hud-edge-bl"></div>
-      <div className="hud-edge hud-edge-br"></div>
+      
     </ToastProvider>
   );
 }

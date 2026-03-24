@@ -13,6 +13,7 @@ const EVSSL = () => {
                     <div className="hero-background hero-background-blue">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
+                        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/EvSll2.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.15, mixBlendMode: 'luminosity', zIndex: 0 }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">AUDIT D'IDENTITÉ &amp; VALIDATION ÉTENDUE</h1>

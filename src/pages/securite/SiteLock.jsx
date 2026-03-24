@@ -13,7 +13,7 @@ const SiteLock = () => {
                     <div className="hero-background hero-background-gradient">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/security-hero.png)' }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/SiteLock.jfif)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div className="hero-text-container">
                                 <h1 className="font-tech hero-title">Garde du Corps de Votre Site</h1>
