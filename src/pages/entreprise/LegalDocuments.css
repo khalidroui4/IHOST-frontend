@@ -1,0 +1,292 @@
+/* LegalDocuments.css */
+.entreprise-page .hero-background-dark {
+    background: linear-gradient(135deg, #0B1F3A 0%, #475569 100%);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.entreprise-page .hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+    z-index: 0;
+}
+
+.entreprise-page .hero-text-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.entreprise-page .hero-title {
+    font-size: 3.8rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.entreprise-page .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.entreprise-page .section-padding {
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+.entreprise-page .section-header-container {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.entreprise-page .section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.entreprise-page .section-subtitle {
+    font-size: 1.25rem;
+    color: #4B5563;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ─── Documents List ────────────────────────────────── */
+.entreprise-page .docs-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.entreprise-page .doc-card {
+    background: white;
+    padding: 2.5rem 3.5rem;
+    border-radius: 32px;
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.entreprise-page .doc-icon-wrapper {
+    padding: 1.2rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entreprise-page .doc-content {
+    flex: 1;
+}
+
+.entreprise-page .doc-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #0B1F3A;
+    margin-bottom: 0.5rem;
+}
+
+.entreprise-page .doc-desc {
+    color: #4B5563;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.entreprise-page .doc-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.entreprise-page .doc-download-btn {
+    background: #F5F7FA;
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem;
+    color: #1E6BFF;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.entreprise-page .doc-arrow {
+    background: transparent;
+    padding: 0.8rem;
+    color: #4B5563;
+    display: flex;
+    align-items: center;
+}
+
+/* ─── Trust Container ───────────────────────────────── */
+.entreprise-page .trust-container {
+    background: #F5F7FA;
+    padding: 6rem;
+    border-radius: 48px;
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+    border: 1px solid rgba(11, 31, 58, 0.1);
+}
+
+.entreprise-page .trust-content { flex: 1.2; text-align: left; }
+
+.entreprise-page .trust-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #0B1F3A;
+    margin-bottom: 2rem;
+}
+
+.entreprise-page .trust-desc {
+    font-size: 1.3rem;
+    color: #4B5563;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+}
+
+.entreprise-page .trust-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4.5rem;
+}
+
+.entreprise-page .trust-feature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #0B1F3A;
+}
+
+.entreprise-page .trust-visual { flex: 1; }
+
+.entreprise-page .trust-visual-box {
+    padding: 4rem;
+    background: #0B1F3A;
+    border-radius: 40px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    color: white;
+}
+
+/* ─── CTA Card ──────────────────────────────────────── */
+.entreprise-page .cta-container {
+    background: linear-gradient(135deg, #0B1F3A 0%, #475569 100%);
+    border-radius: 40px;
+    padding: 6rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.entreprise-page .cta-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+
+.entreprise-page .cta-desc {
+    font-size: 1.4rem;
+    opacity: 0.9;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.entreprise-page .cta-link {
+    background: white;
+    color: #1E6BFF;
+    padding: 1.4rem 4rem;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+}
+
+.entreprise-page .btn-wrap-fix {
+    padding: 1.4rem 4rem;
+    border-radius: 100px;
+    font-weight: 800;
+    background: #1E6BFF;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .entreprise-page .trust-visual { display: none; }
+}
+
+@media (max-width: 768px) {
+    .entreprise-page .hero-title       { font-size: 2.2rem; }
+    .entreprise-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .entreprise-page .section-title    { font-size: 1.9rem; letter-spacing: -0.5px; }
+    .entreprise-page .section-subtitle { font-size: 1.05rem; }
+    .entreprise-page .section-padding  { padding: 4rem 1.5rem; }
+
+    .entreprise-page .doc-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2.5rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 28px;
+    }
+    .entreprise-page .doc-actions { width: 100%; justify-content: space-between; }
+
+    .entreprise-page .trust-container {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+        border-radius: 28px;
+    }
+    .entreprise-page .trust-title { font-size: 2rem; margin-bottom: 1.5rem; }
+    .entreprise-page .trust-desc  { font-size: 1.05rem; margin-bottom: 2rem; }
+    .entreprise-page .trust-features { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+
+    .entreprise-page .btn-wrap-fix,
+    .entreprise-page .cta-link {
+        padding: 1.2rem 1.5rem !important;
+        font-size: 0.95rem !important;
+        width: 100%;
+        white-space: normal !important;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .entreprise-page .cta-container { padding: 3rem 1.5rem; border-radius: 28px; }
+    .entreprise-page .cta-title     { font-size: 1.8rem; }
+    .entreprise-page .cta-desc      { font-size: 1rem; margin-bottom: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .entreprise-page .hero-title      { font-size: 1.8rem; }
+    .entreprise-page .trust-container { padding: 2rem 1rem; }
+    .entreprise-page .trust-title     { font-size: 1.7rem; }
+    .entreprise-page .cta-container   { padding: 2.5rem 1rem; }
+    .entreprise-page .btn-wrap-fix, .entreprise-page .cta-link { font-size: 0.9rem !important; }
+}

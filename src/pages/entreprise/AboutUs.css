@@ -1,0 +1,296 @@
+/* AboutUs.css */
+.entreprise-page .hero-background-dark {
+    background: linear-gradient(135deg, #0B1F3A 0%, #475569 100%);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.entreprise-page .hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+    z-index: 0;
+}
+
+.entreprise-page .hero-text-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.entreprise-page .hero-title {
+    font-size: 3.8rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.entreprise-page .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.entreprise-page .section-padding {
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+.entreprise-page .section-header-container {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.entreprise-page .section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.entreprise-page .section-subtitle {
+    font-size: 1.25rem;
+    color: #4B5563;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ─── Mission / Vision ──────────────────────────────── */
+.entreprise-page .mission-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: 4rem;
+}
+
+.entreprise-page .mission-card {
+    background: white;
+    padding: 4rem;
+    border-radius: 40px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.entreprise-page .mission-icon-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.entreprise-page .mission-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entreprise-page .mission-card-title {
+    font-size: 2.2rem;
+    color: #0B1F3A;
+    margin: 0;
+    font-weight: 900;
+}
+
+.entreprise-page .mission-card-desc {
+    color: #4B5563;
+    line-height: 1.8;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* ─── Stats ─────────────────────────────────────────── */
+.entreprise-page .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem;
+}
+
+.entreprise-page .stat-card {
+    padding: 3.5rem 2rem;
+    background: #F5F7FA;
+    border-radius: 32px;
+    text-align: center;
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.entreprise-page .stat-icon-wrapper {
+    color: #1E6BFF;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* ─── Join Us Card ──────────────────────────────────── */
+.entreprise-page .join-container {
+    background: white;
+    padding: 6rem;
+    border-radius: 48px;
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+}
+
+.entreprise-page .join-content { flex: 1.2; }
+
+.entreprise-page .join-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #0B1F3A;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+}
+
+.entreprise-page .join-desc {
+    font-size: 1.3rem;
+    color: #4B5563;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.entreprise-page .join-checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+}
+
+.entreprise-page .join-check-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0B1F3A;
+}
+
+.entreprise-page .join-visual {
+    flex: 1;
+}
+
+.entreprise-page .join-visual-card {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, #1E6BFF 0%, #1d4ed8 100%);
+    border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ─── CTA ───────────────────────────────────────────── */
+.entreprise-page .cta-container {
+    background: #0B1F3A;
+    border-radius: 48px;
+    padding: 6rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.entreprise-page .cta-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+
+.entreprise-page .cta-desc {
+    font-size: 1.4rem;
+    opacity: 0.8;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.entreprise-page .cta-btn-group {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+.entreprise-page .cta-btn-override {
+    padding: 1.4rem 4rem;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+.entreprise-page .cta-btn-primary { background: white; color: #0B1F3A; }
+.entreprise-page .cta-btn-outline { color: white; border-color: rgba(255,255,255,0.3); }
+
+.entreprise-page .cta-glow {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .entreprise-page .join-visual { display: none; }
+}
+
+@media (max-width: 768px) {
+    .entreprise-page .hero-title       { font-size: 2.2rem; }
+    .entreprise-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .entreprise-page .section-title    { font-size: 1.9rem; letter-spacing: -0.5px; }
+    .entreprise-page .section-subtitle { font-size: 1.05rem; }
+    .entreprise-page .section-padding  { padding: 4rem 1.5rem; }
+
+    .entreprise-page .mission-grid { gap: 2rem; }
+    .entreprise-page .mission-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
+    .entreprise-page .mission-card-title { font-size: 1.8rem; }
+    .entreprise-page .mission-card-desc  { font-size: 1rem; }
+
+    .entreprise-page .stats-grid { gap: 1.5rem; }
+    .entreprise-page .stat-card  { padding: 2rem 1.5rem; border-radius: 20px; }
+
+    .entreprise-page .join-container {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+        border-radius: 28px;
+    }
+    .entreprise-page .join-title       { font-size: 2rem; margin-bottom: 1.5rem; }
+    .entreprise-page .join-desc        { font-size: 1.05rem; margin-bottom: 2rem; }
+    .entreprise-page .join-checklist   { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .entreprise-page .join-check-item  { font-size: 0.95rem; }
+
+    .entreprise-page .cta-container    { padding: 3rem 1.5rem; border-radius: 28px; }
+    .entreprise-page .cta-title        { font-size: 1.8rem; }
+    .entreprise-page .cta-desc         { font-size: 1rem; margin-bottom: 2rem; }
+    .entreprise-page .cta-btn-group    { flex-direction: column; gap: 1rem; }
+    .entreprise-page .cta-btn-override { padding: 1.2rem 1.5rem !important; width: 100%; white-space: normal; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .entreprise-page .hero-title         { font-size: 1.8rem; }
+    .entreprise-page .mission-card       { padding: 2rem 1rem; }
+    .entreprise-page .join-container     { padding: 2rem 1rem; }
+    .entreprise-page .join-title         { font-size: 1.7rem; }
+    .entreprise-page .cta-container      { padding: 2.5rem 1rem; }
+}

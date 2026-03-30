@@ -24,6 +24,7 @@ const RegisterDomain = () => {
     const { addToast } = useToast();
 
     const { items: services, isLoading: isLoadingServices } = useSelector(state => state.services);
+    const { isAuthenticated } = useSelector(state => state.auth);
 
     useEffect(() => {
         if (!services || services.length === 0) {
@@ -65,7 +66,7 @@ const RegisterDomain = () => {
         try {
             const res = await axios.get(`http://localhost/IHOST-backend/domains/check/${query}`);
             setSearchResult({
-                domain: query,
+                domain: res.data.domain || query,
                 available: res.data.available
             });
         } catch (err) {
@@ -87,6 +88,12 @@ const RegisterDomain = () => {
 
     const handleOpenModal = () => {
         if (!searchResult || !searchResult.available) return;
+        
+        if (!isAuthenticated) {
+            addToast("Veuillez vous inscrire ou vous connecter pour enregistrer un domaine.", "info");
+            navigate('/signUp');
+            return;
+        }
         
         const ext = '.' + searchResult.domain.split('.').pop();
         const matchingExt = popularExtensions.find(p => p.ext === ext) || popularExtensions[0];
@@ -327,18 +334,6 @@ const RegisterDomain = () => {
                                     <h3 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1E6BFF', margin: '0 0 1rem 0' }}>{item.ext}</h3>
                                     <p style={{ fontSize: '1rem', color: '#4B5563', textDecoration: 'line-through', margin: '0' }}>{item.oldPrice} DH</p>
                                     <p style={{ fontWeight: 800, color: '#0B1F3A', fontSize: '1.5rem', margin: '0.5rem 0 2rem' }}>{item.price} DH<span style={{ fontSize: '0.9rem', color: '#4B5563', fontWeight: 500 }}> / an</span></p>
-                                    <Link to={`/domaines/register?q=monprojet${item.ext}`} style={{
-                                        width: '100%',
-                                        padding: '0.8rem',
-                                        borderRadius: '12px',
-                                        background: '#F5F7FA',
-                                        border: 'none',
-                                        fontWeight: 700,
-                                        color: '#1E6BFF',
-                                        cursor: 'pointer',
-                                        textDecoration: 'none',
-                                        display: 'block'
-                                    }}>Choisir</Link>
                                 </div>
                             ))}
                         </div>

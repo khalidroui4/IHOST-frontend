@@ -82,9 +82,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.marketing-page .expertise-content {
-    flex: 1.2;
-}
+.marketing-page .expertise-content { flex: 1.2; }
 
 .marketing-page .expertise-title {
     font-size: 2.5rem;
@@ -108,9 +106,7 @@
     font-size: 1.1rem;
 }
 
-.marketing-page .expertise-visual-wrapper {
-    flex: 0.8;
-}
+.marketing-page .expertise-visual-wrapper { flex: 0.8; }
 
 .marketing-page .expertise-visual-card {
     padding: 4rem;
@@ -132,9 +128,7 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
-.marketing-page .audit-content {
-    flex: 1.2;
-}
+.marketing-page .audit-content { flex: 1.2; }
 
 .marketing-page .audit-title {
     font-size: 3rem;
@@ -164,9 +158,7 @@
     font-size: 1.1rem;
 }
 
-.marketing-page .audit-visual-wrapper {
-    flex: 1;
-}
+.marketing-page .audit-visual-wrapper { flex: 1; }
 
 .marketing-page .audit-visual-card {
     padding: 5rem;
@@ -185,9 +177,59 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 1024px) {
     .marketing-page .expertise-visual-wrapper,
-    .marketing-page .audit-visual-wrapper {
-        display: none;
+    .marketing-page .audit-visual-wrapper { display: none; }
+}
+
+@media (max-width: 768px) {
+    .marketing-page .hero-title       { font-size: 2.2rem; }
+    .marketing-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .marketing-page .section-title    { font-size: 1.9rem; letter-spacing: -0.5px; }
+    .marketing-page .section-subtitle { font-size: 1rem; }
+    .marketing-page .section-padding  { padding: 4rem 1.5rem; }
+
+    .marketing-page .expertise-card {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+        border-radius: 28px;
     }
+    .marketing-page .expertise-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
+    .marketing-page .expertise-grid  { grid-template-columns: 1fr; gap: 1rem; }
+    .marketing-page .expertise-item  { font-size: 0.95rem; }
+
+    .marketing-page .audit-container {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+        border-radius: 28px;
+    }
+    .marketing-page .audit-title       { font-size: 2rem; margin-bottom: 1.5rem; }
+    .marketing-page .audit-description { font-size: 1.05rem; margin-bottom: 2rem; }
+    .marketing-page .audit-grid        { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .marketing-page .audit-item        { font-size: 0.95rem; }
+
+    .marketing-page .audit-btn {
+        padding: 1.2rem 1.5rem !important;
+        font-size: 0.95rem !important;
+        width: 100%;
+        white-space: normal !important;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .marketing-page .cta-container     { padding: 3rem 1.5rem; border-radius: 28px; }
+}
+
+@media (max-width: 480px) {
+    .marketing-page .hero-title       { font-size: 1.8rem; }
+    .marketing-page .expertise-card   { padding: 2rem 1rem; }
+    .marketing-page .expertise-title  { font-size: 1.5rem; }
+    .marketing-page .audit-container  { padding: 2rem 1rem; }
+    .marketing-page .audit-title      { font-size: 1.7rem; }
+    .marketing-page .cta-container    { padding: 2.5rem 1rem; }
+    .marketing-page .audit-btn        { font-size: 0.9rem !important; }
 }

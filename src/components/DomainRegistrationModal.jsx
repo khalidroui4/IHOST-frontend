@@ -5,6 +5,8 @@ import axios from 'axios';
 import './DomainRegistrationModal.css';
 
 const DomainRegistrationModal = ({ 
+    isOpen,
+    onClose,
     onConfirm, 
     initialDomain, 
     popularExtensions = [],

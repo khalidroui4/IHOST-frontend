@@ -123,6 +123,7 @@
     margin-bottom: 0.5rem;
     text-align: center;
     background: linear-gradient(135deg, #1E6BFF, #3b82f6);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
@@ -266,12 +267,13 @@
     }
 
     .auth-image-panel {
-        height: 220px;
+        height: auto;
+        min-height: 280px;
         z-index: 1;
     }
 
     .auth-overlay.sliding-overlay {
-        padding: 2rem 1.5rem;
+        padding: 2.5rem 1.5rem;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -300,7 +302,7 @@
     }
 
     .auth-form-content-wrapper {
-        padding: 1.5rem 1.25rem;
+        padding: 2rem 1.25rem 4rem;
         overflow-y: auto;
     }
 
@@ -315,7 +317,7 @@
 
     .auth-form-row {
         flex-direction: column;
-        gap: 0;
+        gap: 1rem;
     }
 }
 
@@ -343,7 +345,7 @@
     }
 
     .auth-form-content-wrapper {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1rem 4.5rem;
     }
 
     .auth-title {

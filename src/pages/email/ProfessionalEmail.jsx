@@ -93,7 +93,7 @@ const ProfessionalEmail = () => {
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Forfaits de Communication</h2>
                             <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Solutions scalables calibrées pour chaque étape de votre développement d'entreprise.</p>
                         </div>
-                        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+                        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'center' }}>
                             {plans.map((plan, index) => (
                                 <TechPricingCard
                                     key={index}
@@ -113,7 +113,7 @@ const ProfessionalEmail = () => {
 
                 <section style={{ padding: '4rem 0' }}>
                     <div className="container-luxe">
-                        <div className="bg-tech-dark" style={{
+                        <div className="bg-tech-dark email-feature-split" style={{
                             padding: '5rem',
                             display: 'flex',
                             gap: '4rem',
@@ -146,7 +146,7 @@ const ProfessionalEmail = () => {
 
                 <section style={{ padding: '8rem 0' }}>
                     <div className="container-luxe">
-                        <div className="glass-card" style={{
+                        <div className="glass-card email-cta-box" style={{
                             padding: '6rem',
                             textAlign: 'center',
                             background: '#0B1F3A',

@@ -85,7 +85,7 @@ const GoogleAds = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button className="btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, fontSize: '1.1rem' }}>Demander Mon Audit</button>
+                                <button className="btn mss-btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, fontSize: '1.1rem' }}>Demander Mon Audit</button>
                             </div>
                             <div className="mss-visual-wrapper">
                                 <div className="mss-visual-card">

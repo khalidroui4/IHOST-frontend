@@ -3,6 +3,7 @@ import { Newspaper, ChevronRight, Tags, Calendar, User, ArrowRight, Search, Zap,
 import { Link } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
+import './Blog.css';
 
 const Blog = () => {
     const articles = [
@@ -44,30 +45,14 @@ const Blog = () => {
         <PageTransition>
             <div className="entreprise-page">
                 <section className="hero">
-                    <div className="hero-background"
-                        style={{
-                            background: 'linear-gradient(135deg, #0B1F3A 0%, #475569 100%)',
-                            position: 'relative',
-                            border: '1px solid rgba(255,255,255,0.1)'
-                        }}>
+                    <div className="hero-background-dark">
                         <div className="pattern-grid-tech" />
                         <div className="hero-overlay" />
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            backgroundImage: 'url(/tech-company.jpg)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            opacity: 0.15,
-                            mixBlendMode: 'luminosity',
-                            zIndex: 0
-                        }} />
+                        <div className="hero-image-overlay" style={{ backgroundImage: 'url(/tech-company.jpg)' }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                 
-                                <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>L'Actualité du Cloud</h1>
-                                <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Tendances technologiques, guides d'expert et visions du futur. Le blog IHOST est votre boussole dans l'écosystème numérique en constante évolution.</p>
+                            <div className="hero-text-container">
+                                <h1 className="font-tech hero-title">L'Actualité du Cloud</h1>
+                                <p className="hero-description">Tendances technologiques, guides d'expert et visions du futur. Le blog IHOST est votre boussole dans l'écosystème numérique en constante évolution.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
                                     <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>S'abonner à la Newsletter <ArrowRight size={20} /></Link>
                                 </div>
@@ -76,101 +61,36 @@ const Blog = () => {
                     </div>
                 </section>
 
-                <section style={{ padding: '6rem 2rem', background: 'white' }}>
+                <section className="section-padding bg-white">
                     <div className="container-luxe">
-                        <div style={{
-                            maxWidth: '1200px',
-                            margin: '0 auto',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '4rem'
-                        }}>
-                            <div style={{
-                                display: 'flex',
-                                gap: '1rem',
-                                flexWrap: 'wrap',
-                                justifyContent: 'center',
-                                padding: '1rem',
-                                background: '#F5F7FA',
-                                borderRadius: '100px',
-                                width: 'fit-content',
-                                margin: '0 auto'
-                            }}>
+                        <div className="blog-container">
+                            <div className="blog-filters">
                                 {['Tous', 'Hébergement', 'Sécurité', 'Cloud', 'DevOps'].map((cat, i) => (
-                                    <span key={i} style={{
-                                        padding: '0.8rem 2rem',
-                                        background: i === 0 ? '#1E6BFF' : 'white',
-                                        color: i === 0 ? 'white' : '#4B5563',
-                                        borderRadius: '999px',
-                                        cursor: 'pointer',
-                                        fontWeight: 800,
-                                        fontSize: '0.9rem',
-                                        boxShadow: i === 0 ? '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)' : 'none',
-                                        transition: 'all 0.3s ease-in-out'
-                                    }} className="hover-lift">
+                                    <span key={i} className={`blog-filter hover-lift ${i === 0 ? 'active' : ''}`}>
                                         {cat}
                                     </span>
                                 ))}
                             </div>
 
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                                gap: '3rem'
-                            }}>
+                            <div className="blog-grid">
                                 {articles.map((article, idx) => (
-                                    <div key={idx} style={{
-                                        background: 'white',
-                                        borderRadius: '40px',
-                                        overflow: 'hidden',
-                                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                        border: '1px solid rgba(11, 31, 58, 0.1)',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        transition: 'all 0.3s ease-in-out'
-                                    }} className="hover-lift">
-                                        <div style={{ position: 'relative', height: '260px', overflow: 'hidden' }}>
-                                            <img src={article.image} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                            <span style={{
-                                                position: 'absolute',
-                                                top: '1.5rem',
-                                                left: '1.5rem',
-                                                background: 'white',
-                                                padding: '0.5rem 1.2rem',
-                                                borderRadius: '100px',
-                                                fontSize: '0.75rem',
-                                                fontWeight: 900,
-                                                color: '#1E6BFF',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '1px',
-                                                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
-                                            }}>
-                                                {article.category}
-                                            </span>
+                                    <div key={idx} className="article-card hover-lift">
+                                        <div className="article-image-container">
+                                            <img src={article.image} alt={article.title} className="article-image" />
+                                            <span className="article-category">{article.category}</span>
                                         </div>
-                                        <div style={{ padding: '3rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                            <div style={{ display: 'flex', gap: '1.5rem', color: '#4B5563', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1.5rem' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <div className="article-content">
+                                            <div className="article-meta">
+                                                <div className="article-meta-item">
                                                     <Calendar size={14} /> {article.date}
                                                 </div>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                <div className="article-meta-item">
                                                     <User size={14} /> Par {article.author}
                                                 </div>
                                             </div>
-                                            <h3 style={{ fontSize: '1.6rem', color: '#0B1F3A', marginBottom: '1.5rem', fontWeight: 900, lineHeight: '1.3' }}>{article.title}</h3>
-                                            <p style={{ color: '#4B5563', fontSize: '1.05rem', lineHeight: '1.7', marginBottom: '2.5rem', flex: 1 }}>{article.excerpt}</p>
-                                            <button style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                color: '#1E6BFF',
-                                                fontWeight: 800,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '0.75rem',
-                                                padding: 0,
-                                                cursor: 'pointer',
-                                                fontSize: '1rem'
-                                            }}>
+                                            <h3 className="article-title">{article.title}</h3>
+                                            <p className="article-excerpt">{article.excerpt}</p>
+                                            <button className="article-btn">
                                                 Lire l'article <ArrowRight size={20} />
                                             </button>
                                         </div>
@@ -181,11 +101,11 @@ const Blog = () => {
                     </div>
                 </section>
 
-                <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section className="section-premium bg-light section-padding">
                     <div className="container-luxe">
-                        <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Plus de Ressources</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Explorez nos guides techniques pour maîtriser votre infrastructure.</p>
+                        <div className="section-header-container">
+                            <h2 className="section-title">Plus de Ressources</h2>
+                            <p className="section-subtitle">Explorez nos guides techniques pour maîtriser votre infrastructure.</p>
                         </div>
                         <div className="features-grid">
                             <LuxeCard icon={Zap} title="Guides de Migration" desc="Passez d'un autre hébergeur vers IHOST sans aucune interruption grâce à nos checklists détaillées." />
@@ -199,52 +119,22 @@ const Blog = () => {
 
                 <section className="cta-split" style={{ padding: '8rem 0' }}>
                     <div className="container-luxe">
-                        <div style={{
-                            background: '#0B1F3A',
-                            borderRadius: '48px',
-                            padding: '6rem',
-                            color: 'white',
-                            textAlign: 'center',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-                        }}>
+                        <div className="newsletter-container">
                             <div style={{ position: 'relative', zIndex: 1 }}>
-                                <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem' }}>Soyez au courant des évolutions</h2>
-                                <p style={{ fontSize: '1.3rem', opacity: 0.8, marginBottom: '4rem', maxWidth: '700px', margin: '0 auto 4rem' }}>
+                                <h2 className="newsletter-title">Soyez au courant des évolutions</h2>
+                                <p className="newsletter-desc">
                                     Recevez chaque mois les meilleurs articles techniques et les nouveautés de l'infrastructure Cloud directement dans votre boîte mail.
                                 </p>
-                                <div style={{
-                                    display: 'flex',
-                                    gap: '1rem',
-                                    justifyContent: 'center',
-                                    maxWidth: '500px',
-                                    margin: '0 auto'
-                                }}>
+                                <div className="newsletter-form">
                                     <input
                                         type="email"
                                         placeholder="Votre adresse email"
-                                        style={{
-                                            flex: 1,
-                                            padding: '1.2rem 2rem',
-                                            borderRadius: '100px',
-                                            border: 'none',
-                                            fontSize: '1.1rem',
-                                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
-                                        }}
+                                        className="newsletter-input"
                                     />
-                                    <button className="btn" style={{ padding: '1.2rem 3rem', borderRadius: '100px', fontWeight: 800, background: '#1E6BFF', border: 'none', color: 'white' }}>OK</button>
+                                    <button className="newsletter-btn hover-lift">OK</button>
                                 </div>
                             </div>
-                            <div style={{
-                                position: 'absolute',
-                                bottom: '-30%',
-                                left: '-10%',
-                                width: '500px',
-                                height: '500px',
-                                background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)',
-                                borderRadius: '50%'
-                            }}></div>
+                            <div className="newsletter-glow"></div>
                         </div>
                     </div>
                 </section>

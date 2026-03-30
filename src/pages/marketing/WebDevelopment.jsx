@@ -100,7 +100,7 @@ const WebDevelopment = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button className="btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, background: '#1E6BFF', border: 'none', color: 'white' }}>Réserver un Audit Tech</button>
+                                <button className="btn audit-btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, background: '#1E6BFF', border: 'none', color: 'white' }}>Réserver un Audit Tech</button>
                             </div>
                             <div className="audit-visual-wrapper">
                                 <div className="audit-visual-card">

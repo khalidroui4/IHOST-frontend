@@ -84,11 +84,11 @@ const AntiSpam = () => {
                     </div>
                 </section>
 
-                <section style={{ padding: '6rem 2rem', background: 'white' }}>
+                <section style={{ padding: '5rem 1.5rem', background: 'white' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="compat-split-box" style={{
                             background: '#F5F7FA',
-                            padding: '5rem',
+                            padding: '4rem 3rem',
                             borderRadius: '40px',
                             border: '1px solid rgba(11, 31, 58, 0.1)',
                             display: 'flex',
@@ -96,18 +96,18 @@ const AntiSpam = () => {
                             gap: '4rem'
                         }}>
                             <div style={{ flex: 1 }}>
-                                <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0B1F3A', marginBottom: '1.5rem' }}>Compatible avec tous les services</h2>
-                                <p style={{ fontSize: '1.2rem', color: '#4B5563', lineHeight: '1.8', marginBottom: '2.5rem' }}>
+                                <h2 style={{ fontWeight: 900, color: '#0B1F3A', marginBottom: '1.5rem' }}>Compatible avec tous les services</h2>
+                                <p style={{ fontSize: '1.05rem', color: '#4B5563', lineHeight: '1.8', marginBottom: '2.5rem' }}>
                                     Notre solution Anti-Spam s'intercale de manière invisible entre internet et vos serveurs de messagerie, peu importe votre solution actuelle.
                                 </p>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div className="m365-checklist" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                                     {[
                                         "Exchange & Office 365",
                                         "Google Workspace / Gmail",
                                         "Serveurs cPanel / Plesk",
                                         "Infrastructures Zimbra / Linux"
                                     ].map((item, i) => (
-                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, color: '#0B1F3A' }}>
+                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, color: '#0B1F3A', fontSize: '0.95rem' }}>
                                             <CheckCircle2 size={20} color="#10b981" /> {item}
                                         </div>
                                     ))}
@@ -116,39 +116,42 @@ const AntiSpam = () => {
                             <div style={{ flex: 1, textAlign: 'center' }}>
                                 <div style={{
                                     background: 'white',
-                                    padding: '4rem',
+                                    padding: '3rem 2rem',
                                     borderRadius: '32px',
                                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                    display: 'inline-block'
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    boxSizing: 'border-box'
                                 }}>
-                                    <ShieldCheck size={60} color="#1E6BFF" style={{ marginBottom: '1.5rem' }} />
-                                    <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1rem' }}>Testez 15 jours</h3>
+                                    <ShieldCheck size={56} color="#1E6BFF" style={{ marginBottom: '1.5rem' }} />
+                                    <h3 style={{ fontWeight: 800, marginBottom: '1rem' }}>Testez 15 jours</h3>
                                     <p style={{ color: '#4B5563', marginBottom: '2rem' }}>Évaluez l'efficacité sans engagement.</p>
-                                    <button className="btn" style={{ padding: '1.2rem 2.5rem', borderRadius: '100px', fontWeight: 800 }}>Démarrer l'Essai</button>
+                                    <button className="btn" style={{ padding: '1rem 2rem', borderRadius: '100px', fontWeight: 800, width: '100%', justifyContent: 'center' }}>Démarrer l'Essai</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="cta-split" style={{ padding: '6rem 0' }}>
+                <section className="cta-split" style={{ padding: '4rem 1rem' }}>
+
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="email-cta-box" style={{
                             background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             borderRadius: '32px',
-                            padding: '5rem',
+                            padding: '4rem 2.5rem',
                             color: 'white',
                             textAlign: 'center',
                             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
                         }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Dites adieu aux polluants numériques</h2>
-                            <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
+                            <h2 style={{ fontWeight: 800, marginBottom: '1.5rem' }}>Dites adieu aux polluants numériques</h2>
+                            <p style={{ fontSize: '1.1rem', opacity: 0.9, maxWidth: '750px', margin: '0 auto 2.5rem', lineHeight: '1.7' }}>
                                 Récupérez le contrôle de votre productivité et sécurisez vos communications dès aujourd'hui.
                             </p>
                             <Link to="/contact" className="btn" style={{
                                 background: 'white',
                                 color: '#3b82f6',
-                                padding: '1.2rem 3rem',
+                                padding: '1rem 2.5rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,
                                 display: 'inline-flex',

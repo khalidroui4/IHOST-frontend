@@ -62,7 +62,7 @@ const ResellerDomains = () => {
                                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
                                     border: '1px solid rgba(11, 31, 58, 0.1)',
                                     transition: 'all 0.3s ease-in-out'
-                                }} className="hover-lift">
+                                }} className="hover-lift reseller-feature-card">
                                     <div style={{
                                         width: '80px',
                                         height: '80px',
@@ -76,7 +76,7 @@ const ResellerDomains = () => {
                                     }}>
                                         <item.icon size={40} />
                                     </div>
-                                    <div style={{ textAlign: 'left' }}>
+                                    <div style={{ textAlign: 'left' }} className="reseller-feature-content">
                                         <h3 style={{ fontSize: '1.6rem', color: '#0B1F3A', marginBottom: '0.75rem', fontWeight: 800 }}>{item.title}</h3>
                                         <p style={{ color: '#4B5563', lineHeight: '1.8', margin: 0, fontSize: '1.1rem' }}>{item.desc}</p>
                                     </div>

@@ -28,8 +28,8 @@ const EmailSecurity = () => {
                 <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Défense Multicouche Avancée</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une approche globale de la sécurité email pour neutraliser les menaces avant qu'elles ne s'infiltrent dans votre organisation.</p>
+                            <h2 style={{ fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Défense Multicouche Avancée</h2>
+                            <p style={{ fontSize: '1.1rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une approche globale de la sécurité email pour neutraliser les menaces avant qu'elles ne s'infiltrent dans votre organisation.</p>
                         </div>
                         <div className="features-grid">
                             <LuxeCard icon={Cpu} title="Protection Malware" desc="Analyse comportementale et scans rigoureux des pièces jointes pour identifier les ransomwares et chevaux de Troie." />
@@ -43,22 +43,23 @@ const EmailSecurity = () => {
                 <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi la sécurité est vitale ?</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Comprendre les risques pour mieux les anticiper.</p>
+                            <h2 style={{ fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi la sécurité est vitale ?</h2>
+                            <p style={{ fontSize: '1.1rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Comprendre les risques pour mieux les anticiper.</p>
                         </div>
                         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                            <div style={{
+
+                            <div className="threat-row hover-lift" style={{
                                 display: 'flex',
                                 gap: '3rem',
                                 alignItems: 'center',
                                 background: '#fff5f5',
-                                padding: '4rem',
+                                padding: '3.5rem',
                                 borderRadius: '32px',
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
                                 border: '1px solid #fee2e2',
                                 transition: 'all 0.3s ease-in-out'
-                            }} className="hover-lift">
-                                <div style={{
+                            }}>
+                                <div className="threat-row-icon" style={{
                                     width: '100px',
                                     height: '100px',
                                     background: '#ef4444',
@@ -72,25 +73,25 @@ const EmailSecurity = () => {
                                     <MailWarning size={45} />
                                 </div>
                                 <div style={{ textAlign: 'left' }}>
-                                    <h3 style={{ fontSize: '1.8rem', color: '#991b1b', marginBottom: '1rem', fontWeight: 800 }}>Prévention Contre l'Espionnage</h3>
-                                    <p style={{ color: '#b91c1c', lineHeight: '1.8', margin: 0, fontSize: '1.15rem', opacity: 0.9 }}>
+                                    <h3 style={{ color: '#991b1b', marginBottom: '1rem', fontWeight: 800 }}>Prévention Contre l'Espionnage</h3>
+                                    <p style={{ color: '#b91c1c', lineHeight: '1.8', margin: 0, opacity: 0.9 }}>
                                         L'interception de communications sensibles (RIB, devis, contrats) est la menace n°1. Notre chiffrement de niveau militaire rend vos données totalement illisibles en cas de détournement.
                                     </p>
                                 </div>
                             </div>
 
-                            <div style={{
+                            <div className="threat-row hover-lift" style={{
                                 display: 'flex',
                                 gap: '3rem',
                                 alignItems: 'center',
                                 background: '#f0fdf4',
-                                padding: '4rem',
+                                padding: '3.5rem',
                                 borderRadius: '32px',
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
                                 border: '1px solid #dcfce7',
                                 transition: 'all 0.3s ease-in-out'
-                            }} className="hover-lift">
-                                <div style={{
+                            }}>
+                                <div className="threat-row-icon" style={{
                                     width: '100px',
                                     height: '100px',
                                     background: '#10b981',
@@ -104,12 +105,13 @@ const EmailSecurity = () => {
                                     <Network size={45} />
                                 </div>
                                 <div style={{ textAlign: 'left' }}>
-                                    <h3 style={{ fontSize: '1.8rem', color: '#166534', marginBottom: '1rem', fontWeight: 800 }}>Imperméabilité au Phishing</h3>
-                                    <p style={{ color: '#15803d', lineHeight: '1.8', margin: 0, fontSize: '1.15rem', opacity: 0.9 }}>
+                                    <h3 style={{ color: '#166534', marginBottom: '1rem', fontWeight: 800 }}>Imperméabilité au Phishing</h3>
+                                    <p style={{ color: '#15803d', lineHeight: '1.8', margin: 0, opacity: 0.9 }}>
                                         Nos filtres analysent l'origine et la réputation des serveurs pour détecter les domaines frauduleux imitant votre banque ou vos partenaires, protégeant vos employés de l'erreur humaine.
                                     </p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </section>
@@ -117,8 +119,8 @@ const EmailSecurity = () => {
                 <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Outils de Sécurité Inclus</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>La panoplie complète pour votre tranquillité d'esprit.</p>
+                            <h2 style={{ fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Outils de Sécurité Inclus</h2>
+                            <p style={{ fontSize: '1.1rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>La panoplie complète pour votre tranquillité d'esprit.</p>
                         </div>
                         <div className="features-grid">
                             <LuxeCard icon={ShieldAlert} title="Alerte Intrusion" desc="Notification immédiate par SMS ou appel en cas de connexion suspecte depuis une IP géographique inhabituelle." />
@@ -128,24 +130,24 @@ const EmailSecurity = () => {
                     </div>
                 </section>
 
-                <section className="cta-split" style={{ padding: '6rem 0' }}>
+                <section className="cta-split" style={{ padding: '4rem 1rem' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="email-cta-box" style={{
                             background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             borderRadius: '32px',
-                            padding: '5rem',
+                            padding: '4rem 2.5rem',
                             color: 'white',
                             textAlign: 'center',
                             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
                         }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Dormez tranquille, IHOST veille</h2>
-                            <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
+                            <h2 style={{ fontWeight: 800, marginBottom: '1.5rem' }}>Dormez tranquille, IHOST veille</h2>
+                            <p style={{ fontSize: '1.1rem', opacity: 0.9, maxWidth: '750px', margin: '0 auto 2.5rem', lineHeight: '1.7' }}>
                                 Ne laissez pas la sécurité de votre entreprise au hasard. Contactez nos auditeurs pour un bilan de sécurité complet.
                             </p>
                             <Link to="/contact" className="btn" style={{
                                 background: 'white',
                                 color: '#3b82f6',
-                                padding: '1.2rem 3rem',
+                                padding: '1rem 2.5rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,
                                 display: 'inline-flex',

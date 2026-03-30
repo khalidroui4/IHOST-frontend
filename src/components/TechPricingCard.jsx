@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../store/slices/cartSlice';
 import ConfirmCartModal from './ConfirmCartModal';
 import { useToast } from '../context/ToastContext';
@@ -23,8 +23,19 @@ const TechPricingCard = ({
     addToCartMode = false,
 }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useSelector(state => state.auth);
     const [showModal, setShowModal] = useState(false);
     const { addToast } = useToast();
+
+    const handleChooseClick = () => {
+        if (!isAuthenticated) {
+            addToast("Veuillez créer un compte pour choisir ce service.", "info");
+            navigate('/signUp');
+            return;
+        }
+        setShowModal(true);
+    };
 
     const handleConfirm = async () => {
         try {
@@ -46,7 +57,7 @@ const TechPricingCard = ({
     const buttonContent = addToCartMode ? (
         <button
             className="modern-btn-choose"
-            onClick={() => setShowModal(true)}
+            onClick={handleChooseClick}
         >
             {buttonText}
         </button>

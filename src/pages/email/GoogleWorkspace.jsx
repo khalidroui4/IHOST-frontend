@@ -86,7 +86,7 @@ const GoogleWorkspace = () => {
 
                 <section style={{ padding: '6rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="email-feature-split google-migration-box" style={{
                             display: 'flex',
                             alignItems: 'center',
                             gap: '5rem',
@@ -100,7 +100,7 @@ const GoogleWorkspace = () => {
                                 <p style={{ fontSize: '1.2rem', color: '#4B5563', lineHeight: '1.8', marginBottom: '2.5rem' }}>
                                     Nos ingénieurs certifiés Google Cloud vous accompagnent dans le transfert de vos données actuelles (emails, Drive) vers Google Workspace sans aucune minute d'interruption.
                                 </p>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div className="google-migration-features" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                     {[
                                         "Importation d'historique email",
                                         "Configuration DNS simplifiée",
@@ -133,7 +133,7 @@ const GoogleWorkspace = () => {
 
                 <section className="cta-split" style={{ padding: '6rem 0' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="email-cta-box" style={{
                             background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             borderRadius: '32px',
                             padding: '5rem',

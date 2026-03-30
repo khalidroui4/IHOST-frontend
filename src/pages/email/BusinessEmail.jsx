@@ -57,7 +57,7 @@ const BusinessEmail = () => {
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
                                 border: '1px solid rgba(11, 31, 58, 0.1)',
                                 transition: 'all 0.4s ease'
-                            }} className="hover-lift">
+                            }} className="hover-lift reseller-feature-card">
                                 <div style={{
                                     width: '100px',
                                     height: '100px',
@@ -71,7 +71,7 @@ const BusinessEmail = () => {
                                 }}>
                                     <Replace size={45} />
                                 </div>
-                                <div style={{ textAlign: 'left' }}>
+                                <div style={{ textAlign: 'left' }} className="reseller-feature-content">
                                     <h3 style={{ fontSize: '1.8rem', color: '#0B1F3A', marginBottom: '1rem', fontWeight: 800 }}>Gestion d'Administration Centralisée</h3>
                                     <p style={{ color: '#4B5563', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
                                         Prenez le contrôle total de votre écosystème numérique. Ajoutez des utilisateurs, gérez les quotas, et configurez les alias depuis une interface unique pensée pour les DSI.
@@ -89,7 +89,7 @@ const BusinessEmail = () => {
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
                                 border: '1px solid rgba(11, 31, 58, 0.1)',
                                 transition: 'all 0.4s ease'
-                            }} className="hover-lift">
+                            }} className="hover-lift reseller-feature-card">
                                 <div style={{
                                     width: '100px',
                                     height: '100px',
@@ -103,7 +103,7 @@ const BusinessEmail = () => {
                                 }}>
                                     <Smartphone size={45} />
                                 </div>
-                                <div style={{ textAlign: 'left' }}>
+                                <div style={{ textAlign: 'left' }} className="reseller-feature-content">
                                     <h3 style={{ fontSize: '1.8rem', color: '#0B1F3A', marginBottom: '1rem', fontWeight: 800 }}>Synchronisation PUSH Native</h3>
                                     <p style={{ color: '#4B5563', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
                                         Ne manquez jamais un message crucial. Profitez d'une synchronisation ultra-rapide des emails, contacts et tâches sur Outlook, Apple Mail, Gmail et toutes les apps mobiles IMAP/ActiveSync.
@@ -137,7 +137,7 @@ const BusinessEmail = () => {
                             color: 'white',
                             textAlign: 'center',
                             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-                        }}>
+                        }} className="email-cta-box">
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Besoins d'une solution sur-mesure ?</h2>
                             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
                                 Pour les besoins spécifiques excédant 500 boîtes mail, nos consultants Enterprise élaborent avec vous une infrastructure dédiée.

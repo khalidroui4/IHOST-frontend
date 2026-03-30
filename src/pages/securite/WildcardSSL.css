@@ -1,0 +1,242 @@
+/* WildcardSSL.css */
+
+/* ─── Hero ─────────────────────────────────────────── */
+.wildcard-page .hero-title {
+    font-size: 3.8rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.wildcard-page .hero-subtext {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* ─── Section headers ───────────────────────────────── */
+.wildcard-page .section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.wildcard-page .section-subtitle {
+    font-size: 1.25rem;
+    color: #4B5563;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ─── Benefit cards (icon + text row) ──────────────── */
+.wc-benefits-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.wc-benefit-card {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    background: white;
+    padding: 4rem;
+    border-radius: 32px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.wc-benefit-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.wc-benefit-icon-blue  { background: rgba(59, 130, 246, 0.1); color: #1E6BFF; }
+.wc-benefit-icon-green { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+
+.wc-benefit-body {
+    text-align: left;
+}
+
+.wc-benefit-title {
+    font-size: 1.8rem;
+    color: #0B1F3A;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.wc-benefit-desc {
+    color: #4B5563;
+    line-height: 1.8;
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+/* ─── Dev choice section ────────────────────────────── */
+.wc-dev-wrapper {
+    background: #F5F7FA;
+    padding: 5rem;
+    border-radius: 40px;
+    border: 1px solid rgba(11, 31, 58, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.wc-dev-content { flex: 1; }
+
+.wc-dev-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #0B1F3A;
+    margin-bottom: 1.5rem;
+}
+
+.wc-dev-desc {
+    font-size: 1.2rem;
+    color: #4B5563;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+.wc-dev-checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.wc-dev-check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    color: #0B1F3A;
+    font-size: 0.95rem;
+}
+
+.wc-dev-visual {
+    flex: 1;
+    text-align: center;
+}
+
+.wc-dev-card {
+    background: white;
+    padding: 4rem;
+    border-radius: 32px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    display: inline-block;
+}
+
+/* ─── CTA section ───────────────────────────────────── */
+.wc-cta-box {
+    background: linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%);
+    border-radius: 32px;
+    padding: 5rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.wc-cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.wc-cta-desc {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin: 0 auto 3rem;
+    max-width: 750px;
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Hero */
+    .wildcard-page .hero-title {
+        font-size: 2.2rem;
+    }
+    .wildcard-page .hero-subtext {
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    /* Section headers */
+    .wildcard-page .section-title {
+        font-size: 1.9rem;
+        letter-spacing: -0.5px;
+    }
+    .wildcard-page .section-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Benefit cards: stack icon above text */
+    .wc-benefit-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 20px;
+    }
+    .wc-benefit-icon {
+        width: 72px;
+        height: 72px;
+    }
+    .wc-benefit-title {
+        font-size: 1.4rem;
+    }
+    .wc-benefit-desc {
+        font-size: 1rem;
+    }
+
+    /* Dev choice: stack vertically */
+    .wc-dev-wrapper {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        gap: 2.5rem;
+        border-radius: 24px;
+    }
+    .wc-dev-title { font-size: 1.8rem; }
+    .wc-dev-desc  { font-size: 1rem; }
+
+    /* Checklist: single column */
+    .wc-dev-checklist {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Hide decorative visual card */
+    .wc-dev-visual { display: none; }
+
+    /* CTA */
+    .wc-cta-box {
+        padding: 3rem 1.5rem;
+        border-radius: 20px;
+    }
+    .wc-cta-title { font-size: 1.8rem; }
+    .wc-cta-desc  { font-size: 1rem; margin-bottom: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .wildcard-page .hero-title { font-size: 1.8rem; }
+    .wc-benefit-card { padding: 1.5rem 1rem; }
+    .wc-dev-wrapper  { padding: 1.5rem 1rem; }
+    .wc-dev-title    { font-size: 1.5rem; }
+    .wc-cta-title    { font-size: 1.5rem; }
+}

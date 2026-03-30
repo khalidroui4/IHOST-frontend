@@ -87,7 +87,7 @@ const Microsoft365 = () => {
 
                 <section style={{ padding: '6rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="m365-split-box" style={{
                             background: 'linear-gradient(135deg, #0078d4 0%, #001a33 100%)',
                             padding: '5rem',
                             borderRadius: '40px',
@@ -98,19 +98,19 @@ const Microsoft365 = () => {
                             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
                         }}>
                             <div style={{ flex: 1 }}>
-                                <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem' }}>Prêt pour l'hybride ?</h2>
-                                <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', lineHeight: '1.8' }}>
+                                <h2 style={{ fontWeight: 900, marginBottom: '2rem' }}>Prêt pour l'hybride ?</h2>
+                                <p style={{ fontSize: '1.1rem', opacity: 0.9, marginBottom: '3rem', lineHeight: '1.8' }}>
                                     Microsoft 365 est la solution idéale pour le travail à distance. Nos experts gèrent pour vous le déploiement des licences et le support technique de vos utilisateurs.
                                 </p>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                                <div className="m365-checklist" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                     {[
                                         "Assistance au déploiement",
                                         "Facturation simplifiée",
                                         "Accompagnement Admin",
                                         "Garantie de SLA 99.9%"
                                     ].map((item, i) => (
-                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontWeight: 700, fontSize: '1.1rem' }}>
-                                            <CheckCircle2 size={24} color="#10b981" /> {item}
+                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1rem' }}>
+                                            <CheckCircle2 size={22} color="#10b981" /> {item}
                                         </div>
                                     ))}
                                 </div>
@@ -119,38 +119,38 @@ const Microsoft365 = () => {
                                 <div style={{
                                     background: 'rgba(255,255,255,0.1)',
                                     backdropFilter: 'blur(20px)',
-                                    padding: '4rem',
+                                    padding: '3rem 2rem',
                                     borderRadius: '32px',
                                     border: '1px solid rgba(255,255,255,0.2)'
                                 }}>
-                                    <Cloud size={60} color="white" style={{ marginBottom: '1.5rem' }} />
-                                    <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1rem' }}>Déploiement Pro</h3>
-                                    <p style={{ opacity: 0.8, marginBottom: '2.5rem' }}>Nous migrons vos anciennes données Exchange/Outlook vers M365.</p>
-                                    <button className="btn" style={{ background: 'white', color: '#0078d4', padding: '1.2rem 3rem', borderRadius: '100px', fontWeight: 800, border: 'none' }}>Démarrer la Migration</button>
+                                    <Cloud size={56} color="white" style={{ marginBottom: '1.5rem' }} />
+                                    <h3 style={{ fontWeight: 800, marginBottom: '1rem' }}>Déploiement Pro</h3>
+                                    <p style={{ opacity: 0.8, marginBottom: '2rem' }}>Nous migrons vos anciennes données Exchange/Outlook vers M365.</p>
+                                    <button className="btn" style={{ background: 'white', color: '#0078d4', padding: '1rem 2.5rem', borderRadius: '100px', fontWeight: 800, border: 'none' }}>Démarrer la Migration</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="cta-split" style={{ padding: '6rem 0' }}>
+                <section className="cta-split" style={{ padding: '4rem 1rem' }}>
                     <div className="container-luxe">
-                        <div style={{
+                        <div className="email-cta-box" style={{
                             background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             borderRadius: '32px',
-                            padding: '5rem',
+                            padding: '4rem 2.5rem',
                             color: 'white',
                             textAlign: 'center',
                             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
                         }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Besoin d'aide pour choisir ?</h2>
-                            <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
+                            <h2 style={{ fontWeight: 800, marginBottom: '1.5rem' }}>Besoin d'aide pour choisir ?</h2>
+                            <p style={{ fontSize: '1.1rem', opacity: 0.9, maxWidth: '750px', margin: '0 auto 2.5rem', lineHeight: '1.7' }}>
                                 Entre Google Workspace et Microsoft 365, le choix peut être difficile. Nos architectes cloud sont là pour vous guider.
                             </p>
                             <Link to="/contact" className="btn" style={{
                                 background: 'white',
                                 color: '#0078d4',
-                                padding: '1.2rem 3rem',
+                                padding: '1rem 2.5rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,
                                 display: 'inline-flex',

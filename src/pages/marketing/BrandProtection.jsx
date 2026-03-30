@@ -85,7 +85,7 @@ const BrandProtection = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button className="btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, background: '#1E6BFF', border: 'none', color: 'white', fontSize: '1.1rem' }}>Contacter un Consultant Brand</button>
+                                <button className="btn legal-btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, background: '#1E6BFF', border: 'none', color: 'white', fontSize: '1.1rem' }}>Contacter un Consultant Brand</button>
                             </div>
                             <div className="legal-visual-wrapper">
                                 <div className="legal-visual-card">

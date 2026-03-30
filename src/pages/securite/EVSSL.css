@@ -30,6 +30,7 @@
     text-align: center;
 }
 
+/* ─── Audit card ────────────────────────────────────── */
 .security-page .audit-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -109,6 +110,7 @@
     border: 1px solid #2563EB;
 }
 
+/* ─── VIP card ──────────────────────────────────────── */
 .security-page .vip-card-container {
     padding: 6rem;
     display: flex;
@@ -117,6 +119,7 @@
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 32px;
 }
 
 .security-page .vip-content {
@@ -130,15 +133,28 @@
     color: white;
     margin-bottom: 2rem;
     text-transform: uppercase;
+    word-break: break-word;
 }
 
 .security-page .vip-description {
     font-size: 1.25rem;
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.8;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
+/* Button group */
+.security-page .vip-btn-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.security-page .vip-btn {
+    padding: 1.4rem 3rem;
+}
+
+/* ─── CTA glass card ────────────────────────────────── */
 .security-page .cta-glass-card {
     padding: 6rem;
     text-align: center;
@@ -147,6 +163,7 @@
     position: relative;
     overflow: hidden;
     border: 1px solid #2563EB;
+    border-radius: 32px;
 }
 
 .security-page .cta-glass-title {
@@ -154,6 +171,7 @@
     font-weight: 700;
     margin-bottom: 2.5rem;
     text-transform: uppercase;
+    word-break: break-word;
 }
 
 .security-page .cta-glass-description {
@@ -163,4 +181,62 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Hero */
+    .security-page .hero-title       { font-size: 2rem; }
+    .security-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .security-page .section-padding  { padding: 4rem 1.5rem; }
+
+    /* Audit card */
+    .security-page .audit-card {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+    }
+    .security-page .audit-title { font-size: 1.7rem; }
+    .security-page .audit-desc  { font-size: 1rem; }
+    .security-page .audit-checklist { grid-template-columns: 1fr; gap: 1rem; }
+
+    /* VIP card */
+    .security-page .vip-card-container {
+        padding: 2.5rem 1.5rem;
+        border-radius: 24px;
+        gap: 2rem;
+    }
+    .security-page .vip-title {
+        font-size: clamp(1.4rem, 7vw, 2rem);
+        margin-bottom: 1.5rem;
+    }
+    .security-page .vip-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Stack buttons vertically */
+    .security-page .vip-btn-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .security-page .vip-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 1.2rem 2rem;
+        text-align: center;
+    }
+
+    /* CTA glass */
+    .security-page .cta-glass-card  { padding: 3rem 1.5rem; border-radius: 20px; }
+    .security-page .cta-glass-title { font-size: clamp(1.4rem, 6vw, 2rem); }
+    .security-page .cta-glass-description { font-size: 1rem; margin-bottom: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .security-page .hero-title         { font-size: 1.6rem; }
+    .security-page .vip-card-container { padding: 2rem 1rem; }
+    .security-page .audit-card         { padding: 1.5rem 1rem; }
+    .security-page .cta-glass-card     { padding: 2.5rem 1rem; }
 }

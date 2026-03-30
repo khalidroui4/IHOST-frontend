@@ -86,7 +86,7 @@ const WebsiteBuilder = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button className="btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, fontSize: '1.1rem' }}>Voir la Démo E-commerce</button>
+                                <button className="btn mss-btn" style={{ padding: '1.4rem 4rem', borderRadius: '100px', fontWeight: 800, fontSize: '1.1rem' }}>Voir la Démo E-commerce</button>
                             </div>
                             <div className="mss-visual-wrapper">
                                 <div className="mss-visual-card">

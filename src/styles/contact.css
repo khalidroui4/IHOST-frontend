@@ -200,7 +200,13 @@
         padding: 6rem 1rem 4rem;
     }
     
-    .contact-form-card {
+    .contact-form-card, .contact-info-card {
         padding: 2.5rem 1.5rem;
+    }
+    
+    .submit-btn {
+        padding: 1rem;
+        white-space: normal !important;
+        font-size: 0.95rem;
     }
 }

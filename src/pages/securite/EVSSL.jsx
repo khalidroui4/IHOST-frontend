@@ -84,7 +84,7 @@ const EVSSL = () => {
                     </div>
                 </section>
 
-                <section style={{ padding: '8rem 0', background: 'white' }}>
+                <section style={{ padding: '8rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
                         <div className="bg-tech-dark vip-card-container">
                             <div className="pattern-grid-tech" style={{ opacity: 0.1 }} />
@@ -94,9 +94,9 @@ const EVSSL = () => {
                                 <p className="vip-description">
                                     Le processus de validation EV demande une précision extrême. Nos consultants vous assistent dans la préparation de chaque document pour une émission prioritaire.
                                 </p>
-                                <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                    <button className="btn btn-primary" style={{ padding: '1.4rem 4rem' }}>DÉMARRER L'AUDIT</button>
-                                    <button className="btn btn-outline" style={{ padding: '1.4rem 4rem', color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>VOIR LES DOCUMENTS</button>
+                                <div className="vip-btn-group">
+                                    <button className="btn btn-primary vip-btn">DÉMARRER L'AUDIT</button>
+                                    <button className="btn btn-outline vip-btn" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>VOIR LES DOCUMENTS</button>
                                 </div>
                             </div>
                         </div>

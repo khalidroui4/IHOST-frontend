@@ -167,7 +167,7 @@ const Home = () => {
                             zIndex: 0
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%' }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '0 1rem' }}>
+                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '1rem' }}>
                                 <h1 className="font-tech hero-title">Hébergez votre projet en<br className="desktop-br"/>toute confiance avec IHOST</h1>
                                 <p className="hero-subtext">Solutions d'hébergement fiables, noms de domaine et<br className="desktop-br"/>support technique pour particuliers et entreprises au Maroc.</p>
                                 <div className="hero-buttons">

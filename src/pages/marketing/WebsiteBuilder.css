@@ -115,9 +115,7 @@
     border: 1px solid rgba(11, 31, 58, 0.1);
 }
 
-.marketing-page .mss-content {
-    flex: 1.2;
-}
+.marketing-page .mss-content { flex: 1.2; }
 
 .marketing-page .mss-title {
     font-size: 3rem;
@@ -149,9 +147,7 @@
     color: #0B1F3A;
 }
 
-.marketing-page .mss-visual-wrapper {
-    flex: 1;
-}
+.marketing-page .mss-visual-wrapper { flex: 1; }
 
 .marketing-page .mss-visual-card {
     padding: 5rem;
@@ -176,8 +172,49 @@
     position: relative;
     z-index: 1;
 }
+
+/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .marketing-page .mss-visual-wrapper {
-        display: none;
+    .marketing-page .mss-visual-wrapper { display: none; }
+}
+
+@media (max-width: 768px) {
+    .marketing-page .hero-title       { font-size: 2.2rem; }
+    .marketing-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .marketing-page .section-title    { font-size: 1.9rem; letter-spacing: -0.5px; }
+    .marketing-page .section-subtitle { font-size: 1rem; }
+    .marketing-page .section-padding  { padding: 4rem 1.5rem; }
+
+    .marketing-page .builder-grid     { grid-template-columns: 1fr; }
+    .marketing-page .builder-card     { padding: 2.5rem 1.5rem; border-radius: 24px; }
+
+    .marketing-page .mss-card-container {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+        border-radius: 28px;
     }
+    .marketing-page .mss-title        { font-size: 2rem; }
+    .marketing-page .mss-description  { font-size: 1.05rem; margin-bottom: 2rem; }
+    .marketing-page .mss-checklist    { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .marketing-page .mss-check-item   { font-size: 0.95rem; }
+
+    .marketing-page .mss-btn {
+        padding: 1.2rem 1.5rem !important;
+        font-size: 0.95rem !important;
+        width: 100%;
+        white-space: normal !important;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .marketing-page .cta-container    { padding: 3rem 1.5rem; border-radius: 28px; }
+}
+
+@media (max-width: 480px) {
+    .marketing-page .hero-title       { font-size: 1.8rem; }
+    .marketing-page .mss-card-container { padding: 2rem 1rem; }
+    .marketing-page .mss-title        { font-size: 1.7rem; }
+    .marketing-page .cta-container    { padding: 2.5rem 1rem; }
+    .marketing-page .mss-btn          { font-size: 0.9rem !important; }
 }

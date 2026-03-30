@@ -53,12 +53,12 @@ h4,
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 16px;
 }
 
 .glass-card-dark {
@@ -454,10 +454,41 @@ h4,
 @media (max-width: 768px) {
   .container-luxe {
     padding: 1.5rem 1rem;
+    min-height: auto !important;
+  }
+  /* Domain Search Fixes */
+  .domain-search-wrapper {
+    padding: 0.5rem !important;
+    border-radius: 24px !important;
+    max-width: 100% !important;
+  }
+  .domain-search-wrapper form {
+    flex-direction: column !important;
+    border-radius: 20px !important;
+    padding: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+  .domain-search-wrapper input {
+    width: 100% !important;
+    font-size: 1rem !important;
+    padding: 0.75rem !important;
+    text-align: center !important;
+    border-radius: 12px !important;
+  }
+  .domain-search-wrapper button {
+    width: 100% !important;
+    border-radius: 12px !important;
+    justify-content: center !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+  }
+  .domain-search-wrapper svg {
+    display: none !important; 
   }
   .hero h1 {
-    font-size: 2.25rem;
+    font-size: 2.827rem !important;
     word-break: break-word;
+    line-height: 1.2 !important;
   }
   .hero-buttons {
     flex-direction: column;
@@ -496,14 +527,18 @@ h4,
   }
 
   .global-back-button,
-  .scroll-to-top {
-    bottom: 1rem;
+  .chatbot-container {
+    bottom: 1.5rem !important;
   }
   .global-back-button {
-    left: 1rem;
+    left: 1rem !important;
+  }
+  .chatbot-container {
+    right: 1rem !important;
   }
   .scroll-to-top {
-    right: 1rem;
+    bottom: 6rem !important;
+    right: 1rem !important;
   }
 
   /* Dashboard Layouts Mobile */
@@ -547,26 +582,66 @@ h4,
   }
 
   /* Hero Fixes */
-  .hero-title {
-    font-size: clamp(2rem, 8vw, 3.8rem) !important;
-    margin-bottom: 1rem !important;
-    line-height: 1.2;
+  .hero {
+    padding-top: 5rem !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
-  .desktop-br {
-    display: none;
+  .hero-background {
+    padding-top: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+  }
+  .hero-content {
+    text-align: center !important;
+    padding: 0.5rem !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+  }
+  .hero-content > div {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 8vw, 3.8rem) !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.2 !important;
+    word-break: break-word !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   .hero-subtext {
     font-size: 1rem !important;
     margin-bottom: 2rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
   }
   .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+    width: 100% !important;
   }
   .hero-btn {
     width: 100%;
     justify-content: center;
+  }
+  @media (max-width: 400px) {
+    .hero-title,
+    .hero h1 {
+      font-size: 1.4rem !important;
+    }
+  }
+  .desktop-br {
+    display: none;
   }
   .domain-search-form {
     flex-wrap: wrap;
@@ -598,6 +673,50 @@ h4,
     flex-direction: column !important;
     gap: 1rem !important;
     margin-top: 1rem;
+  }
+  .reseller-feature-card {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 2.5rem 1.5rem !important;
+    gap: 1.5rem !important;
+  }
+  .reseller-feature-content {
+    text-align: center !important;
+  }
+  .email-feature-split {
+    flex-direction: column !important;
+    padding: 2.5rem 1.5rem !important;
+    gap: 2.5rem !important;
+    text-align: center !important;
+  }
+  .email-feature-split h2 {
+    font-size: 2.2rem !important;
+  }
+  .email-cta-box {
+    padding: 3rem 1.5rem !important;
+  }
+  .email-cta-box h2 {
+    font-size: 2.5rem !important;
+  }
+  .email-cta-box p {
+    font-size: 1.1rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+  .email-cta-box .btn {
+    padding: 1.2rem 2rem !important;
+    font-size: 0.9rem !important;
+  }
+  .google-migration-box {
+    padding: 2.5rem 1.5rem !important;
+    border-radius: 24px !important;
+  }
+  .google-migration-box h2 {
+    font-size: 1.8rem !important;
+  }
+  .google-migration-features {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
   }
 }
 
@@ -738,4 +857,179 @@ h4,
 
 .bg-light {
   background: #f5f7fa;
+}
+
+/* ============================================================
+   EMAIL PAGES — MOBILE FIXES (Microsoft365, AntiSpam,
+   EmailSecurity, EmailArchiving)
+   ============================================================ */
+
+/* --- Hero h1 inline fontSize override --- */
+@media (max-width: 768px) {
+  .email-page .hero h1,
+  .email-page h1.font-tech {
+    font-size: clamp(1.8rem, 7vw, 2.8rem) !important;
+    line-height: 1.2 !important;
+    word-break: break-word !important;
+  }
+
+  /* Section padding reduction */
+  .email-page .section-premium,
+  .email-page section {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  /* Section header h2 */
+  .email-page h2 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  /* Features grid — single column on mobile */
+  .email-page .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Auto-fit grids used inline — force single column */
+  .email-page [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* The EmailArchiving "third card spanning 2 cols" — reset */
+  .email-page [style*="gridColumn"] {
+    grid-column: auto !important;
+  }
+
+  /* Flex split sections (icon card + text) → stack vertically */
+  .email-page [style*="display: flex"][style*="gap"],
+  .email-page [style*="display:'flex'"] {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    align-items: stretch !important;
+  }
+
+  /* Large padded CTA/split boxes */
+  .email-page [style*="padding: '5rem'"],
+  .email-page [style*="padding: '5.5rem'"],
+  .email-page [style*="padding: '4rem'"] {
+    padding: 2rem 1.25rem !important;
+    border-radius: 24px !important;
+  }
+
+  /* Guarantee feature check-list grid → single column */
+  .email-page [style*="gridTemplateColumns: '1fr 1fr'"],
+  .email-page [style*='gridTemplateColumns: "1fr 1fr"'] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Extra-small screens */
+@media (max-width: 480px) {
+  .email-page .hero h1,
+  .email-page h1.font-tech {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+
+  .email-page h2 {
+    font-size: clamp(1.4rem, 5.5vw, 1.8rem) !important;
+  }
+
+  .email-page h3 {
+    font-size: 1.15rem !important;
+  }
+
+  .email-page p {
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+  }
+
+  /* CTA boxes */
+  .email-page [style*="padding: '5rem'"],
+  .email-page [style*="padding: '4rem'"],
+  .email-page [style*="padding: '3rem'"] {
+    padding: 1.75rem 1rem !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* --- Specific structural fixes using class selectors --- */
+
+/* Microsoft365: "Prêt pour l'hybride" two-column split */
+@media (max-width: 768px) {
+  .email-page .m365-split-box {
+    flex-direction: column !important;
+    padding: 2.5rem 1.5rem !important;
+    gap: 2.5rem !important;
+  }
+  .email-page .m365-split-box > div {
+    flex: none !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* AntiSpam / EmailArchiving: compat box split */
+  .email-page .compat-split-box {
+    flex-direction: column !important;
+    padding: 2.5rem 1.5rem !important;
+    gap: 2.5rem !important;
+    border-radius: 24px !important;
+  }
+  .email-page .compat-split-box > div {
+    flex: none !important;
+    width: 100% !important;
+  }
+
+  /* EmailSecurity: threat row cards (icon left + text right) */
+  .email-page .threat-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 2rem 1.25rem !important;
+    gap: 1.5rem !important;
+    border-radius: 20px !important;
+  }
+  .email-page .threat-row-icon {
+    width: 70px !important;
+    height: 70px !important;
+    border-radius: 18px !important;
+  }
+  .email-page .threat-row-icon svg {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .email-page .threat-row h3 {
+    font-size: 1.3rem !important;
+  }
+  .email-page .threat-row p {
+    font-size: 0.95rem !important;
+  }
+
+  /* EmailArchiving: audit-split box */
+  .email-page .audit-split-box {
+    flex-direction: column !important;
+    padding: 2.5rem 1.5rem !important;
+    gap: 2.5rem !important;
+    border-radius: 24px !important;
+  }
+  .email-page .audit-split-box > div {
+    flex: none !important;
+    width: 100% !important;
+  }
+
+  /* 2-col checklist → single column */
+  .email-page .m365-checklist {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* CTA boxes */
+  .email-page .email-cta-box {
+    padding: 2.5rem 1.25rem !important;
+    border-radius: 24px !important;
+  }
+  .email-page .email-cta-box h2 {
+    font-size: clamp(1.4rem, 5.5vw, 2rem) !important;
+  }
 }

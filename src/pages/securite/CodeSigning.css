@@ -79,19 +79,10 @@
     flex-shrink: 0;
 }
 
-.security-page .comparison-icon-red {
-    background: #ef4444;
-    color: white;
-}
+.security-page .comparison-icon-red   { background: #ef4444; color: white; }
+.security-page .comparison-icon-green { background: #10b981; color: white; }
 
-.security-page .comparison-icon-green {
-    background: #10b981;
-    color: white;
-}
-
-.security-page .comparison-content {
-    text-align: left;
-}
+.security-page .comparison-content { text-align: left; }
 
 .security-page .comparison-title-red {
     font-size: 1.8rem;
@@ -131,9 +122,7 @@
     gap: 5rem;
 }
 
-.security-page .mss-content {
-    flex: 1;
-}
+.security-page .mss-content { flex: 1; }
 
 .security-page .mss-title {
     font-size: 2.5rem;
@@ -169,4 +158,47 @@
     color: white;
     text-align: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+    .security-page .hero-title       { font-size: 2.2rem; }
+    .security-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .security-page .section-padding  { padding: 4rem 1.5rem; }
+
+    /* Comparison cards: stack icon above text */
+    .security-page .comparison-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 20px;
+    }
+    .security-page .comparison-icon-wrapper { width: 72px; height: 72px; }
+    .security-page .comparison-title-red,
+    .security-page .comparison-title-green { font-size: 1.4rem; }
+    .security-page .comparison-desc-red,
+    .security-page .comparison-desc-green  { font-size: 1rem; }
+
+    /* MSS split card */
+    .security-page .mss-card-container {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+        border-radius: 24px;
+    }
+    .security-page .mss-title       { font-size: 1.8rem; }
+    .security-page .mss-description { font-size: 1rem; }
+    .security-page .mss-visual-wrapper { display: none; }
+
+    .security-page .cta-container {
+        padding: 3rem 1.5rem;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .security-page .hero-title       { font-size: 1.8rem; }
+    .security-page .comparison-card  { padding: 1.5rem 1rem; }
+    .security-page .mss-card-container { padding: 1.5rem 1rem; }
 }

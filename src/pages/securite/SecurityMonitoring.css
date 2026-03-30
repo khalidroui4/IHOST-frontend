@@ -1,3 +1,4 @@
+/* SecurityMonitoring.css */
 .security-page .hero-background-gradient {
     background: linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%);
     position: relative;
@@ -91,19 +92,10 @@
     flex-shrink: 0;
 }
 
-.security-page .benefit-icon-blue {
-    background: rgba(59, 130, 246, 0.1);
-    color: #1E6BFF;
-}
+.security-page .benefit-icon-blue  { background: rgba(59, 130, 246, 0.1); color: #1E6BFF; }
+.security-page .benefit-icon-green { background: rgba(16, 185, 129, 0.1); color: #10b981; }
 
-.security-page .benefit-icon-green {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.security-page .benefit-content {
-    text-align: left;
-}
+.security-page .benefit-content { text-align: left; }
 
 .security-page .benefit-title {
     font-size: 1.8rem;
@@ -129,9 +121,7 @@
     gap: 5rem;
 }
 
-.security-page .mss-content {
-    flex: 1;
-}
+.security-page .mss-content { flex: 1; }
 
 .security-page .mss-title {
     font-size: 2.5rem;
@@ -181,4 +171,49 @@
     color: white;
     text-align: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+    .security-page .hero-title       { font-size: 2.2rem; }
+    .security-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
+    .security-page .section-title    { font-size: 1.9rem; letter-spacing: -0.5px; }
+    .security-page .section-subtitle { font-size: 1rem; }
+    .security-page .section-padding  { padding: 4rem 1.5rem; }
+
+    /* Benefit cards: stack icon above text */
+    .security-page .benefit-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 20px;
+    }
+    .security-page .benefit-icon-wrapper { width: 72px; height: 72px; }
+    .security-page .benefit-title { font-size: 1.4rem; }
+    .security-page .benefit-desc  { font-size: 1rem; }
+
+    /* MSS split card */
+    .security-page .mss-card-container {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+        border-radius: 24px;
+    }
+    .security-page .mss-title       { font-size: 1.8rem; }
+    .security-page .mss-description { font-size: 1rem; }
+    .security-page .mss-checklist   { grid-template-columns: 1fr; gap: 1rem; }
+    .security-page .mss-visual-wrapper { display: none; }
+
+    .security-page .cta-container {
+        padding: 3rem 1.5rem;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .security-page .hero-title    { font-size: 1.8rem; }
+    .security-page .section-title { font-size: 1.6rem; }
+    .security-page .benefit-card  { padding: 1.5rem 1rem; }
+    .security-page .mss-card-container { padding: 1.5rem 1rem; }
 }
