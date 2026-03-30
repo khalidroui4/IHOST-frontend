@@ -7,7 +7,7 @@ import { fetchNotifications } from '../../store/slices/notificationSlice';
 import {
     LayoutDashboard, Server, Globe, ShoppingCart, CreditCard,
     HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
-    Package, FileText
+    Package, FileText, Menu
 } from 'lucide-react';
 import LogoutConfirmModal from '../LogoutConfirmModal';
 
@@ -58,6 +58,7 @@ const ClientLayout = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         if (user?.id) {
@@ -66,13 +67,17 @@ const ClientLayout = () => {
         }
     }, [dispatch, user]);
 
-
-
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', background: '#f0f4f8', zIndex: 9999, overflow: 'hidden', fontFamily: 'Inter, system-ui, sans-serif' }}>
             
+            {/* Sidebar Overlay for Mobile */}
+            <div 
+                className={`sidebar-overlay ${isSidebarOpen ? '' : 'hidden'}`} 
+                onClick={() => setIsSidebarOpen(false)}
+            />
+
             {/* ═══════════ FIXED SIDEBAR ═══════════ */}
-            <aside style={{ width: '240px', background: '#0B1F3A', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
+            <aside className={`app-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ width: '240px', background: '#0B1F3A', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
                 
                 {/* Logo */}
                 <div style={{ padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
@@ -139,13 +144,21 @@ const ClientLayout = () => {
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
                 {/* ── TOPBAR ── */}
-                <header style={{ height: '64px', background: '#e3eff6', borderBottom: '1px solid #cbcbcbff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                    {/* Search */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
-                        onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
-                        onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
-                    >
-                        
+                <header className="dashboard-header" style={{ height: '64px', background: '#e3eff6', borderBottom: '1px solid #cbcbcbff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        {/* Mobile Toggle */}
+                        <button className="mobile-header-toggle" onClick={() => setIsSidebarOpen(true)}>
+                            <Menu size={24} color="#0B1F3A" />
+                        </button>
+
+                        {/* Search */}
+                        <div className="dashboard-search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
+                            onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
+                            onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
+                        >
+                            
+                        </div>
                     </div>
 
                     {/* Right Side */}
@@ -200,7 +213,7 @@ const ClientLayout = () => {
                     </div>
                 </header>
 
-                <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#e3eff6' }}>
+                <main className="dashboard-main" style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#e3eff6' }}>
                     <Outlet />
                 </main>
             </div>

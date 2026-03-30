@@ -161,12 +161,12 @@ const ClientProfile = () => {
 
     return (
         <PageTransition>
-            <div style={{ paddingTop: '140px', minHeight: '100vh', maxWidth: '1100px', margin: '0 auto', display: 'flex', gap: '4rem', paddingBottom: '4rem', paddingLeft: '2rem', paddingRight: '2rem' }}>
+            <div className="profile-container">
 
                 {/* SIDEBAR */}
-                <div style={{ width: '200px', flexShrink: 0 }}>
+                <div className="profile-sidebar">
                     <h2 style={{ fontSize: '1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Account settings</h2>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                    <ul className="profile-sidebar-list">
                         {tabs.map(tab => (
                             <li key={tab.id}>
                                 <button
@@ -208,7 +208,7 @@ const ClientProfile = () => {
                                 </span>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'flex-start' }}>
+                            <div className="profile-content-wrap">
                                 {/* Avatar */}
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
                                     <div
@@ -230,13 +230,13 @@ const ClientProfile = () => {
                                 </div>
 
                                 {/* Form */}
-                                <form onSubmit={handleProfileSubmit} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                <form onSubmit={handleProfileSubmit} style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                                    <div className="form-row">
                                         <InputField label="First name" value={form.first_name} onChange={e => setForm({ ...form, first_name: e.target.value })} />
                                         <InputField label="Last name" value={form.last_name} onChange={e => setForm({ ...form, last_name: e.target.value })} />
                                     </div>
                                     <InputField label="Username" value={form.username} onChange={e => setForm({ ...form, username: e.target.value })} hint={`ihost.ma/@${form.username || 'user'}`} />
-                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                    <div className="form-row">
                                         <InputField label="Location" value={form.location} placeholder="Casablanca, Maroc" onChange={e => setForm({ ...form, location: e.target.value })} />
                                         <InputField label="Website" value={form.website} placeholder="https://" onChange={e => setForm({ ...form, website: e.target.value })} />
                                     </div>
@@ -255,7 +255,7 @@ const ClientProfile = () => {
                                         <span style={{ fontSize: '0.75rem', color: '#94a3b8', alignSelf: 'flex-end' }}>{form.bio.length}/250</span>
                                     </div>
                                     <InputField label="Interests (comma-separated)" value={form.interests} placeholder="web, hosting, cloud..." onChange={e => setForm({ ...form, interests: e.target.value })} />
-                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                    <div className="form-row">
                                         <InputField label="Instagram" value={form.instagram} placeholder="username" onChange={e => setForm({ ...form, instagram: e.target.value })} hint="@ihost_ma may feature you" />
                                         <InputField label="X (Twitter)" value={form.twitter} placeholder="username" onChange={e => setForm({ ...form, twitter: e.target.value })} hint="@ihost_ma may feature you" />
                                     </div>

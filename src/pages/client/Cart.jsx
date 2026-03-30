@@ -63,11 +63,11 @@ const Cart = () => {
                     </Link>
                 </div>
             ) : (
-                <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: '1fr 340px', alignItems: 'start' }}>
+                <div className="cart-layout" style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: '1fr 340px', alignItems: 'start' }}>
                     {/* Cart Items */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         {cart.map((item, idx) => (
-                            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'white', padding: '1.25rem 1.5rem', borderRadius: '14px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                            <div key={idx} className="cart-item-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'white', padding: '1.25rem 1.5rem', borderRadius: '14px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                                 <div>
                                     <h3 style={{ margin: '0 0 0.2rem 0', fontSize: '1rem', fontWeight: 700, color: '#0B1F3A' }}>
                                         {item.nameService} {item.domainName ? `: ${item.domainName}` : ''}
@@ -76,7 +76,7 @@ const Cart = () => {
                                         {item.domainName ? (item.durationMonths / 12) + (item.durationMonths / 12 > 1 ? ' Ans' : ' An') : item.durationMonths + ' Mois'}
                                     </p>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                                <div className="cart-item-actions" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                                     <div style={{ textAlign: 'right' }}>
                                         <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E6BFF' }}>
                                             {item.domainName 

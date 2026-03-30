@@ -243,16 +243,114 @@
 }
 
 @media (max-width: 900px) {
+    .auth-page-wrapper {
+        padding: 5rem 0.75rem 2rem;
+        align-items: flex-start;
+    }
+
     .auth-container-sliding {
         flex-direction: column;
         height: auto;
+        min-height: unset;
+        border-radius: 20px;
     }
-    .auth-image-panel, .auth-form-panel {
-        position: relative;
-        width: 100%;
-        left: 0;
+
+    /* Override absolute positioning — stack image on top, form below */
+    .auth-image-panel,
+    .auth-form-panel {
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        transform: none !important;
     }
+
     .auth-image-panel {
-        height: 250px;
+        height: 220px;
+        z-index: 1;
+    }
+
+    .auth-overlay.sliding-overlay {
+        padding: 2rem 1.5rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .auth-image-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .auth-image-content p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .auth-image-footer {
+        margin-top: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .auth-form-panel {
+        height: auto !important;
+        z-index: 2;
+    }
+
+    .auth-form-content-wrapper {
+        padding: 1.5rem 1.25rem;
+        overflow-y: auto;
+    }
+
+    .auth-form-container {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .auth-title {
+        font-size: 1.7rem;
+    }
+
+    .auth-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-page-wrapper {
+        padding: 5rem 0.25rem 1.5rem;
+    }
+
+    .auth-container-sliding {
+        border-radius: 16px;
+    }
+
+    .auth-overlay.sliding-overlay {
+        padding: 1.5rem 1rem;
+    }
+
+    .auth-image-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-auth-link {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.85rem;
+        margin-top: 12px;
+    }
+
+    .auth-form-content-wrapper {
+        padding: 1.5rem 1rem;
+    }
+
+    .auth-title {
+        font-size: 1.45rem;
+    }
+
+    .auth-subtitle {
+        font-size: 0.72rem;
     }
 }

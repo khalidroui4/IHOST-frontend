@@ -58,6 +58,11 @@
     transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Hide the mobile-only action block on desktop (it lives inside the pill nav on desktop) */
+.navbar-links-wrapper .navbar-action {
+    display: none;
+}
+
 .navbar-links {
     display: flex;
     align-items: center;
@@ -306,4 +311,182 @@
     background-color: #1d4ed8;
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(29, 78, 216, 0.4);
+}
+
+/* Mobile Menu Toggle Button */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 1024px) {
+    .navbar-container {
+        grid-template-columns: auto 1fr auto;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* Show hamburger button */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+    }
+
+    /* HIDE the desktop sign-in button & actions from the top bar on mobile */
+    .navbar-container > .navbar-action {
+        display: none !important;
+    }
+
+    .navbar-links-wrapper {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: min(85vw, 360px);
+        height: 100dvh;
+        background: rgba(11, 31, 58, 0.98);
+        backdrop-filter: blur(20px);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0;
+        padding: 5rem 1.25rem 2rem;
+        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        z-index: 999;
+        box-sizing: border-box;
+    }
+
+    .navbar-links-wrapper.mobile-open {
+        right: 0;
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 0.25rem;
+    }
+
+    .navbar-links li {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Override flex row from base: make dropdown stack below the nav link */
+    .nav-item-dropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .nav-item-dropdown > a {
+        width: 100%;
+    }
+
+    .navbar-links li a {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.85rem 1rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+        border-radius: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        white-space: normal;
+    }
+
+    .nav-dropdown-menu {
+        position: static;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 10px;
+        box-shadow: none;
+        padding: 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: none;
+        margin-top: 0.5rem;
+        overflow: hidden;
+    }
+
+    .nav-item-dropdown.active .nav-dropdown-menu {
+        display: block;
+    }
+
+    .nav-dropdown-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        width: 100%;
+    }
+
+    .nav-dropdown-item {
+        padding: 0.65rem 0.5rem;
+        gap: 0.75rem;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        align-items: center;
+    }
+
+    /* Text container must stretch to fill remaining width */
+    .nav-dropdown-desc-container {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    /* Hide description on mobile - only show title */
+    .nav-dropdown-desc {
+        display: none;
+    }
+
+    .nav-dropdown-icon {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        border-radius: 8px;
+    }
+
+    .nav-dropdown-title {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: white;
+        display: block;
+        width: 100%;
+    }
+
+    /* Sign-in button inside the mobile sidebar panel */
+    .navbar-links-wrapper .navbar-action {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        justify-content: flex-start;
+    }
+
+    .navbar-action .btn-client-area {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.9rem;
+        padding: 0.85rem 1.25rem;
+    }
 }

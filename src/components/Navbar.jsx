@@ -4,7 +4,7 @@ import { logout } from '../store/slices/authSlice';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LogoutConfirmModal from './LogoutConfirmModal';
 import './Navbar.css';
-import { ArrowUpRight, ChevronDown, ShoppingCart, LayoutDashboard, Settings } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, ShoppingCart, LayoutDashboard, Settings, Menu, X } from 'lucide-react';
 import { navData } from '../data/navData';
 
 const Navbar = () => {
@@ -12,6 +12,7 @@ const Navbar = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [profileDropdown, setProfileDropdown] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -39,6 +40,12 @@ const Navbar = () => {
         };
     }, []);
 
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [isMobileMenuOpen]);
+
     const toggleDropdown = (e, index) => {
         e.preventDefault();
         setActiveDropdown(activeDropdown === index ? null : index);
@@ -47,15 +54,15 @@ const Navbar = () => {
     return (
         <nav className={`custom-navbar ${scrolled ? 'scrolled' : ''}`} ref={navRef}>
             <div className="navbar-container">
-                <div className={`navbar-logo ${scrolled ? 'nav-hidden' : ''}`}>
+                <div className={`navbar-logo ${scrolled && !isMobileMenuOpen ? 'nav-hidden' : ''}`}>
                     <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                         <img src="/logo.jpeg" alt="IHOST Logo" style={{ height: '55px', objectFit: 'contain' }} />
                     </Link>
                 </div>
 
-                <div className="navbar-links-wrapper">
+                <div className={`navbar-links-wrapper ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
                     <ul className="navbar-links">
-                        <li><Link to="/" className="active">Accueil</Link></li>
+                        <li><Link to="/" className="active" onClick={() => setIsMobileMenuOpen(false)}>Accueil</Link></li>
 
                         {navData.map((category, index) => (
                             <li key={index} className={`nav-item-dropdown ${activeDropdown === index ? 'active' : ''}`}>
@@ -73,7 +80,10 @@ const Navbar = () => {
                                                 to={item.href}
                                                 key={idx}
                                                 className="nav-dropdown-item"
-                                                onClick={() => setActiveDropdown(null)}
+                                                onClick={() => {
+                                                    setActiveDropdown(null);
+                                                    setIsMobileMenuOpen(false);
+                                                }}
                                             >
                                                 <div className="nav-dropdown-icon">
                                                     {item.icon ? <item.icon size={20} /> : <div style={{ width: 20, height: 20 }} />}
@@ -89,6 +99,30 @@ const Navbar = () => {
                             </li>
                         ))}
                     </ul>
+
+                    {/* Sign-in / User actions rendered INSIDE the sidebar on mobile */}
+                    <div className="navbar-action">
+                        {isAuthenticated ? (
+                            <>
+                                <Link to={isAdmin ? '/admin/dashboard' : '/client/dashboard'}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.75rem 1rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)', marginBottom: '0.5rem' }}
+                                >
+                                    <LayoutDashboard size={16} /> {isAdmin ? 'Admin Dashboard' : 'Espace Client'}
+                                </Link>
+                                <button
+                                    onClick={() => { setShowLogoutModal(true); setIsMobileMenuOpen(false); }}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', width: '100%', padding: '0.75rem 1rem', color: '#f87171', background: 'rgba(239,68,68,0.08)', border: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}
+                                >
+                                    Déconnexion
+                                </button>
+                            </>
+                        ) : (
+                            <Link to="/signUp" className="btn-client-area" onClick={() => setIsMobileMenuOpen(false)}>
+                                S'inscrire <ArrowUpRight size={16} strokeWidth={3} />
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 <div className={`navbar-action ${scrolled ? 'nav-hidden' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -177,11 +211,19 @@ const Navbar = () => {
                             </div>
                         </>
                     ) : (
-                        <Link to="/signUp" className="btn-client-area">
+                        <Link to="/signUp" className="btn-client-area" onClick={() => setIsMobileMenuOpen(false)}>
                             S'inscrire <ArrowUpRight size={16} strokeWidth={3} />
                         </Link>
                     )}
                 </div>
+
+                {/* Mobile Hamburger Button */}
+                <button 
+                    className="mobile-menu-btn" 
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                </button>
             </div>
             <LogoutConfirmModal 
                 isOpen={showLogoutModal} 

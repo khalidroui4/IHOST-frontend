@@ -50,27 +50,18 @@ const Home = () => {
     };
 
     const domainSearchContent = (
-        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative' }}>
+        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative', width: '100%', padding: '0 1rem' }}>
             <form 
+                className="domain-search-form"
                 onSubmit={handleSearch}
-                style={{
-                    background: '#e3eff6',
-                    borderRadius: '50px',
-                    padding: '6px 6px 6px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
-                    marginBottom: '2rem',
-                    gap: '0.5rem',
-                }}
             >
-                <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} />
+                <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} className="search-icon-mobile" />
                 <input
                     type="text"
                     placeholder="exemple.ma"
                     value={domainQuery}
                     onChange={(e) => setDomainQuery(e.target.value)}
-                    style={{ flex: 1, border: 'none', outline: 'none', padding: '0.75rem 0.5rem', fontSize: '1.05rem', color: '#1E6BFF', background: 'transparent', fontWeight: 600, minWidth: 0 }}
+                    className="domain-search-input"
                 />
                 {/* Domain selector button */}
                 <div style={{ position: 'relative' }} ref={dropdownRef}>
@@ -129,25 +120,14 @@ const Home = () => {
                 </div>
                 <button 
                     type="submit"
-                    style={{
-                        background: '#1E6BFF',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '50px',
-                        padding: '0.75rem 1.5rem',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        transition: 'all 0.2s'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = '#0043C0'}
-                    onMouseLeave={e => e.currentTarget.style.background = '#1E6BFF'}
+                    className="domain-search-btn"
                 >
                     Rechercher
                 </button>
             </form>
 
             {/* Feature Highlights */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', alignItems: 'center', padding: '0 1rem', color: '#E2E8F0', fontSize: '1.05rem', fontWeight: 400 }}>
+            <div className="hero-feature-highlights">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <Zap size={20} color="#FBBF24" fill="#FBBF24" /> Activation rapide
                 </div>
@@ -184,15 +164,15 @@ const Home = () => {
                             mixBlendMode: 'luminosity',
                             zIndex: 0
                         }} />
-                        <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                                <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Hébergez votre projet en<br />toute confiance avec IHOST</h1>
-                                <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Solutions d'hébergement fiables, noms de domaine et<br />support technique pour particuliers et entreprises au Maroc.</p>
-                                <div className="hero-buttons" style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
-                                    <Link to="/signup" style={{ background: '#e3eff6', color: '#1E6BFF', padding: '1.2rem 2.5rem', borderRadius: '50px', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
+                        <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%', overflow: 'hidden' }}>
+                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '0 1rem' }}>
+                                <h1 className="font-tech hero-title">Hébergez votre projet en<br className="desktop-br"/>toute confiance avec IHOST</h1>
+                                <p className="hero-subtext">Solutions d'hébergement fiables, noms de domaine et<br className="desktop-br"/>support technique pour particuliers et entreprises au Maroc.</p>
+                                <div className="hero-buttons">
+                                    <Link to="/signup" className="hero-btn">
                                         Commencer maintenant <ArrowUpRight size={20} strokeWidth={2.5} />
                                     </Link>
-                                    <Link to="/pricing" style={{ background: '#e3eff6', color: '#1E6BFF', padding: '1.2rem 2.5rem', borderRadius: '50px', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
+                                    <Link to="/pricing" className="hero-btn hero-btn-outline">
                                         Voir les offres <ArrowUpRight size={20} strokeWidth={2.5} />
                                     </Link>
                                 </div>
@@ -212,7 +192,7 @@ const Home = () => {
                         </div>
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
                             gap: '2.5rem',
                             maxWidth: '1250px',
                             margin: '0 auto'
