@@ -50,10 +50,11 @@ const Home = () => {
     };
 
     const domainSearchContent = (
-        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative', width: '100%', padding: '0 1rem' }}>
+        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative', width: '100%', padding: '0 1rem', overflow: 'visible' }}>
             <form 
                 className="domain-search-form"
                 onSubmit={handleSearch}
+                style={{ overflow: 'visible' }}
             >
                 <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} className="search-icon-mobile" />
                 <input
@@ -90,12 +91,13 @@ const Home = () => {
                         {selectedDomain} <ChevronDown size={15} />
                     </button>
                     {isDropdownOpen && (
-                        <ul style={{
+                        <ul className="domain-dropdown-list" style={{
                             position: 'absolute',
-                            right: 0,
                             top: 'calc(100% + 8px)',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
                             background: '#0B1F3A',
-                            width: '150px',
+                            width: '140px',
                             boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
                             borderRadius: '16px',
                             padding: '0.5rem',
@@ -164,7 +166,7 @@ const Home = () => {
                             mixBlendMode: 'luminosity',
                             zIndex: 0
                         }} />
-                        <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%', overflow: 'hidden' }}>
+                        <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%' }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '0 1rem' }}>
                                 <h1 className="font-tech hero-title">Hébergez votre projet en<br className="desktop-br"/>toute confiance avec IHOST</h1>
                                 <p className="hero-subtext">Solutions d'hébergement fiables, noms de domaine et<br className="desktop-br"/>support technique pour particuliers et entreprises au Maroc.</p>
@@ -177,7 +179,7 @@ const Home = () => {
                                     </Link>
                                 </div>
                             </div>
-                            <div style={{ marginTop: '4rem' }}>
+                            <div style={{ marginTop: '4rem', overflow: 'visible' }}>
                                 {domainSearchContent}
                             </div>
                         </div>
