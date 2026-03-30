@@ -51,7 +51,7 @@ const AdminLayout = () => {
             />
 
             {/* ═══════════ FIXED SIDEBAR ═══════════ */}
-            <aside className={`app-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ width: '240px', background: '#2B2B2B', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
+            <aside className={`app-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ width: '240px', background: '#0B1F3A', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
                 
                 {/* Logo */}
                 <div style={{ padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
@@ -81,8 +81,8 @@ const AdminLayout = () => {
                                                 textDecoration: 'none', fontWeight: isActive ? 700 : 500,
                                                 fontSize: '0.875rem', transition: 'all 0.15s',
                                                 color: isActive ? '#ffffff' : 'rgba(255,255,255,0.55)',
-                                                background: isActive ? 'rgba(239,68,68,0.15)' : 'transparent',
-                                                borderLeft: isActive ? '3px solid #ef4444' : '3px solid transparent',
+                                                background: isActive ? 'rgba(30,107,255,0.15)' : 'transparent',
+                                                borderLeft: isActive ? '3px solid #1E6BFF' : '3px solid transparent',
                                             }}
                                         >
                                             <Icon size={17} />
@@ -113,7 +113,7 @@ const AdminLayout = () => {
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
                 {/* ── TOPBAR ── */}
-                <header className="dashboard-header" style={{ height: '64px', background: 'white', borderBottom: '1px solid #e5eaf0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <header className="dashboard-header" style={{ height: '64px', background: '#e3eff6', borderBottom: '1px solid #cbcbcbff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         {/* Mobile Toggle */}
@@ -123,7 +123,7 @@ const AdminLayout = () => {
 
                         {/* Search */}
                         <div className="dashboard-search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem',  padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
-                            onFocus={e => (e.currentTarget.style.borderColor = '#ef4444')}
+                            onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
                             onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
                         >
                             
@@ -135,7 +135,7 @@ const AdminLayout = () => {
 
                         {/* User Avatar */}
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '10px', transition: 'background 0.15s' }}>
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444, #dc2626)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
                                 {user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'A'}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
@@ -147,7 +147,7 @@ const AdminLayout = () => {
                 </header>
 
                 {/* ── CONTENT (Outlet renders child pages here) ── */}
-                <main className="dashboard-main" style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#f0f4f8' }}>
+                <main className="dashboard-main" style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#e3eff6' }}>
                     <Outlet />
                 </main>
             </div>
