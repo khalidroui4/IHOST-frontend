@@ -70,9 +70,6 @@ import Contact from "./pages/entreprise/Contact";
 import Chatbot from "./components/chat/Chatbot";
 import ClientLayout from "./components/client/ClientLayout";
 import AdminLayout from "./components/admin/AdminLayout";
-
-import { useLocation } from "react-router-dom";
-
 // Client Routes
 import ProtectedRoute from "./components/ProtectedRoute";
 import ClientDashboard from "./pages/client/Dashboard";
@@ -93,8 +90,24 @@ import AdminOrders from "./pages/admin/Orders";
 import AdminServices from "./pages/admin/Services";
 import AdminSupport from "./pages/admin/Support";
 
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkAuth } from "./store/slices/authSlice";
+import { fetchCart } from "./store/slices/cartSlice";
+
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('iHostToken');
+    if (token) {
+      dispatch(checkAuth());
+      dispatch(fetchCart());
+    }
+  }, [dispatch]);
+
   const isClientRoute = location.pathname.startsWith('/client') || location.pathname.startsWith('/admin');
   const hideNavbarRoutes = ["/welcome"];
   const showNavbar = !hideNavbarRoutes.includes(location.pathname) && !isClientRoute;

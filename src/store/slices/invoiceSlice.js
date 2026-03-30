@@ -18,6 +18,15 @@ export const fetchInvoices = createAsyncThunk('invoices/fetch', async (userId, {
     }
 });
 
+export const payInvoice = createAsyncThunk('invoices/pay', async (idFacture, { rejectWithValue }) => {
+    try {
+        const res = await axios.post(`${API_URL}/pay`, { idFacture }, authHeader());
+        return res.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || { message: 'Payment failed' });
+    }
+});
+
 const invoiceSlice = createSlice({
     name: 'invoices',
     initialState: {

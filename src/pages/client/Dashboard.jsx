@@ -1,52 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders } from '../../store/slices/orderSlice';
-import { fetchDomains } from '../../store/slices/domainSlice';
-import { fetchSubscriptions } from '../../store/slices/subscriptionSlice';
-import { fetchInvoices } from '../../store/slices/invoiceSlice';
+import { fetchDashboardData } from '../../store/slices/dashboardSlice';
 import { Link } from 'react-router-dom';
 import {
     LayoutDashboard, Globe, Server, CreditCard, Bell,
     ShoppingCart, CheckCircle2, AlertCircle, Activity, Clock,
-    Plus, ChevronRight, Shield, ArrowUpRight
+    Plus, ChevronRight, Shield, ArrowUpRight, Loader2
 } from 'lucide-react';
 
 const ClientDashboard = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
-    const { items: orders } = useSelector(state => state.orders);
-    const { items: domains } = useSelector(state => state.domains);
-    const { items: subscriptions } = useSelector(state => state.subscriptions);
-    const { items: invoices } = useSelector(state => state.invoices);
-    const { items: notifications } = useSelector(state => state.notifications);
-    const [isLoading, setIsLoading] = useState(true);
+    const { stats, recentActivity, notifications, isLoading, error } = useSelector(state => state.dashboard);
 
     useEffect(() => {
-        if (user?.id) {
-            Promise.all([
-                dispatch(fetchOrders(user.id)),
-                dispatch(fetchDomains(user.id)),
-                dispatch(fetchSubscriptions(user.id)),
-                dispatch(fetchInvoices(user.id))
-            ]).finally(() => setIsLoading(false));
-        }
-    }, [dispatch, user]);
+        dispatch(fetchDashboardData());
+    }, [dispatch]);
 
-    const firstName = user?.name?.split(' ')[0] || user?.first_name || 'Client';
+    const displayName = user?.username || user?.first_name || 'Client';
 
-    const activeSubscriptions = subscriptions.filter(s => s.statusSub === 'active' || s.statusSub === 'active');
-    const unpaidInvoices = invoices.filter(i => i.statusFacture !== 'paid');
-
-    const stats = [
-        { label: 'Services Actifs', value: activeSubscriptions.length || '0', icon: Server, color: '#3b82f6', bg: '#eff6ff', accent: '#3b82f6' },
-        { label: 'Domaines', value: domains.length || '0', icon: Globe, color: '#8b5cf6', bg: '#f5f3ff', accent: '#8b5cf6' },
-        { label: 'Commandes', value: orders.length || '0', icon: ShoppingCart, color: '#10b981', bg: '#ecfdf5', accent: '#10b981' },
-        { label: 'Factures Impayées', value: unpaidInvoices.length || '0', icon: CreditCard, color: '#ef4444', bg: '#fef2f2', accent: '#ef4444' },
+    const statCards = [
+        { label: 'Services Actifs', value: stats.activeServices, icon: Server, color: '#3b82f6', bg: '#eff6ff', accent: '#3b82f6' },
+        { label: 'Domaines', value: stats.domains, icon: Globe, color: '#8b5cf6', bg: '#f5f3ff', accent: '#8b5cf6' },
+        { label: 'Commandes', value: stats.totalOrders, icon: ShoppingCart, color: '#10b981', bg: '#ecfdf5', accent: '#10b981' },
+        { label: 'Factures Impayées', value: stats.unpaidInvoices, icon: CreditCard, color: '#ef4444', bg: '#fef2f2', accent: '#ef4444' },
     ];
 
     /* ─── Shared Styles ─── */
-    const card = { background: 'white', borderRadius: '16px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' };
-    const sectionTitle = { margin: '0 0 1.25rem 0', fontSize: '1rem', fontWeight: 800, color: '#0B1F3A' };
+    const cardStyle = { background: 'white', borderRadius: '16px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' };
+    const sectionTitleStyle = { margin: '0 0 1.25rem 0', fontSize: '1rem', fontWeight: 800, color: '#0B1F3A' };
+
+    if (isLoading) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', gap: '1rem', color: '#64748b' }}>
+                <Loader2 className="animate-spin" size={40} />
+                <p style={{ fontWeight: 600 }}>Chargement de votre tableau de bord...</p>
+            </div>
+        );
+    }
 
     return (
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
@@ -57,7 +48,7 @@ const ClientDashboard = () => {
                 <div style={{ position: 'relative', zIndex: 1 }}>
                     <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem', fontWeight: 600, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '1px' }}>Tableau de Bord</p>
                     <h2 style={{ margin: '0 0 0.4rem 0', fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.5px' }}>
-                        Bonjour, <span style={{ color: '#60a5fa' }}>{firstName}</span>  
+                        Bonjour, <span style={{ color: '#60a5fa' }}>{displayName}</span>  
                     </h2>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: '#cbd5e1', maxWidth: '440px' }}>
                         Bienvenue dans votre espace client IHOST. Gérez vos services et infrastructures en toute simplicité.
@@ -72,8 +63,8 @@ const ClientDashboard = () => {
 
             {/* ── Stat Cards ── */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
-                {stats.map(({ label, value, icon: Icon, bg, color, accent }) => (
-                    <div key={label} style={{ ...card, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderBottom: `3px solid ${accent}`, transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'default' }}
+                {statCards.map(({ label, value, icon: Icon, bg, color, accent }) => (
+                    <div key={label} style={{ ...cardStyle, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderBottom: `3px solid ${accent}`, transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'default' }}
                         onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.08)'; }}
                         onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}
                     >
@@ -88,48 +79,35 @@ const ClientDashboard = () => {
                 ))}
             </div>
 
-            {/* ── Main Grid: Services + Sidebar ── */}
+            {/* ── Main Grid: Activity + Quick Links ── */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.25rem' }}>
 
-                {/* Services Table */}
-                <div style={{ ...card, padding: '1.75rem', display: 'flex', flexDirection: 'column' }}>
+                {/* Activity Timeline */}
+                <div style={{ ...cardStyle, padding: '1.75rem', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                        <h3 style={sectionTitle}>Mes Services Récents</h3>
-                        <Link to="/client/services" style={{ fontSize: '0.82rem', fontWeight: 600, color: '#1E6BFF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <h3 style={sectionTitleStyle}>Activité Récente</h3>
+                        <Link to="/client/orders" style={{ fontSize: '0.82rem', fontWeight: 600, color: '#1E6BFF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                             Tout voir <ChevronRight size={14} />
                         </Link>
                     </div>
-                    {isLoading ? (
-                        <p style={{ color: '#94a3b8', textAlign: 'center', padding: '2rem 0', fontSize: '0.9rem' }}>Chargement des services...</p>
-                    ) : subscriptions.length === 0 ? (
-                        <div style={{ textAlign: 'center', padding: '2rem', borderRadius: '12px', border: '1px dashed #e2e8f0', background: '#fafafa' }}>
-                            <Server size={32} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
-                            <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#64748b' }}>Vous n'avez pas encore de services actifs.</p>
-                            <Link to="/pricing" style={{ color: '#1E6BFF', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                                Parcourir nos offres <ArrowUpRight size={13} />
-                            </Link>
+                    {recentActivity.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '3rem 0', color: '#94a3b8' }}>
+                            <Activity size={40} strokeWidth={1.5} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+                            <p style={{ fontSize: '0.9rem' }}>Aucune activité récente à afficher.</p>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {subscriptions.slice(0, 3).map((s) => (
-                                <div key={s.idSub} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.25rem', borderRadius: '12px', background: '#f8fafc', border: '1px solid #f1f5f9', transition: 'background 0.15s' }}
-                                    onMouseEnter={e => e.currentTarget.style.background = '#f1f5f9'}
-                                    onMouseLeave={e => e.currentTarget.style.background = '#f8fafc'}
-                                >
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: `linear-gradient(135deg, #3b82f6, #0043C0)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
-                                            <Server size={20} />
-                                        </div>
+                        <div style={{ position: 'relative', paddingLeft: '1.5rem', borderLeft: '2px solid #f1f5f9', marginLeft: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            {recentActivity.map((act, i) => (
+                                <div key={i} style={{ position: 'relative' }}>
+                                    <div style={{ position: 'absolute', left: '-1.85rem', top: '0.25rem', width: '10px', height: '10px', borderRadius: '50%', background: act.type === 'order' ? '#3b82f6' : act.type === 'payment' ? '#10b981' : '#f59e0b', border: '2px solid white', boxShadow: '0 0 0 4px white' }} />
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                         <div>
-                                            <p style={{ margin: 0, fontWeight: 700, color: '#0B1F3A', fontSize: '0.9rem' }}>{s.nameService}</p>
-                                            <p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>{s.descriptionS?.substring(0, 40)}...</p>
+                                            <p style={{ margin: '0 0 0.2rem 0', fontSize: '0.9rem', fontWeight: 700, color: '#0B1F3A' }}>{act.title}</p>
+                                            <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Statut: <span style={{ fontWeight: 600, color: '#334155' }}>{act.status}</span></p>
                                         </div>
-                                    </div>
-                                    <div style={{ textAlign: 'right' }}>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: s.statusSub === 'active' ? '#ecfdf5' : '#fef2f2', color: s.statusSub === 'active' ? '#10b981' : '#ef4444', fontSize: '0.72rem', fontWeight: 700, padding: '0.25rem 0.6rem', borderRadius: '9999px', textTransform: 'capitalize' }}>
-                                            {s.statusSub === 'active' && <CheckCircle2 size={11} strokeWidth={3} />} {s.statusSub}
+                                        <span style={{ fontSize: '0.7rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.25rem', whiteSpace: 'nowrap' }}>
+                                            <Clock size={12} /> {new Date(act.date).toLocaleDateString()}
                                         </span>
-                                        <p style={{ margin: '0.3rem 0 0', fontSize: '0.72rem', color: '#94a3b8' }}>Expire le {s.endDate}</p>
                                     </div>
                                 </div>
                             ))}
@@ -137,54 +115,69 @@ const ClientDashboard = () => {
                     )}
                 </div>
 
-                {/* Right Column */}
+                {/* Sidebar: Quick Actions & Support */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
-                    {/* Domains */}
-                    <div style={{ ...card, padding: '1.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                            <h3 style={{ ...sectionTitle, marginBottom: 0 }}>Domaines</h3>
-                            <Link to="/client/domains" style={{ fontSize: '0.8rem', fontWeight: 600, color: '#1E6BFF', textDecoration: 'none' }}>Gérer</Link>
-                        </div>
-                        {domains.length === 0 ? (
-                            <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Aucun domaine enregistré.</p>
-                        ) : (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                                {domains.slice(0, 3).map(d => {
-                                    const isExpiring = new Date(d.expirationDate) < new Date(new Date().setDate(new Date().getDate() + 30));
-                                    return (
-                                        <div key={d.idDomaine} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 0.9rem', borderRadius: '10px', background: isExpiring ? '#fff7ed' : '#f8fafc', border: `1px solid ${isExpiring ? '#fed7aa' : '#f1f5f9'}` }}>
-                                            <div>
-                                                <p style={{ margin: 0, fontWeight: 700, fontSize: '0.85rem', color: '#0B1F3A' }}>{d.domainName}</p>
-                                                <p style={{ margin: 0, fontSize: '0.72rem', color: isExpiring ? '#ea580c' : '#94a3b8' }}>
-                                                    {isExpiring ? `⚠ Expire bientôt` : `Expire le ${new Date(d.expirationDate).toLocaleDateString()}`}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                    {/* Quick Support */}
+                    <div style={{ ...cardStyle, padding: '1.5rem', background: 'linear-gradient(to bottom right, #ffffff, #f0f9ff)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                            <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Shield size={18} />
                             </div>
-                        )}
+                            <h3 style={{ ...sectionTitleStyle, marginBottom: 0 }}>Support Technique</h3>
+                        </div>
+                        <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+                            Besoin d'aide ? Nos experts sont disponibles 24/7 pour vous accompagner.
+                        </p>
+                        <Link to="/client/support" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '0.75rem', borderRadius: '10px', background: '#0B1F3A', color: 'white', textDecoration: 'none', fontWeight: 600, fontSize: '0.85rem', transition: 'background 0.2s' }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#1a3a6e'}
+                            onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
+                        >
+                            Ouvrir un Ticket
+                        </Link>
                     </div>
 
-                    {/* Activity Timeline */}
-                    <div style={{ ...card, padding: '1.5rem', flex: 1 }}>
-                        <h3 style={sectionTitle}>Notifications</h3>
-                        {notifications.length === 0 ? (
-                            <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Aucune notification récente.</p>
-                        ) : (
-                            <div style={{ position: 'relative', paddingLeft: '1.25rem', borderLeft: '2px solid #e5eaf0', marginLeft: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-                                {notifications.slice(0, 4).map((n, i) => (
-                                    <div key={i} style={{ position: 'relative' }}>
-                                        <div style={{ position: 'absolute', left: '-1.55rem', top: '0.15rem', width: '12px', height: '12px', borderRadius: '50%', background: '#1E6BFF', border: '2px solid white', boxShadow: `0 0 0 3px rgba(30,107,255,0.2)` }} />
-                                        <p style={{ margin: '0 0 0.1rem 0', fontSize: '0.85rem', fontWeight: 600, color: '#0B1F3A' }}>{n.message}</p>
-                                        <span style={{ fontSize: '0.72rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                                            <Clock size={11} /> {new Date(n.createdAt).toLocaleString()}
-                                        </span>
+                    {/* Server Status */}
+                    <div style={{ ...cardStyle, padding: '1.5rem' }}>
+                        <h3 style={sectionTitleStyle}>État des Services</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            {[
+                                { name: 'Infrastructure Cloud', status: 'Opérationnel' },
+                                { name: 'Réseau & DNS', status: 'Opérationnel' },
+                                { name: 'Serveurs Mail', status: 'Opérationnel' }
+                            ].map((s, i) => (
+                                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ fontSize: '0.85rem', color: '#475569', fontWeight: 500 }}>{s.name}</span>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#10b981', fontSize: '0.75rem', fontWeight: 700 }}>
+                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }} />
+                                        {s.status}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Notifications Panel */}
+                    <div style={{ ...cardStyle, padding: '1.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                            <h3 style={{ ...sectionTitleStyle, marginBottom: 0 }}>Notifications</h3>
+                            <Link to="/client/notifications" style={{ fontSize: '0.8rem', color: '#1E6BFF', textDecoration: 'none', fontWeight: 600 }}>Voir tout</Link>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            {!notifications || notifications.length === 0 ? (
+                                <p style={{ fontSize: '0.85rem', color: '#94a3b8', textAlign: 'center', margin: '1rem 0' }}>Aucune nouvelle notification.</p>
+                            ) : (
+                                notifications.map(n => (
+                                    <div key={n.idNotification} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', paddingBottom: '0.75rem', borderBottom: '1px solid #f1f5f9' }}>
+                                        <div style={{ minWidth: '8px', minHeight: '8px', background: n.isRead ? '#cbd5e1' : '#3b82f6', borderRadius: '50%', marginTop: '5px' }} />
+                                        <div style={{ flex: 1 }}>
+                                            <p style={{ margin: '0 0 0.2rem 0', fontSize: '0.85rem', color: n.isRead ? '#64748b' : '#0B1F3A', fontWeight: n.isRead ? 400 : 600, lineHeight: 1.4 }}>{n.message}</p>
+                                            <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>{new Date(n.createdAt).toLocaleDateString()}</span>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
+                                ))
+                            )}
+                        </div>
                     </div>
 
                 </div>

@@ -7,9 +7,11 @@ import { loginUser, registerUser } from '../store/slices/authSlice';
 import PageTransition from "../pageTransition";
 import PasswordStrength from '../components/security/PasswordStrength';
 import Captcha from '../components/security/Captcha';
+import { useToast } from '../context/ToastContext';
 import '../styles/auth.css';
 
 const Auth = () => {
+    const { addToast } = useToast();
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,10 +39,12 @@ const Auth = () => {
 
     useEffect(() => {
         if (isAuthenticated && user) {
-            const path = user.role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
-            navigate(path);
+            const role = user.role?.toLowerCase() || user.roleU?.toLowerCase();
+            const path = role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
+            // Use normal link/redirect to force reload and get data from database
+            window.location.href = path;
         }
-    }, [isAuthenticated, user, navigate]);
+    }, [isAuthenticated, user]);
 
     const handleSwitch = (toLogin) => {
         setIsLogin(toLogin);
@@ -65,6 +69,7 @@ const Auth = () => {
         try {
             if (isLogin) {
                 await dispatch(loginUser({ email: formData.email, password: formData.password })).unwrap();
+                addToast("Connexion réussie !", "success");
             } else {
                 await dispatch(registerUser({
                     first_name: formData.first_name,
@@ -74,10 +79,13 @@ const Auth = () => {
                     password: formData.password
                 })).unwrap();
                 
+                addToast("Compte créé avec succès ! Vous pouvez maintenant vous connecter.", "success");
                 handleSwitch(true);
             }
         } catch (err) {
+            const errorMsg = err.errors ? Object.values(err.errors).flat()[0] : (err.message || 'Error occurred');
             setLocalError(err);
+            addToast(errorMsg, "error");
         }
     };
 

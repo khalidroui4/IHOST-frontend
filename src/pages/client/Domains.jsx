@@ -23,7 +23,7 @@ const ClientDomains = () => {
                 <div style={{ padding: '4rem 2rem', background: '#fff', textAlign: 'center', borderRadius: '16px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     <Globe size={48} color="#cbd5e1" style={{ margin: '0 auto 1rem auto' }} />
                     <p style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: '#64748b' }}>Vous n'avez aucun domaine enregistré.</p>
-                    <Link to="/domains" style={{ color: '#1E6BFF', fontWeight: 700, textDecoration: 'none' }}>Rechercher un domaine</Link>
+                    <Link to="/domaines/register" style={{ color: '#1E6BFF', fontWeight: 700, textDecoration: 'none' }}>Rechercher un domaine</Link>
                 </div>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>

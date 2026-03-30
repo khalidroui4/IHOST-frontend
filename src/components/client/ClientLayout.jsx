@@ -9,6 +9,7 @@ import {
     HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
     Package, FileText
 } from 'lucide-react';
+import LogoutConfirmModal from '../LogoutConfirmModal';
 
 const sidebarGroups = [
     {
@@ -56,6 +57,7 @@ const ClientLayout = () => {
     const notifCount = useSelector(state => state.notifications?.unread || 0);
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
         if (user?.id) {
@@ -64,10 +66,7 @@ const ClientLayout = () => {
         }
     }, [dispatch, user]);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate('/');
-    };
+
 
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', background: '#f0f4f8', zIndex: 9999, overflow: 'hidden', fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -125,8 +124,8 @@ const ClientLayout = () => {
                 {/* Logout */}
                 <div style={{ padding: '1rem 0.75rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
                     <button
-                        onClick={handleLogout}
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', width: '100%', padding: '0.6rem 0.75rem', borderRadius: '8px', background: 'transparent', border: 'none', color: '#f87171', fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
+                        onClick={() => setShowLogoutModal(true)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', width: '100%', padding: '0.6rem 0.75rem', borderRadius: '8px', background: 'transparent', border: 'none', color: '#ff0000ff', fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                     >
@@ -140,19 +139,13 @@ const ClientLayout = () => {
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
                 {/* ── TOPBAR ── */}
-                <header style={{ height: '64px', background: 'white', borderBottom: '1px solid #e5eaf0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <header style={{ height: '64px', background: '#e3eff6', borderBottom: '1px solid #cbcbcbff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     {/* Search */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: '#f3f6fb', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
                         onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
                         onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
                     >
-                        <Search size={16} color="#94a3b8" />
-                        <input
-                            placeholder="Rechercher services, factures..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            style={{ background: 'transparent', border: 'none', outline: 'none', width: '100%', fontSize: '0.875rem', color: '#1e293b' }}
-                        />
+                        
                     </div>
 
                     {/* Right Side */}
@@ -195,23 +188,26 @@ const ClientLayout = () => {
                                 {user?.avatar ? (
                                     <img src={`http://localhost${user.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 ) : (
-                                    user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'
+                                    user?.username?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'
                                 )}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
-                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0B1F3A' }}>{user?.name?.split(' ')[0] || user?.first_name || 'Client'}</span>
-                                <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Client IHOST</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0B1F3A' }}>{user?.username || user?.first_name || 'Client'}</span>
+                                <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>{user?.role === 'admin' ? 'Administrateur IHOST' : 'Client IHOST'}</span>
                             </div>
                             <ChevronRight size={14} color="#94a3b8" />
                         </Link>
                     </div>
                 </header>
 
-                {/* ── CONTENT (Outlet renders child pages here) ── */}
-                <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#f0f4f8' }}>
+                <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#e3eff6' }}>
                     <Outlet />
                 </main>
             </div>
+            <LogoutConfirmModal 
+                isOpen={showLogoutModal} 
+                onClose={() => setShowLogoutModal(false)} 
+            />
         </div>
     );
 };

@@ -1,16 +1,40 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchInvoices } from '../../store/slices/invoiceSlice';
-import { FileText, Download } from 'lucide-react';
+import { fetchInvoices, payInvoice } from '../../store/slices/invoiceSlice';
+import { fetchDashboardData } from '../../store/slices/dashboardSlice';
+import { fetchSubscriptions } from '../../store/slices/subscriptionSlice';
+import { FileText, Download, CreditCard, Loader2 } from 'lucide-react';
+import ConfirmModal from '../../components/ConfirmModal';
+import { useToast } from '../../context/ToastContext';
 
 const ClientInvoices = () => {
+    const { addToast } = useToast();
     const dispatch = useDispatch();
     const { items: invoices, isLoading } = useSelector(state => state.invoices);
     const { user } = useSelector(state => state.auth);
+    const [confirmModal, setConfirmModal] = React.useState({ show: false, id: null });
 
     useEffect(() => {
         if (user?.id) dispatch(fetchInvoices(user.id));
     }, [dispatch, user]);
+
+    const handlePay = async (idFacture) => {
+        setConfirmModal({ show: true, id: idFacture });
+    };
+
+    const confirmPayment = async () => {
+        const idFacture = confirmModal.id;
+        setConfirmModal({ show: false, id: null });
+        try {
+            await dispatch(payInvoice(idFacture)).unwrap();
+            addToast('Paiement réussi ! Vos services ont été activés.', 'success');
+            dispatch(fetchInvoices(user.id));
+            dispatch(fetchDashboardData());
+            dispatch(fetchSubscriptions(user.id));
+        } catch (err) {
+            addToast(err.message || 'Le paiement a échoué', 'error');
+        }
+    };
 
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -59,18 +83,38 @@ const ClientInvoices = () => {
                                         </span>
                                     </td>
                                     <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
-                                        <button style={{ background: 'transparent', color: '#64748b', border: '1px solid #e5eaf0', padding: '0.5rem 0.75rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s' }}
-                                            onMouseEnter={e => { e.currentTarget.style.color = '#1E6BFF'; e.currentTarget.style.borderColor = '#1E6BFF'; }}
-                                            onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.borderColor = '#e5eaf0'; }}
-                                        >
-                                            <Download size={14} /> PDF
-                                        </button>
+                                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                                            {inv.statusFacture === 'unpaid' && (
+                                                <button 
+                                                    onClick={() => handlePay(inv.idFacture)}
+                                                    style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(16,185,129,0.2)' }}
+                                                >
+                                                    <CreditCard size={14} /> Payer
+                                                </button>
+                                            )}
+                                            <button style={{ background: 'transparent', color: '#64748b', border: '1px solid #e5eaf0', padding: '0.5rem 0.75rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s' }}
+                                                onMouseEnter={e => { e.currentTarget.style.color = '#1E6BFF'; e.currentTarget.style.borderColor = '#1E6BFF'; }}
+                                                onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.borderColor = '#e5eaf0'; }}
+                                            >
+                                                <Download size={14} /> PDF
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+            )}
+            {confirmModal.show && (
+                <ConfirmModal 
+                    title="Confirmer le paiement"
+                    message="Voulez-vous vraiment confirmer le paiement de cette facture ?"
+                    onConfirm={confirmPayment}
+                    onCancel={() => setConfirmModal({ show: false, id: null })}
+                    confirmText="Payer maintenant"
+                    cancelText="Plus tard"
+                />
             )}
         </div>
     );

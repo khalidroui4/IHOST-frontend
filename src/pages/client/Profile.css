@@ -1,0 +1,16 @@
+.logout-profile:hover{
+    color: rgb(255, 0, 0);
+    scale: 1.2;
+    font-weight: bold ;
+   transition: 0.2s;
+   margin-left: 10px;
+   text-decoration: underline;
+}
+.logout-profile{
+    background: none;
+    border: none;
+    padding: 0;
+    color: #8b6464ff;
+    font-size: 0.92rem;
+    cursor: pointer;
+}

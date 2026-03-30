@@ -1,0 +1,372 @@
+.drm-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 31, 58, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1.5rem;
+    animation: drmFadeIn 0.3s ease-out;
+}
+
+.drm-panel {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1) inset;
+    position: relative;
+    overflow: hidden;
+    animation: drmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.drm-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: #f1f5f9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.drm-close:hover {
+    background: #e2e8f0;
+    color: #0B1F3A;
+    transform: rotate(90deg);
+}
+
+.drm-header {
+    padding: 2.5rem 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.drm-icon-wrap {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #1E6BFF;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.drm-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.drm-domain-display {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-top: 0.2rem;
+}
+
+.drm-domain-display .name {
+    font-size: 1.6rem;
+    font-weight: 850;
+    color: #0B1F3A;
+    letter-spacing: -0.5px;
+}
+
+.drm-domain-display .ext {
+    font-size: 1.6rem;
+    font-weight: 850;
+    color: #1E6BFF;
+    transition: color 0.3s;
+}
+
+.drm-domain-display .ext.checking { color: #94a3b8; }
+.drm-domain-display .ext.taken { color: #ef4444; }
+.drm-domain-display .ext.available { color: #10b981; }
+
+.drm-body {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.drm-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.drm-body::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+.drm-section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0B1F3A;
+    margin-bottom: 0.75rem;
+}
+
+.drm-ext-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.drm-ext-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.drm-ext-grid::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+.drm-ext-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.drm-ext-btn:hover { background: #f1f5f9; }
+.drm-ext-btn.active {
+    background: #f0f7ff;
+    border-color: #1E6BFF;
+}
+
+.ext-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0B1F3A;
+}
+
+.drm-ext-btn.active .ext-name { color: #1E6BFF; }
+
+.ext-price {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.drm-error-msg {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    color: #ef4444;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fef2f2;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.drm-duration-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+}
+
+.drm-duration-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.drm-duration-btn:hover {
+    background: #f1f5f9;
+}
+
+.drm-duration-btn.active {
+    background: #f0f7ff;
+    border-color: #1E6BFF;
+    color: #1E6BFF;
+}
+
+.year-num {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.year-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.drm-option-card {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 1rem;
+}
+
+.drm-option-card:hover {
+    background: #f1f5f9;
+}
+
+.drm-option-card.active {
+    background: #f0f7ff;
+    border-color: #1E6BFF;
+}
+
+.option-info {
+    flex: 1;
+}
+
+.option-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0B1F3A;
+}
+
+.option-desc {
+    margin: 0.2rem 0 0;
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.option-price {
+    text-align: right;
+    margin-right: 0.5rem;
+}
+
+.price-val {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1E6BFF;
+}
+
+.price-period {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.check-empty {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+}
+
+.drm-features {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    padding-top: 0.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #10b981;
+}
+
+.drm-footer {
+    padding: 1.5rem 2rem 2rem;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.summary-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+}
+
+.summary-amount {
+    font-size: 1.6rem;
+    font-weight: 850;
+    color: #0B1F3A;
+    letter-spacing: -0.5px;
+}
+
+.summary-amount .currency {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.drm-submit-btn {
+    background: linear-gradient(135deg, #1E6BFF, #0043C0);
+    color: white;
+    border: none;
+    padding: 1rem 1.75rem;
+    border-radius: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(30,107,255,0.25);
+    transition: all 0.2s;
+}
+
+.drm-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(30,107,255,0.3);
+}
+
+@keyframes drmFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes drmSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

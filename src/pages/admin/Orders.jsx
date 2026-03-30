@@ -47,7 +47,10 @@ const AdminOrders = () => {
                                 {orders.map(o => (
                                     <tr key={o.idOrder} style={{ borderTop: '1px solid #e2e8f0' }}>
                                         <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#0B1F3A' }}>#{o.idOrder}</td>
-                                        <td style={{ padding: '1rem 1.5rem', color: '#6B7280' }}>ID: {o.userId}</td>
+                                        <td style={{ padding: '1rem 1.5rem', color: '#6B7280' }}>
+                                            <div style={{ fontWeight: 600, color: '#0B1F3A' }}>{o.nameU}</div>
+                                            <div style={{ fontSize: '0.8rem' }}>{o.email}</div>
+                                        </td>
                                         <td style={{ padding: '1rem 1.5rem', fontWeight: 600 }}>{o.totalAmount} DH</td>
                                         <td style={{ padding: '1rem 1.5rem' }}>
                                             <span style={{ 

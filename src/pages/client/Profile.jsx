@@ -4,7 +4,8 @@ import { logout, updateUserProfile, updateUserAvatar, updateUserPassword, update
 import { useNavigate } from 'react-router-dom';
 import PageTransition from '../../pageTransition';
 import { CheckCircle2, Camera, Loader2, AlertCircle } from 'lucide-react';
-
+import LogoutConfirmModal from '../../components/LogoutConfirmModal';
+import './Profile.css';
 const InputField = ({ label, value, onChange, type = 'text', placeholder = '', hint = '', readOnly = false }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1 }}>
         <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>{label}</label>
@@ -76,33 +77,47 @@ const ClientProfile = () => {
 
     // Avatar local preview
     const [avatarPreview, setAvatarPreview] = useState(user?.avatar ? `http://localhost${user.avatar}` : null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const showFlash = (type, message) => {
         setFlash({ type, message });
         setTimeout(() => setFlash(null), 5000);
     };
 
-    const handleAvatarChange = async (e) => {
+    const handleAvatarChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        setSelectedFile(file);
         setAvatarPreview(URL.createObjectURL(file));
-        const fd = new FormData();
-        fd.append('avatar', file);
-        const result = await dispatch(updateUserAvatar(fd));
-        if (updateUserAvatar.fulfilled.match(result)) {
-            showFlash('success', 'Photo de profil mise à jour !');
-        } else {
-            showFlash('error', result.payload?.message || 'Erreur lors du téléchargement.');
-        }
     };
 
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
-        const result = await dispatch(updateUserProfile(form));
-        if (updateUserProfile.fulfilled.match(result)) {
-            showFlash('success', 'Profil mis à jour avec succès !');
+        let success = true;
+        let errorMsg = '';
+
+        if (selectedFile) {
+            const fd = new FormData();
+            fd.append('avatar', selectedFile);
+            const avatarResult = await dispatch(updateUserAvatar(fd));
+            if (!updateUserAvatar.fulfilled.match(avatarResult)) {
+                success = false;
+                errorMsg = avatarResult.payload?.message || 'Erreur lors du téléchargement de l\'avatar.';
+            } else {
+                setSelectedFile(null); // Clear after success
+            }
+        }
+
+        if (success) {
+            const result = await dispatch(updateUserProfile(form));
+            if (updateUserProfile.fulfilled.match(result)) {
+                showFlash('success', 'Profil mis à jour avec succès !');
+            } else {
+                showFlash('error', result.payload?.message || 'Erreur interne. Réessayez.');
+            }
         } else {
-            showFlash('error', result.payload?.message || 'Erreur interne. Réessayez.');
+            showFlash('error', errorMsg);
         }
     };
 
@@ -169,8 +184,8 @@ const ClientProfile = () => {
                         ))}
                         <div style={{ margin: '0.5rem 0', height: '1px', background: '#e2e8f0' }} />
                         <li>
-                            <button onClick={() => { if (window.confirm('Log out?')) { dispatch(logout()); navigate('/'); } }}
-                                style={{ background: 'none', border: 'none', padding: 0, color: '#64748b', fontSize: '0.92rem', cursor: 'pointer' }}>
+                            <button onClick={() => setShowLogoutModal(true)}
+                                className='logout-profile'>
                                 Log out
                             </button>
                         </li>
@@ -314,6 +329,10 @@ const ClientProfile = () => {
 
                 </div>
             </div>
+            <LogoutConfirmModal 
+                isOpen={showLogoutModal} 
+                onClose={() => setShowLogoutModal(false)} 
+            />
         </PageTransition>
     );
 };

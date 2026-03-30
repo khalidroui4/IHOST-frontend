@@ -125,6 +125,7 @@
     background: linear-gradient(135deg, #1E6BFF, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    
 }
 
 .auth-subtitle {

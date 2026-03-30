@@ -13,18 +13,18 @@ const Checkout = () => {
     const navigate = useNavigate();
     const [paymentMethod, setPaymentMethod] = useState('credit_card');
 
-    const totalTTC = cartTotal * 1.20;
+    const finalTotal = cartTotal;
 
     const handleCheckout = async () => {
         // 1. Create Order (the backend creates the order and order_items from the native cart)
-        const orderRes = await dispatch(createOrder({ totalAmount: totalTTC }));
+        const orderRes = await dispatch(createOrder({ totalAmount: finalTotal }));
         if (orderRes.payload?.status === 'success') {
             const orderId = orderRes.payload.orderId;
             
             // 2. Process Payment (the backend triggers activate_subscription automatically)
             const payRes = await dispatch(processPayment({
                 orderId,
-                amount: totalTTC,
+                amount: finalTotal,
                 method: paymentMethod
             }));
 
@@ -85,8 +85,8 @@ const Checkout = () => {
 
             <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', border: '1px solid #e5eaf0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                 <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.9rem', marginBottom: '0.3rem', fontWeight: 500 }}>Montant total TTC</span>
-                    <span style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0B1F3A', letterSpacing: '-1px' }}>{totalTTC.toFixed(2)} <span style={{ fontSize: '1.2rem', color: '#64748b' }}>DH</span></span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.9rem', marginBottom: '0.3rem', fontWeight: 500 }}>Montant total</span>
+                    <span style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0B1F3A', letterSpacing: '-1px' }}>{finalTotal.toFixed(2)} <span style={{ fontSize: '1.2rem', color: '#64748b' }}>DH</span></span>
                 </div>
                 <button 
                     onClick={handleCheckout} 

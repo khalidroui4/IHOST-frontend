@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/slices/cartSlice';
 import ConfirmCartModal from './ConfirmCartModal';
+import { useToast } from '../context/ToastContext';
 import './TechPricingCard.css';
 
 const TechPricingCard = ({ 
@@ -23,15 +24,23 @@ const TechPricingCard = ({
 }) => {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+    const { addToast } = useToast();
 
-    const handleConfirm = () => {
-        dispatch(addToCart({
-            idService,
-            nameService: name,
-            price: parseFloat(price),
-            durationMonths: 1,
-        }));
-        setShowModal(false);
+    const handleConfirm = async () => {
+        try {
+            await dispatch(addToCart({
+                idService,
+                nameService: name,
+                price: parseFloat(price),
+                durationMonths: 1,
+            })).unwrap();
+            
+            addToast("L'article a été ajouté à votre panier avec succès !", "success");
+            setShowModal(false);
+        } catch (error) {
+            addToast(`Échec de l'ajout: ${error.message || "Erreur réseau"}`, "error");
+            setShowModal(false);
+        }
     };
 
     const buttonContent = addToCartMode ? (

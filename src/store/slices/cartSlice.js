@@ -32,31 +32,43 @@ export const addToCart = createAsyncThunk(
     'cart/add',
     async (service, { rejectWithValue, dispatch }) => {
         try {
-            let serviceId = service.idService;
+            let serviceId = service.idService || service.serviceId;
 
             // If idService is missing (e.g., from marketing pages), try to look it up by name
             if (!serviceId && service.nameService) {
+                let errString = "";
                 try {
                     const catalogRes = await axios.get('http://localhost/IHOST-backend/services');
                     const catalog = catalogRes.data.data;
+                    const queryName = String(service.nameService).trim().toLowerCase();
                     const matched = catalog.find(s => 
-                        s.nameService.trim().toLowerCase() === service.nameService.trim().toLowerCase()
+                        String(s.nameService).trim().toLowerCase() === queryName || String(s.nameService).trim().toLowerCase().includes(queryName)
                     );
                     if (matched) {
                         serviceId = matched.idService;
+                    } else {
+                        errString = "Not found in catalog of " + (catalog ? catalog.length : "0") + " items.";
                     }
                 } catch (e) {
-                    console.log("Could not look up service by name:", e);
+                    errString = e.message;
+                    console.error("Could not look up service by name:", e);
+                }
+
+                if (!serviceId) {
+                    const msg = `L'offre '${service.nameService || 'inconnue'}' n'est pas configurée (${errString}).`;
+                    return rejectWithValue({ message: msg });
                 }
             }
 
             if (!serviceId) {
-                return rejectWithValue({ message: `L'offre '${service.nameService}' n\'est pas encore configurée côté serveur.` });
+                const msg = `L'offre n'a pas d'ID valide.`;
+                return rejectWithValue({ message: msg });
             }
 
             const payload = {
                 serviceId: serviceId,
-                durationMonths: service.durationMonths || 1
+                durationMonths: service.durationMonths || 1,
+                domainName: service.domainName || null
             };
 
             console.log("SENDING DATA:", payload);
@@ -71,10 +83,9 @@ export const addToCart = createAsyncThunk(
             return res.data;
 
         } catch (error) {
-            console.log("ADD ERROR:", error.response?.data);
-            return rejectWithValue(
-                error.response?.data || { message: 'Network error' }
-            );
+            console.error("ADD ERROR:", error.response?.data || error.message);
+            const errMsg = error.response?.data?.message || error.message || 'Erreur réseau';
+            return rejectWithValue({ message: errMsg });
         }
     }
 );
@@ -117,6 +128,19 @@ export const clearCart = createAsyncThunk(
             return rejectWithValue(
                 error.response?.data || { message: 'Network error' }
             );
+        }
+    }
+);
+
+export const updateCartItem = createAsyncThunk(
+    'cart/updateCartItem',
+    async ({ idCart, durationMonths }, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await axios.put(API_URL, { idCart, durationMonths }, authHeader());
+            dispatch(fetchCart());
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to update item');
         }
     }
 );
@@ -180,6 +204,17 @@ const cartSlice = createSlice({
                 state.total = 0;
             })
             .addCase(clearCart.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload?.message;
+            })
+            .addCase(updateCartItem.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(updateCartItem.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(updateCartItem.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload?.message;
             });

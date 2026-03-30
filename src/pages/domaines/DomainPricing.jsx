@@ -11,19 +11,42 @@ import {
 import { Link } from "react-router-dom";
 import PageTransition from "../../pageTransition";
 import LuxeCard from "../../components/LuxeCard";
-
-const pricingData = [
-  { ext: ".com", reg: "120 DH", ren: "130 DH", trans: "120 DH", promo: true },
-  { ext: ".net", reg: "140 DH", ren: "150 DH", trans: "140 DH" },
-  { ext: ".org", reg: "135 DH", ren: "145 DH", trans: "135 DH" },
-  { ext: ".ma", reg: "150 DH", ren: "160 DH", trans: "150 DH", trending: true },
-  { ext: ".co", reg: "250 DH", ren: "280 DH", trans: "250 DH" },
-  { ext: ".io", reg: "350 DH", ren: "380 DH", trans: "350 DH" },
-  { ext: ".store", reg: "30 DH", ren: "400 DH", trans: "400 DH", promo: true },
-  { ext: ".online", reg: "40 DH", ren: "350 DH", trans: "350 DH", promo: true },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchServices } from '../../store/slices/serviceSlice';
+import { useEffect } from 'react';
 
 const DomainPricing = () => {
+  const dispatch = useDispatch();
+  const { items: services, isLoading } = useSelector(state => state.services);
+
+  useEffect(() => {
+    if (!services || services.length === 0) {
+      dispatch(fetchServices());
+    }
+  }, [dispatch, services]);
+
+  const dynamicPricingData = Array.from(new Map(
+    services
+      .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
+      .map(s => {
+        const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
+        const ext = extMatch ? extMatch[0].toLowerCase() : null;
+        if (!ext) return null;
+        const priceVal = parseFloat(s.price);
+        return [ext, {
+          ext,
+          reg: `${priceVal.toFixed(0)} DH`,
+          ren: `${(priceVal * 1.05).toFixed(0)} DH`,
+          trans: `${priceVal.toFixed(0)} DH`,
+          promo: priceVal < 50,
+          trending: ext === '.com' || ext === ".ma"
+        }];
+      })
+      .filter(Boolean)
+  ).values());
+
+  const pricingData = dynamicPricingData;
+
   return (
     <PageTransition>
       <div className="domain-page">
@@ -171,7 +194,13 @@ const DomainPricing = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {pricingData.map((item, index) => (
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="4" style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+                        Chargement des tarifs...
+                      </td>
+                    </tr>
+                  ) : pricingData.map((item, index) => (
                     <tr
                       key={index}
                       style={{
@@ -268,8 +297,7 @@ const DomainPricing = () => {
             </div>
             <div style={{ marginTop: "3rem", textAlign: "center" }}>
               <p style={{ color: "#4B5563", fontSize: "0.95rem" }}>
-                * Tous les prix sont indiqués Hors Taxes (HT). Offres de
-                bienvenue valables pour la première année.
+                * Offres de bienvenue valables pour la première année.
               </p>
             </div>
           </div>

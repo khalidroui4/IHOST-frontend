@@ -6,6 +6,7 @@ import {
     LayoutDashboard, Users, Server, Package,
     HelpCircle, Search, LogOut, Shield, ChevronRight
 } from 'lucide-react';
+import LogoutConfirmModal from '../LogoutConfirmModal';
 
 const sidebarGroups = [
     {
@@ -37,11 +38,9 @@ const AdminLayout = () => {
     const { user } = useSelector(state => state.auth);
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate('/');
-    };
+
 
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', background: '#f0f4f8', zIndex: 9999, overflow: 'hidden', fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -51,11 +50,8 @@ const AdminLayout = () => {
                 
                 {/* Logo */}
                 <div style={{ padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-                    <Link to="/admin/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                        <Shield size={22} color="#10B981" strokeWidth={2.5} />
-                        <span style={{ color: 'white', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '-0.5px' }}>
-                            IHOST<span style={{ color: '#10B981' }}>.</span>
-                        </span>
+                    <Link to="/admin/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img src='/logo.jpeg' alt="logo" style={{ width: '160px', height: '80px', margin: 'auto' }} />
                     </Link>
                 </div>
 
@@ -80,8 +76,8 @@ const AdminLayout = () => {
                                                 textDecoration: 'none', fontWeight: isActive ? 700 : 500,
                                                 fontSize: '0.875rem', transition: 'all 0.15s',
                                                 color: isActive ? '#ffffff' : 'rgba(255,255,255,0.55)',
-                                                background: isActive ? 'rgba(16,185,129,0.15)' : 'transparent',
-                                                borderLeft: isActive ? '3px solid #10B981' : '3px solid transparent',
+                                                background: isActive ? 'rgba(239,68,68,0.15)' : 'transparent',
+                                                borderLeft: isActive ? '3px solid #ef4444' : '3px solid transparent',
                                             }}
                                         >
                                             <Icon size={17} />
@@ -97,7 +93,7 @@ const AdminLayout = () => {
                 {/* Logout */}
                 <div style={{ padding: '1rem 0.75rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
                     <button
-                        onClick={handleLogout}
+                        onClick={() => setShowLogoutModal(true)}
                         style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', width: '100%', padding: '0.6rem 0.75rem', borderRadius: '8px', background: 'transparent', border: 'none', color: '#f87171', fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
@@ -114,17 +110,11 @@ const AdminLayout = () => {
                 {/* ── TOPBAR ── */}
                 <header style={{ height: '64px', background: 'white', borderBottom: '1px solid #e5eaf0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     {/* Search */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: '#f3f6fb', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
-                        onFocus={e => (e.currentTarget.style.borderColor = '#10B981')}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem',  padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
+                        onFocus={e => (e.currentTarget.style.borderColor = '#ef4444')}
                         onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
                     >
-                        <Search size={16} color="#94a3b8" />
-                        <input
-                            placeholder="Recherche générale..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            style={{ background: 'transparent', border: 'none', outline: 'none', width: '100%', fontSize: '0.875rem', color: '#1e293b' }}
-                        />
+                        
                     </div>
 
                     {/* Right Side */}
@@ -132,12 +122,12 @@ const AdminLayout = () => {
 
                         {/* User Avatar */}
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '10px', transition: 'background 0.15s' }}>
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444, #dc2626)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0 }}>
                                 {user?.name?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'A'}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
                                 <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0B1F3A' }}>{user?.name?.split(' ')[0] || user?.first_name || 'Admin'}</span>
-                                <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>IHOST ROOT</span>
+                                <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>{user?.role === 'admin' ? 'IHOST ROOT' : 'IHOST STAFF'}</span>
                             </div>
                         </div>
                     </div>
@@ -148,6 +138,10 @@ const AdminLayout = () => {
                     <Outlet />
                 </main>
             </div>
+            <LogoutConfirmModal 
+                isOpen={showLogoutModal} 
+                onClose={() => setShowLogoutModal(false)} 
+            />
         </div>
     );
 };

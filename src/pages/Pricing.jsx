@@ -3,43 +3,63 @@ import { Check, ArrowRight, Zap, Shield, Globe, Mail, Cloud, Server } from 'luci
 import { Link } from 'react-router-dom';
 import PageTransition from '../pageTransition';
 import TechPricingCard from '../components/TechPricingCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchServices } from '../store/slices/serviceSlice';
+import { useEffect } from 'react';
 
 const Pricing = () => {
-    const categories = [
+    const dispatch = useDispatch();
+    const { items: services, isLoading } = useSelector(state => state.services);
+
+    useEffect(() => {
+        if (!services || services.length === 0) {
+            dispatch(fetchServices());
+        }
+    }, [dispatch, services]);
+    const categoriesDef = [
         {
             title: 'Hébergement Web',
             icon: Server,
             color: '#1E6BFF',
-            plans: [
-                { name: 'Starter', price: '29', features: ['1 Site', '10 GB SSD', 'SSL Gratuit'] },
-                { name: 'Pro', price: '59', features: ['10 Sites', '50 GB SSD', 'Backup Auto'] },
-                { name: 'Business', price: '99', features: ['Sites illimités', '100 GB SSD', 'Vitesse Max'] }
-            ],
+            type: 'hosting',
             link: '/hebergement/mutualise'
         },
         {
             title: 'Cloud & VPS',
             icon: Cloud,
             color: '#00C2FF',
-            plans: [
-                { name: 'Cloud Basic', price: '149', features: ['2 vCPU', '4 GB RAM', '80 GB SSD'] },
-                { name: 'Cloud Pro', price: '249', features: ['4 vCPU', '8 GB RAM', '160 GB SSD'] },
-                { name: 'Cloud Ent.', price: '449', features: ['8 vCPU', '16 GB RAM', '320 GB SSD'] }
-            ],
+            type: 'cloud',
             link: '/hebergement/cloud'
         },
         {
             title: 'Noms de Domaine',
             icon: Globe,
             color: '#6366F1',
-            plans: [
-                { name: '.MA', price: '150', features: ['Identité Marocaine', 'DNS Manager', 'Privacy Incluse'] },
-                { name: '.COM', price: '120', features: ['Standard Mondial', 'Full Control', '24/7 Support'] },
-                { name: '.ONLINE', price: '40', features: ['Promo Limitée', 'Nouveau & Moderne', 'Instant Active'] }
-            ],
+            type: 'domain',
             link: '/domaines/pricing'
         }
     ];
+
+    const categories = categoriesDef.map(cat => {
+        const uniquePlansMap = new Map();
+        services
+            .filter(s => s.typeService === cat.type && parseInt(s.isActive) === 1)
+            .forEach(s => {
+                if (!uniquePlansMap.has(s.nameService)) {
+                    uniquePlansMap.set(s.nameService, {
+                        id: s.idService,
+                        name: s.nameService,
+                        price: s.price,
+                        features: s.descriptionS ? s.descriptionS.split(',').map(f => f.trim()) : []
+                    });
+                }
+            });
+            
+        return {
+            ...cat,
+            plans: Array.from(uniquePlansMap.values())
+        };
+    });
 
     return (
         <PageTransition>
@@ -56,7 +76,9 @@ const Pricing = () => {
                 <section style={{ padding: '6rem 0', background: '#f8fafc' }}>
                     <div className="container-luxe">
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem' }}>
-                            {categories.map((cat, idx) => (
+                            {isLoading ? (
+                                <div style={{ textAlign: 'center', padding: '4rem', color: '#64748b' }}>Chargement des offres...</div>
+                            ) : categories.map((cat, idx) => (
                                 <div key={idx}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
                                         <div style={{ background: cat.color, color: 'white', padding: '0.8rem', borderRadius: '12px' }}>
@@ -68,6 +90,7 @@ const Pricing = () => {
                                         {cat.plans.map((plan, pIdx) => (
                                             <TechPricingCard
                                                 key={pIdx}
+                                                id={plan.id}
                                                 name={plan.name}
                                                 price={plan.price}
                                                 period="DH / mois"

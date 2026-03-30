@@ -11,7 +11,7 @@ const ProfessionalEmail = () => {
             id: '#MAIL-PRO-1',
             name: 'STARTER PRO',
             price: '29',
-            period: 'DH / HT / MOIS',
+            period: 'DH / MOIS',
             highlight: false,
             features: [
                 { label: '5 Comptes Email', tech: 'SSD Sync' },
@@ -25,7 +25,7 @@ const ProfessionalEmail = () => {
             id: '#MAIL-BIZ-X',
             name: 'BUSINESS ELITE',
             price: '59',
-            period: 'DH / HT / MOIS',
+            period: 'DH / MOIS',
             highlight: true,
             badge: 'PERFORMANCE MAX',
             features: [
@@ -40,7 +40,7 @@ const ProfessionalEmail = () => {
             id: '#MAIL-ENT-INF',
             name: 'ENTERPRISE CLOUD',
             price: '99',
-            period: 'DH / HT / MOIS',
+            period: 'DH / MOIS',
             highlight: false,
             features: [
                 { label: 'Comptes Illimités', tech: 'Scale-Free' },

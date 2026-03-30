@@ -1,20 +1,37 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowUpRight, Search, ChevronDown, CheckCircle2, Zap, Shield, Headset, Globe, CloudDownload, Check, PhoneCall, CloudLightning, Lock, ArrowRight, Star } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import PageTransition from '../pageTransition';
 import LuxeCard from '../components/LuxeCard';
 import TechPricingCard from '../components/TechPricingCard';
-
-const domainOptions = [
-    '.ma', '.com', '.net', '.info', '.org',
-    '.co.ma', '.org.ma', '.net.ma', '.edu.ma',
-    '.press.ma', '.gov.ma', '.ac.ma'
-];
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchServices } from '../store/slices/serviceSlice';
 
 const Home = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dispatch = useDispatch();
+    const { items: services, isLoading } = useSelector(state => state.services);
+
+    const dynamicDomainOptions = Array.from(new Set(
+        services
+            .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
+            .map(s => {
+                const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
+                return extMatch ? extMatch[0].toLowerCase() : null;
+            })
+            .filter(Boolean)
+    ));
+    const domainOptionsList = dynamicDomainOptions;
     const [selectedDomain, setSelectedDomain] = useState('.ma');
+    const [domainQuery, setDomainQuery] = useState('');
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!services || services.length === 0) {
+            dispatch(fetchServices());
+        }
+    }, [dispatch, services]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -25,29 +42,40 @@ const Home = () => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (!domainQuery.trim()) return;
+        const fullDomain = domainQuery.includes('.') ? domainQuery : `${domainQuery}${selectedDomain}`;
+        navigate(`/domaines/register?q=${encodeURIComponent(fullDomain)}`);
+    };
 
     const domainSearchContent = (
         <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative' }}>
-            {/* Search Bar Pill */}
-            <div style={{
-                background: '#e3eff6',
-                borderRadius: '50px',
-                padding: '6px 6px 6px 20px',
-                display: 'flex',
-                alignItems: 'center',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
-                marginBottom: '2rem',
-                gap: '0.5rem',
-            }}>
+            <form 
+                onSubmit={handleSearch}
+                style={{
+                    background: '#e3eff6',
+                    borderRadius: '50px',
+                    padding: '6px 6px 6px 20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
+                    marginBottom: '2rem',
+                    gap: '0.5rem',
+                }}
+            >
                 <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} />
                 <input
                     type="text"
                     placeholder="exemple.ma"
+                    value={domainQuery}
+                    onChange={(e) => setDomainQuery(e.target.value)}
                     style={{ flex: 1, border: 'none', outline: 'none', padding: '0.75rem 0.5rem', fontSize: '1.05rem', color: '#1E6BFF', background: 'transparent', fontWeight: 600, minWidth: 0 }}
                 />
                 {/* Domain selector button */}
                 <div style={{ position: 'relative' }} ref={dropdownRef}>
                     <button
+                        type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         style={{
                             background: '#0B1F3A',
@@ -85,7 +113,7 @@ const Home = () => {
                             border: '1px solid rgba(255,255,255,0.1)',
                             textAlign: 'left'
                         }}>
-                            {domainOptions.map(opt => (
+                            {domainOptionsList.map(opt => (
                                 <li
                                     key={opt}
                                     onClick={() => { setSelectedDomain(opt); setIsDropdownOpen(false); }}
@@ -99,7 +127,24 @@ const Home = () => {
                         </ul>
                     )}
                 </div>
-            </div>
+                <button 
+                    type="submit"
+                    style={{
+                        background: '#1E6BFF',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50px',
+                        padding: '0.75rem 1.5rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#0043C0'}
+                    onMouseLeave={e => e.currentTarget.style.background = '#1E6BFF'}
+                >
+                    Rechercher
+                </button>
+            </form>
 
             {/* Feature Highlights */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', alignItems: 'center', padding: '0 1rem', color: '#E2E8F0', fontSize: '1.05rem', fontWeight: 400 }}>
@@ -172,56 +217,38 @@ const Home = () => {
                             maxWidth: '1250px',
                             margin: '0 auto'
                         }}>
-                            <TechPricingCard
-                                name="CLOUD STARTER"
-                                desc="Architecture mutualisée pour projets émergents."
-                                price="39"
-                                period="DH / HT / MOIS"
-                                features={[
-                                    "1 Site Web (LVE Restricted)",
-                                    "10 GB Stockage (NVMe Gen4)",
-                                    "Email Pro (Exim/IMAP)",
-                                    "SSL Gratuit (Let's Encrypt)",
-                                    "Support 24/7 (Ticket/Chat)"
-                                ]}
-                                highlight={false}
-                                buttonText="Ajouter au panier"
-                                addToCartMode={true}
-                            />
+                            {isLoading ? (
+                                <div style={{ textAlign: 'center', width: '100%', padding: '4rem', color: 'rgba(255,255,255,0.7)' }}>Chargement des offres...</div>
+                            ) : (
+                                services
+                                    .filter(s => ['CLOUD STARTER', 'VPS PRO-X', 'BUSINESS CORE'].includes(s.nameService) && parseInt(s.isActive) === 1)
+                                    .sort((a, b) => {
+                                        const order = ['CLOUD STARTER', 'VPS PRO-X', 'BUSINESS CORE'];
+                                        return order.indexOf(a.nameService) - order.indexOf(b.nameService);
+                                    })
+                                    .map(plan => {
+                                        let extraInfo = {};
+                                        if (plan.nameService === 'CLOUD STARTER') extraInfo = { desc: 'Architecture mutualisée pour projets émergents.', highlight: false };
+                                        if (plan.nameService === 'VPS PRO-X') extraInfo = { highlight: true, badge: 'HAUT RENDEMENT' };
+                                        if (plan.nameService === 'BUSINESS CORE') extraInfo = { desc: 'Solutions web complexes et E-commerce.', highlight: false };
 
-                            <TechPricingCard
-                                name="VPS PRO-X"
-                                price="129"
-                                period="DH / HT / MOIS"
-                                features={[
-                                    "4 vCore EPYC (Milan/Genoa)",
-                                    "8 GB DDR4 RAM (ECC Registered)",
-                                    "100 GB Stockage (Raid 10 NVMe)",
-                                    "Snapshot (Daily Backup)",
-                                    "Network (1 Gbps Port)"
-                                ]}
-                                highlight={true}
-                                badge="HAUT RENDEMENT"
-                                buttonText="Ajouter au panier"
-                                addToCartMode={true}
-                            />
-
-                            <TechPricingCard
-                                name="BUSINESS CORE"
-                                desc="Solutions web complexes et E-commerce."
-                                price="99"
-                                period="DH / HT / MOIS"
-                                features={[
-                                    "Unlimited Sites (Apache/Nginx)",
-                                    "Unlimited Space (Pure NVMe)",
-                                    "WAF Protection (BitNinja/Luxe)",
-                                    "Daily Backups (JetBackup)",
-                                    "Dedicated IP (IPv4/IPv6)"
-                                ]}
-                                highlight={false}
-                                buttonText="Ajouter au panier"
-                                addToCartMode={true}
-                            />
+                                        return (
+                                            <TechPricingCard
+                                                key={plan.idService}
+                                                id={plan.idService}
+                                                name={plan.nameService}
+                                                desc={extraInfo.desc}
+                                                price={plan.price}
+                                                period="DH / MOIS"
+                                                features={plan.descriptionS ? plan.descriptionS.split(',').map(f => f.trim()) : []}
+                                                highlight={extraInfo.highlight}
+                                                badge={extraInfo.badge}
+                                                buttonText="Ajouter au panier"
+                                                addToCartMode={true}
+                                            />
+                                        );
+                                    })
+                            )}
                         </div>
                     </div>
                 </section>

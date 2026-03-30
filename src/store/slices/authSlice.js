@@ -14,18 +14,47 @@ const authHeader = (isMultipart = false) => {
     };
 };
 
+const normalizeUser = (user) => {
+    if (!user) return null;
+    const role = (user.role || user.roleU || '').toLowerCase().trim();
+    return {
+        ...user,
+        id: user.id || user.idU,
+        role: role,
+        username: user.username || user.nameU || user.first_name,
+        name: user.name || user.nameU || (user.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : 'User'),
+        first_name: user.first_name || (user.nameU ? user.nameU.split(' ')[0] : ''),
+        avatar: user.avatar || user.avatarU || null
+    };
+};
+
 export const loginUser = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
     try {
         const response = await axios.post(`${API_URL}/login`, credentials);
         if (response.data.status === 'success') {
             localStorage.setItem('iHostToken', response.data.token);
-            localStorage.setItem('iHostUser', JSON.stringify(response.data.user));
+            // We no longer save user to localStorage
             return response.data;
         } else {
             return rejectWithValue(response.data);
         }
     } catch (error) {
         return rejectWithValue(error.response?.data || { message: 'Network error' });
+    }
+});
+
+export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithValue }) => {
+    try {
+        const response = await axios.get(`${API_URL}/me`, authHeader());
+        if (response.data.status === 'success') {
+            return response.data.user;
+        } else {
+            localStorage.removeItem('iHostToken');
+            return rejectWithValue(response.data);
+        }
+    } catch (error) {
+        localStorage.removeItem('iHostToken');
+        return rejectWithValue(error.response?.data || { message: 'Session expired' });
     }
 });
 
@@ -46,7 +75,6 @@ export const updateUserProfile = createAsyncThunk('auth/updateProfile', async (p
     try {
         const response = await axios.post(`${USERS_API_URL}/update`, profileData, authHeader());
         if (response.data.status === 'success') {
-            localStorage.setItem('iHostUser', JSON.stringify(response.data.user));
             return response.data.user;
         } else {
             return rejectWithValue(response.data);
@@ -60,7 +88,6 @@ export const updateUserAvatar = createAsyncThunk('auth/updateAvatar', async (for
     try {
         const response = await axios.post(`${USERS_API_URL}/avatar`, formData, authHeader(true));
         if (response.data.status === 'success') {
-            localStorage.setItem('iHostUser', JSON.stringify(response.data.user));
             return response.data.user;
         } else {
             return rejectWithValue(response.data);
@@ -87,7 +114,6 @@ export const updateUserEmail = createAsyncThunk('auth/updateEmail', async (data,
     try {
         const response = await axios.post(`${USERS_API_URL}/email`, data, authHeader());
         if (response.data.status === 'success') {
-            localStorage.setItem('iHostUser', JSON.stringify(response.data.user));
             return response.data.user;
         } else {
             return rejectWithValue(response.data);
@@ -98,10 +124,10 @@ export const updateUserEmail = createAsyncThunk('auth/updateEmail', async (data,
 });
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('iHostUser')) || null,
+    user: null, // No longer initialized from localStorage
     token: localStorage.getItem('iHostToken') || null,
     isAuthenticated: !!localStorage.getItem('iHostToken'),
-    isLoading: false,
+    isLoading: !!localStorage.getItem('iHostToken'), // Loading if we have a token (fetching me)
     error: null
 };
 
@@ -111,7 +137,6 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             localStorage.removeItem('iHostToken');
-            localStorage.removeItem('iHostUser');
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
@@ -125,7 +150,7 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.user;
+                state.user = normalizeUser(action.payload.user);
                 state.token = action.payload.token;
                 state.isAuthenticated = true;
             })
@@ -151,7 +176,7 @@ const authSlice = createSlice({
             })
             .addCase(updateUserProfile.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload;
+                state.user = normalizeUser(action.payload);
             })
             .addCase(updateUserProfile.rejected, (state, action) => {
                 state.isLoading = false;
@@ -164,7 +189,7 @@ const authSlice = createSlice({
             })
             .addCase(updateUserAvatar.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload;
+                state.user = normalizeUser(action.payload);
             })
             .addCase(updateUserAvatar.rejected, (state, action) => {
                 state.isLoading = false;
@@ -177,11 +202,27 @@ const authSlice = createSlice({
             })
             .addCase(updateUserEmail.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload;
+                state.user = normalizeUser(action.payload);
             })
             .addCase(updateUserEmail.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload?.message || 'Email update failed';
+            })
+            // Check Auth
+            .addCase(checkAuth.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(checkAuth.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = normalizeUser(action.payload);
+                state.isAuthenticated = true;
+            })
+            .addCase(checkAuth.rejected, (state, action) => {
+                state.isLoading = false;
+                state.user = null;
+                state.token = null;
+                state.isAuthenticated = false;
+                state.error = action.payload?.message;
             });
     }
 });

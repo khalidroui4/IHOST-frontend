@@ -10,6 +10,7 @@ import supportReducer from './slices/supportSlice';
 import notificationReducer from './slices/notificationSlice';
 import subscriptionReducer from './slices/subscriptionSlice';
 import invoiceReducer from './slices/invoiceSlice';
+import dashboardReducer from './slices/dashboardSlice';
 
 export const store = configureStore({
     reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
         support: supportReducer,
         notifications: notificationReducer,
         subscriptions: subscriptionReducer,
-        invoices: invoiceReducer
+        invoices: invoiceReducer,
+        dashboard: dashboardReducer
     }
 });

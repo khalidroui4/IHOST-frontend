@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/slices/authSlice';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
+import LogoutConfirmModal from './LogoutConfirmModal';
 import './Navbar.css';
 import { ArrowUpRight, ChevronDown, ShoppingCart, LayoutDashboard, Settings } from 'lucide-react';
 import { navData } from '../data/navData';
@@ -10,6 +11,7 @@ const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [profileDropdown, setProfileDropdown] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const navRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,12 +42,6 @@ const Navbar = () => {
     const toggleDropdown = (e, index) => {
         e.preventDefault();
         setActiveDropdown(activeDropdown === index ? null : index);
-    };
-
-    const handleLogout = () => {
-        dispatch(logout());
-        setProfileDropdown(false);
-        navigate('/');
     };
 
     return (
@@ -169,8 +165,8 @@ const Navbar = () => {
                                         </Link>
                                         <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0.4rem 0' }} />
                                         <button
-                                            onClick={handleLogout}
-                                            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%', padding: '0.65rem 1rem', color: '#f87171', background: 'none', border: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
+                                            onClick={() => { setShowLogoutModal(true); setProfileDropdown(false); }}
+                                            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%', padding: '0.65rem 1rem', color: '#ff0000ff', background: 'none', border: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left' }}
                                             onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                         >
@@ -187,6 +183,10 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
+            <LogoutConfirmModal 
+                isOpen={showLogoutModal} 
+                onClose={() => setShowLogoutModal(false)} 
+            />
         </nav>
     );
 };
