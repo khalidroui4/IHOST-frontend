@@ -19,14 +19,14 @@ const AdminDashboard = () => {
 
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '0.5rem' }}>Espace Administrateur</h1>
+                <h1 style={{ color: '#1B0606', fontWeight: 800, marginBottom: '0.5rem' }}>Espace Administrateur</h1>
                 <p style={{ color: '#6B7280', fontSize: '1.2rem', marginBottom: '3rem' }}>Vue d'ensemble de la plateforme</p>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
                     <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                         <h3 style={{ fontSize: '1.1rem', color: '#6B7280', fontWeight: 600 }}>Total Utilisateurs</h3>
-                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1E6BFF', margin: '1rem 0' }}>{users.length}</p>
-                        <Link to="/admin/users" style={{ color: '#1E6BFF', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
+                        <p style={{ fontSize: '2.5rem', fontWeight: 800, color: '#DC2626', margin: '1rem 0' }}>{users.length}</p>
+                        <Link to="/admin/users" style={{ color: '#DC2626', fontWeight: 600, textDecoration: 'none' }}>Gérer &rarr;</Link>
                     </div>
                     
                     <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>

@@ -49,10 +49,10 @@ const UserAvatar = ({ user, size = 40 }) => {
     return (
         <div style={{
             width: size, height: size, borderRadius: '50%',
-            background: 'linear-gradient(135deg, #1E6BFF, #0043C0)',
+            background: 'linear-gradient(135deg, #DC2626, #991B1B)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: 'white', fontWeight: 700, fontSize: size * 0.38, flexShrink: 0,
-            overflow: 'hidden', border: '2px solid white', boxShadow: '0 2px 8px rgba(30,107,255,0.2)'
+            overflow: 'hidden', border: '2px solid white', boxShadow: '0 2px 8px rgba(220,38,38,0.2)'
         }}>
             {user?.avatar
                 ? <img src={`http://localhost${user.avatar}`} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -117,14 +117,14 @@ const AdminSupport = () => {
             {/* ── Page Header ── */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexShrink: 0 }}>
                 <div>
-                    <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#0B1F3A' }}>Support Tickets</h1>
+                    <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#1B0606' }}>Support Tickets</h1>
                     <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.875rem' }}>Gérez et répondez aux demandes clients</p>
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
                     {[
                         { label: 'Ouverts', value: openCount, color: '#22c55e', bg: '#dcfce7' },
                         { label: 'Fermés', value: closedCount, color: '#64748b', bg: '#f1f5f9' },
-                        { label: 'Total', value: tickets.length, color: '#1E6BFF', bg: '#eff6ff' },
+                        { label: 'Total', value: tickets.length, color: '#DC2626', bg: '#fef2f2' },
                     ].map(s => (
                         <div key={s.label} style={{ textAlign: 'center', background: s.bg, padding: '0.5rem 1rem', borderRadius: '10px' }}>
                             <div style={{ fontSize: '1.4rem', fontWeight: 800, color: s.color }}>{s.value}</div>
@@ -147,7 +147,7 @@ const AdminSupport = () => {
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
                                 placeholder="Rechercher ticket, utilisateur..."
-                                style={{ border: 'none', outline: 'none', background: 'transparent', fontSize: '0.875rem', color: '#0B1F3A', width: '100%' }}
+                                style={{ border: 'none', outline: 'none', background: 'transparent', fontSize: '0.875rem', color: '#1B0606', width: '100%' }}
                             />
                         </div>
                         <div style={{ display: 'flex', gap: '0.35rem' }}>
@@ -158,7 +158,7 @@ const AdminSupport = () => {
                                     style={{
                                         padding: '4px 12px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 600,
                                         border: 'none', cursor: 'pointer', transition: 'all 0.15s',
-                                        background: filter === val ? '#0B1F3A' : '#f1f5f9',
+                                        background: filter === val ? '#1B0606' : '#f1f5f9',
                                         color: filter === val ? '#fff' : '#64748b'
                                     }}
                                 >
@@ -193,10 +193,10 @@ const AdminSupport = () => {
                                     onClick={() => setActiveId(t.idSupport)}
                                     style={{
                                         padding: '0.9rem 1rem', borderRadius: '12px', marginBottom: '4px', cursor: 'pointer',
-                                        background: isActive ? '#eff6ff' : 'transparent',
-                                        borderLeft: isActive ? '3px solid #1E6BFF' : '3px solid transparent',
+                                        background: isActive ? '#fef2f2' : 'transparent',
+                                        borderLeft: isActive ? '3px solid #DC2626' : '3px solid transparent',
                                         transition: 'all 0.15s',
-                                        boxShadow: isActive ? '0 2px 8px rgba(30,107,255,0.08)' : 'none',
+                                        boxShadow: isActive ? '0 2px 8px rgba(220,38,38,0.08)' : 'none',
                                     }}
                                     onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = '#f8fafc'; }}
                                     onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
@@ -205,7 +205,7 @@ const AdminSupport = () => {
                                         <UserAvatar user={t} size={36} />
                                         <div style={{ flex: 1, minWidth: 0 }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
-                                                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0B1F3A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '130px' }}>
+                                                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#1B0606', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '130px' }}>
                                                     {userName}
                                                 </span>
                                                 <span style={{ fontSize: '0.68rem', color: '#94a3b8', flexShrink: 0 }}>{timeAgo(t.createdAt)}</span>
@@ -214,7 +214,7 @@ const AdminSupport = () => {
                                                 <span style={{ fontSize: '0.68rem', color: '#94a3b8', fontWeight: 600 }}>#{t.idSupport}</span>
                                                 <StatusBadge status={t.statusSupport} />
                                             </div>
-                                            <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 600, color: isActive ? '#1E6BFF' : '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                            <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 600, color: isActive ? '#DC2626' : '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                 {t.subjectSupport}
                                             </p>
                                             {lastMsg && (
@@ -255,7 +255,7 @@ const AdminSupport = () => {
                                         <UserAvatar user={activeTicket} size={48} />
                                         <div>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#0B1F3A' }}>
+                                                <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#1B0606' }}>
                                                     {activeTicket.userId === null
                                                         ? 'Utilisateur Anonyme'
                                                         : (activeTicket.username || activeTicket.first_name || `Utilisateur #${activeTicket.userId}`)}
@@ -289,7 +289,7 @@ const AdminSupport = () => {
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
                                         <div style={{ textAlign: 'right', marginRight: '0.5rem' }}>
-                                            <p style={{ margin: 0, fontWeight: 700, fontSize: '0.82rem', color: '#0B1F3A', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                            <p style={{ margin: 0, fontWeight: 700, fontSize: '0.82rem', color: '#1B0606', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                 {activeTicket.subjectSupport}
                                             </p>
                                             <p style={{ margin: '2px 0 0', fontSize: '0.7rem', color: '#94a3b8' }}>Sujet du ticket</p>
@@ -332,12 +332,12 @@ const AdminSupport = () => {
                                         <div key={m.idMessage || i} style={{ display: 'flex', flexDirection: 'column', alignItems: isAdmin ? 'flex-end' : 'flex-start' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                                                 {!isAdmin && <UserAvatar user={activeTicket} size={22} />}
-                                                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: isAdmin ? '#1E6BFF' : '#475569' }}>
+                                                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: isAdmin ? '#DC2626' : '#475569' }}>
                                                     {senderName}
                                                 </span>
                                                 <span style={{ fontSize: '0.68rem', color: '#94a3b8' }}>{formatTime(m.createdAt)}</span>
                                                 {isAdmin && (
-                                                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'linear-gradient(135deg,#0B1F3A,#1E6BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.6rem', fontWeight: 800 }}>A</div>
+                                                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'linear-gradient(135deg,#1B0606,#DC2626)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.6rem', fontWeight: 800 }}>A</div>
                                                 )}
                                             </div>
                                             <div style={{
@@ -345,9 +345,9 @@ const AdminSupport = () => {
                                                 borderBottomLeftRadius: isAdmin ? '16px' : '4px',
                                                 borderBottomRightRadius: isAdmin ? '4px' : '16px',
                                                 background: isAdmin
-                                                    ? 'linear-gradient(135deg, #1E6BFF, #0043C0)'
+                                                    ? 'linear-gradient(135deg, #DC2626, #991B1B)'
                                                     : 'white',
-                                                color: isAdmin ? 'white' : '#0B1F3A',
+                                                color: isAdmin ? 'white' : '#1B0606',
                                                 boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                                                 fontSize: '0.875rem', lineHeight: 1.55,
                                                 border: isAdmin ? 'none' : '1px solid #e2e8f0',
@@ -381,7 +381,7 @@ const AdminSupport = () => {
                                 ) : (
                                     <form onSubmit={handleSend} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-end' }}>
                                         <div style={{ flex: 1, background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '14px', padding: '0.85rem 1rem', display: 'flex', flexDirection: 'column', transition: 'border-color 0.2s' }}
-                                            onFocusCapture={e => e.currentTarget.style.borderColor = '#1E6BFF'}
+                                            onFocusCapture={e => e.currentTarget.style.borderColor = '#DC2626'}
                                             onBlurCapture={e => e.currentTarget.style.borderColor = '#e2e8f0'}
                                         >
                                             <textarea
@@ -392,7 +392,7 @@ const AdminSupport = () => {
                                                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) handleSend(e); }}
                                                 style={{
                                                     border: 'none', outline: 'none', background: 'transparent',
-                                                    fontSize: '0.9rem', color: '#0B1F3A', resize: 'none',
+                                                    fontSize: '0.9rem', color: '#1B0606', resize: 'none',
                                                     fontFamily: 'inherit', lineHeight: 1.5
                                                 }}
                                             />
@@ -406,7 +406,7 @@ const AdminSupport = () => {
                                             style={{
                                                 display: 'flex', alignItems: 'center', gap: '8px',
                                                 padding: '0.85rem 1.5rem', borderRadius: '14px',
-                                                background: isSending || !msgText.trim() ? '#e2e8f0' : 'linear-gradient(135deg, #1E6BFF, #0043C0)',
+                                                background: isSending || !msgText.trim() ? '#e2e8f0' : 'linear-gradient(135deg, #DC2626, #991B1B)',
                                                 color: isSending || !msgText.trim() ? '#94a3b8' : 'white',
                                                 border: 'none', fontWeight: 700, fontSize: '0.9rem',
                                                 cursor: isSending || !msgText.trim() ? 'not-allowed' : 'pointer',

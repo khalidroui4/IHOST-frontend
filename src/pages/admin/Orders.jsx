@@ -27,7 +27,7 @@ const AdminOrders = () => {
 
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Commandes</h1>
+                <h1 style={{ color: '#1B0606', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Commandes</h1>
                 
                 {isLoading ? (
                     <p>Chargement des commandes...</p>
@@ -46,9 +46,9 @@ const AdminOrders = () => {
                             <tbody>
                                 {orders.map(o => (
                                     <tr key={o.idOrder} style={{ borderTop: '1px solid #e2e8f0' }}>
-                                        <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#0B1F3A' }}>#{o.idOrder}</td>
+                                        <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#1B0606' }}>#{o.idOrder}</td>
                                         <td style={{ padding: '1rem 1.5rem', color: '#6B7280' }}>
-                                            <div style={{ fontWeight: 600, color: '#0B1F3A' }}>{o.nameU}</div>
+                                            <div style={{ fontWeight: 600, color: '#1B0606' }}>{o.nameU}</div>
                                             <div style={{ fontSize: '0.8rem' }}>{o.email}</div>
                                         </td>
                                         <td style={{ padding: '1rem 1.5rem', fontWeight: 600 }}>{o.totalAmount} DH</td>

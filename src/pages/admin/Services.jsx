@@ -100,10 +100,10 @@ const AdminServices = () => {
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <h1 style={{ color: '#0B1F3A', fontWeight: 800, margin: 0 }}>Catalogue des Services</h1>
+                <h1 style={{ color: '#1B0606', fontWeight: 800, margin: 0 }}>Catalogue des Services</h1>
                 <button 
                     onClick={() => handleOpenModal()} 
-                    style={{ background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(30,107,255,0.2)' }}
+                    style={{ background: 'linear-gradient(135deg, #DC2626, #991B1B)', color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(220,38,38,0.2)' }}
                 >
                     + NOUVEAU SERVICE
                 </button>
@@ -111,7 +111,7 @@ const AdminServices = () => {
 
             {/* Modal Overlay */}
             {isModalOpen && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(11, 31, 58, 0.6)', backdropBlur: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(27, 6, 6, 0.6)', backdropBlur: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
                     <div style={{ background: 'white', width: '100%', maxWidth: '550px', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative' }}>
                         <button 
                             onClick={() => setIsModalOpen(false)}
@@ -120,7 +120,7 @@ const AdminServices = () => {
                             <span style={{ fontSize: '1.5rem' }}>&times;</span>
                         </button>
                         
-                        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1B0606', marginBottom: '1.5rem' }}>
                             {isEditing ? 'Modifier le Service' : 'Ajouter un Nouveau Service'}
                         </h2>
                         
@@ -193,7 +193,7 @@ const AdminServices = () => {
                                 </button>
                                 <button 
                                     type="submit" 
-                                    style={{ flex: 2, padding: '0.85rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(30,107,255,0.2)' }}
+                                    style={{ flex: 2, padding: '0.85rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #DC2626, #991B1B)', color: 'white', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(220,38,38,0.2)' }}
                                 >
                                     {isEditing ? 'Mettre à jour' : 'Créer le Service'}
                                 </button>
@@ -238,16 +238,16 @@ const AdminServices = () => {
                         <tbody>
                             {services.map(s => (
                                 <tr key={s.idService} style={{ borderTop: '1px solid #e2e8f0' }}>
-                                    <td style={{ padding: '1.25rem 1.5rem', fontWeight: 600, color: '#0B1F3A' }}>#{s.idService}</td>
+                                    <td style={{ padding: '1.25rem 1.5rem', fontWeight: 600, color: '#1B0606' }}>#{s.idService}</td>
                                     <td style={{ padding: '1.25rem 1.5rem' }}>
-                                        <div style={{ fontWeight: 700, color: '#0B1F3A' }}>{s.nameService}</div>
+                                        <div style={{ fontWeight: 700, color: '#1B0606' }}>{s.nameService}</div>
                                         <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase' }}>{s.typeService}</div>
                                     </td>
                                     <td style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontSize: '0.9rem' }}>
                                         {s.descriptionS.length > 60 ? s.descriptionS.substring(0, 60) + '...' : s.descriptionS}
                                     </td>
                                     <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.durationMonths} Mois</td>
-                                    <td style={{ padding: '1.25rem 1.5rem', fontWeight: 800, color: '#1E6BFF' }}>{s.price} DH</td>
+                                    <td style={{ padding: '1.25rem 1.5rem', fontWeight: 800, color: '#DC2626' }}>{s.price} DH</td>
                                     <td style={{ padding: '1.25rem 1.5rem' }}>
                                         <span style={{ 
                                             background: parseInt(s.isActive) ? '#ecfdf5' : '#fef2f2', 

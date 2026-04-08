@@ -11,7 +11,7 @@ const AdminUsers = () => {
 
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h1 style={{ color: '#0B1F3A', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Utilisateurs</h1>
+                <h1 style={{ color: '#1B0606', fontWeight: 800, marginBottom: '2rem' }}>Gestion des Utilisateurs</h1>
                 
                 {isLoading ? (
                     <p>Chargement des utilisateurs...</p>
@@ -30,7 +30,7 @@ const AdminUsers = () => {
                             <tbody>
                                 {users.map(u => (
                                     <tr key={u.idU} style={{ borderTop: '1px solid #e2e8f0' }}>
-                                        <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#0B1F3A' }}>{u.idU}</td>
+                                        <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#1B0606' }}>{u.idU}</td>
                                         <td style={{ padding: '1rem 1.5rem', fontWeight: 600 }}>{u.nameU}</td>
                                         <td style={{ padding: '1rem 1.5rem', color: '#6B7280' }}>{u.email}</td>
                                         <td style={{ padding: '1rem 1.5rem' }}>
