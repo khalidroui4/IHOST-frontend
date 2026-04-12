@@ -52,8 +52,8 @@
 .auth-overlay.sliding-overlay {
     height: 100%;
     background: linear-gradient(135deg, 
-        rgba(11, 31, 51, 0.85) 0%, 
-        rgba(22, 58, 99, 0.95) 100%
+        rgba(35, 99, 164, 0.488) 0%, 
+        rgba(19, 51, 87, 0.777) 100%
     );
     display: flex;
     flex-direction: column;
@@ -109,6 +109,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    background-color: #e9f2f8;
 }
 
 .auth-form-container {
@@ -163,7 +164,7 @@
 .auth-form-group label {
     font-size: 0.85rem !important;
     font-weight: 700 !important;
-    color: #1e293b !important; /* Dark color for visibility */
+    color: #1e293b !important; 
     display: block !important;
     text-align: left !important;
 }
@@ -172,9 +173,9 @@
     width: 100% !important;
     padding: 0.75rem 1rem !important;
     border-radius: 10px !important;
-    border: 2px solid #CBD5E1 !important; /* Visible border */
-    background-color: #F8FAFC !important; /* Light background */
-    color: #0F172A !important; /* Dark text color */
+    border: 2px solid #CBD5E1 !important; 
+    background-color: #F8FAFC !important; 
+    color: #0F172A !important; 
     font-size: 0.95rem !important;
     font-weight: 500 !important;
     outline: none !important;
@@ -207,7 +208,7 @@
 
 .btn-auth-submit {
     width: 100%;
-    background: #1E6BFF;
+    background: #0B2E59;
     color: white;
     border: none;
     padding: 0.85rem;

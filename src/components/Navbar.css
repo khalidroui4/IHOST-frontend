@@ -97,10 +97,11 @@
 .btn-client-area {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    background: #1E6BFF;
-    color: white;
+    background: #e9f2f8;
+    color: #287fb9;
     padding: 0.75rem 1.5rem;
     border-radius: 4px;
+    border-color: #287fb9;
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -295,9 +296,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: white;
-    background-color: #1E6BFF;
-    border: none;
+    color: #287fb9;
+    background-color: #e9f2f8;
+    border: 1px solid #287fb9;
     border-radius: 9999px;
     padding: 1.2rem;
     text-decoration: none;
@@ -308,7 +309,8 @@
 }
 
 .navbar-action .btn-client-area:hover {
-    background-color: #1d4ed8;
+    background-color: #287fb9;
+    color: white;
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(29, 78, 216, 0.4);
 }
