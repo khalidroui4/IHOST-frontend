@@ -158,7 +158,7 @@ const Home = () => {
                         <div style={{
                             position: 'absolute',
                             inset: 0,
-                            backgroundImage: 'url(/dist/cloud-storage-background-business-network-design.jpg)',
+                            backgroundImage: 'url(/cloud_storage.jpg)',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
