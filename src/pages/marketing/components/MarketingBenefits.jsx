@@ -17,7 +17,7 @@ const MarketingBenefits = ({ benefits, title = "Pourquoi nous choisir ?", subtit
                         boxShadow: '0 4px 6px -1px rgba(236, 72, 153, 0.05), 0 2px 4px -1px rgba(236, 72, 153, 0.03)',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         textAlign: 'left',
-                        borderTop: '4px solid #db2777' // Vibrant pink border
+                        borderTop: '4px solid #db2777' 
                     }}
                         onMouseEnter={(e) => {
                             e.currentTarget.style.transform = 'translateY(-5px)';

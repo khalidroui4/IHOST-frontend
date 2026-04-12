@@ -203,7 +203,6 @@ const AdminServices = () => {
                 </div>
             )}
 
-            {/* Delete Confirmation Modal */}
             {isDeleteModalOpen && (
                 <ConfirmModal 
                     title="Désactiver le service ?"

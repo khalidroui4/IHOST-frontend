@@ -40,7 +40,6 @@ const Navbar = () => {
         };
     }, []);
 
-    // Lock body scroll when mobile menu is open
     useEffect(() => {
         document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
         return () => { document.body.style.overflow = ''; };
@@ -100,7 +99,6 @@ const Navbar = () => {
                         ))}
                     </ul>
 
-                    {/* Sign-in / User actions rendered INSIDE the sidebar on mobile */}
                     <div className="navbar-action">
                         {isAuthenticated ? (
                             <>
@@ -128,7 +126,6 @@ const Navbar = () => {
                 <div className={`navbar-action ${scrolled ? 'nav-hidden' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     {isAuthenticated ? (
                         <>
-                            {/* Cart Icon with Badge */}
                             <Link
                                 to="/client/cart"
                                 style={{ position: 'relative', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', transition: 'all 0.2s', textDecoration: 'none' }}
@@ -144,7 +141,6 @@ const Navbar = () => {
                                 )}
                             </Link>
 
-                            {/* Profile Dropdown */}
                             <div style={{ position: 'relative' }}>
                                 <button
                                     onClick={() => setProfileDropdown(!profileDropdown)}
@@ -217,7 +213,6 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* Mobile Hamburger Button */}
                 <button 
                     className="mobile-menu-btn" 
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

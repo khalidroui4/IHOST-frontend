@@ -1,4 +1,3 @@
-/* SEO.css */
 .marketing-page .hero-background-orange {
     background: linear-gradient(135deg, #0B1F3A 0%, #EA580C 100%);
     position: relative;
@@ -189,7 +188,6 @@
     border-radius: 50%;
 }
 
-/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 1024px) {
     .marketing-page .mss-visual-wrapper { display: none; }
 }

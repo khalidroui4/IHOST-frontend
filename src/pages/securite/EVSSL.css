@@ -1,4 +1,3 @@
-/* EVSSL.css */
 .security-page .hero-background-blue {
     background: linear-gradient(135deg, #0B1F3A 0%, #0EA5E9 100%);
     position: relative;
@@ -30,7 +29,6 @@
     text-align: center;
 }
 
-/* ─── Audit card ────────────────────────────────────── */
 .security-page .audit-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -110,7 +108,6 @@
     border: 1px solid #2563EB;
 }
 
-/* ─── VIP card ──────────────────────────────────────── */
 .security-page .vip-card-container {
     padding: 6rem;
     display: flex;
@@ -143,7 +140,6 @@
     margin-bottom: 3rem;
 }
 
-/* Button group */
 .security-page .vip-btn-group {
     display: flex;
     gap: 1.5rem;
@@ -154,7 +150,6 @@
     padding: 1.4rem 3rem;
 }
 
-/* ─── CTA glass card ────────────────────────────────── */
 .security-page .cta-glass-card {
     padding: 6rem;
     text-align: center;
@@ -183,15 +178,12 @@
     margin-right: auto;
 }
 
-/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 768px) {
 
-    /* Hero */
     .security-page .hero-title       { font-size: 2rem; }
     .security-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
     .security-page .section-padding  { padding: 4rem 1.5rem; }
 
-    /* Audit card */
     .security-page .audit-card {
         flex-direction: column;
         padding: 2rem 1.5rem;
@@ -201,7 +193,6 @@
     .security-page .audit-desc  { font-size: 1rem; }
     .security-page .audit-checklist { grid-template-columns: 1fr; gap: 1rem; }
 
-    /* VIP card */
     .security-page .vip-card-container {
         padding: 2.5rem 1.5rem;
         border-radius: 24px;
@@ -216,7 +207,6 @@
         margin-bottom: 2rem;
     }
 
-    /* Stack buttons vertically */
     .security-page .vip-btn-group {
         flex-direction: column;
         gap: 1rem;
@@ -228,7 +218,6 @@
         text-align: center;
     }
 
-    /* CTA glass */
     .security-page .cta-glass-card  { padding: 3rem 1.5rem; border-radius: 20px; }
     .security-page .cta-glass-title { font-size: clamp(1.4rem, 6vw, 2rem); }
     .security-page .cta-glass-description { font-size: 1rem; margin-bottom: 2rem; }

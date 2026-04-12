@@ -64,7 +64,6 @@ const Home = () => {
                     onChange={(e) => setDomainQuery(e.target.value)}
                     className="domain-search-input"
                 />
-                {/* Domain selector button */}
                 <div style={{ position: 'relative' }} ref={dropdownRef}>
                     <button
                         type="button"

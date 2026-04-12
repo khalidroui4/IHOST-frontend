@@ -136,7 +136,6 @@ const SSLCertificates = () => {
                     </div>
                 </section>
 
-                {/* ── Installation 1-Clic ── */}
                 <section style={{ padding: '6rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
                         <div className="ssl-install-wrapper">
@@ -174,7 +173,6 @@ const SSLCertificates = () => {
                     </div>
                 </section>
 
-                {/* ── CTA ── */}
                 <section className="cta-split" style={{ padding: '6rem 2rem' }}>
                     <div className="container-luxe">
                         <div className="ssl-cta-box">

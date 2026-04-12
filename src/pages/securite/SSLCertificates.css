@@ -1,6 +1,4 @@
-/* SSLCertificates.css */
 
-/* ─── Hero ─────────────────────────────────────────── */
 .ssl-page .hero-title {
     font-size: 3.8rem;
     color: #fff;
@@ -15,7 +13,6 @@
     font-weight: 400;
 }
 
-/* ─── Section headers ───────────────────────────────── */
 .ssl-page .section-title {
     font-size: 3rem;
     font-weight: 800;
@@ -32,7 +29,6 @@
     line-height: 1.6;
 }
 
-/* ─── Pricing grid ──────────────────────────────────── */
 .ssl-pricing-grid {
     max-width: 1100px;
     margin: 0 auto;
@@ -42,8 +38,7 @@
     align-items: center;
 }
 
-/* ─── Installation 1-Clic section ──────────────────── */
-.ssl-install-wrapper {
+    .ssl-install-wrapper {
     background: #F5F7FA;
     padding: 5rem;
     border-radius: 40px;
@@ -100,7 +95,6 @@
     display: inline-block;
 }
 
-/* ─── CTA section ───────────────────────────────────── */
 .ssl-cta-box {
     background: linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%);
     border-radius: 32px;
@@ -124,7 +118,6 @@
     max-width: 750px;
 }
 
-/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 768px) {
     .ssl-page .hero-title {
         font-size: 2.2rem;
@@ -144,7 +137,6 @@
         font-size: 1rem;
     }
 
-    /* Installation: stack vertically */
     .ssl-install-wrapper {
         flex-direction: column;
         padding: 2rem 1.5rem;
@@ -160,18 +152,14 @@
         font-size: 1rem;
     }
 
-    /* Checklist: single column on small screens */
     .ssl-install-checklist {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-
-    /* Visual card: hide on mobile to save space */
     .ssl-install-visual {
         display: none;
     }
 
-    /* CTA */
     .ssl-cta-box {
         padding: 3rem 1.5rem;
         border-radius: 20px;

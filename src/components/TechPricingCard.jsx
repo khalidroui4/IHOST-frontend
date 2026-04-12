@@ -18,8 +18,7 @@ const TechPricingCard = ({
     badge = null, 
     buttonText = "Choisir cette offre", 
     buttonLink = null,
-    // When true the button opens a confirm-then-add-to-cart modal
-    // instead of navigating with buttonLink
+ 
     addToCartMode = false,
 }) => {
     const dispatch = useDispatch();

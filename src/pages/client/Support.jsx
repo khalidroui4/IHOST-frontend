@@ -6,7 +6,6 @@ import {
     Clock, Tag, ChevronRight, Inbox, Shield, X, Loader2
 } from 'lucide-react';
 
-/* ─── Helpers ─── */
 const timeAgo = (d) => {
     if (!d) return '';
     const m = Math.floor((Date.now() - new Date(d)) / 60000);
@@ -35,7 +34,6 @@ const StatusBadge = ({ status }) => {
     );
 };
 
-/* ─── New Ticket Modal ─── */
 const NewTicketModal = ({ onClose, onSubmit, isCreating }) => {
     const [subject, setSubject] = useState('');
     const [msg, setMsg] = useState('');
@@ -122,7 +120,6 @@ const NewTicketModal = ({ onClose, onSubmit, isCreating }) => {
     );
 };
 
-/* ─── Main ─── */
 const ClientSupport = () => {
     const dispatch = useDispatch();
     const { myTickets: tickets, isLoading } = useSelector(state => state.support);
@@ -138,10 +135,8 @@ const ClientSupport = () => {
         const userId = user?.id || user?.idU;
         if (!userId) return;
         
-        // Initial fetch
         dispatch(fetchMyTickets(userId));
         
-        // Poll every 8 seconds so admin replies appear automatically
         const interval = setInterval(() => {
             dispatch(fetchMyTickets(userId));
         }, 8000);
@@ -178,7 +173,6 @@ const ClientSupport = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 0 }}>
-            {/* Modal */}
             {showModal && (
                 <NewTicketModal
                     onClose={() => setShowModal(false)}
@@ -187,7 +181,6 @@ const ClientSupport = () => {
                 />
             )}
 
-            {/* ── Page Header ── */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexShrink: 0 }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#0B1F3A' }}>Support Client</h1>
@@ -207,10 +200,8 @@ const ClientSupport = () => {
                 </button>
             </div>
 
-            {/* ── 2-Column Layout ── */}
             <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '1.25rem', flex: 1, minHeight: 0 }}>
 
-                {/* ══ LEFT: Ticket List ══ */}
                 <div style={{ display: 'flex', flexDirection: 'column', background: 'white', borderRadius: 18, border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
                     <div style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
                         <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
@@ -278,7 +269,6 @@ const ClientSupport = () => {
                     </div>
                 </div>
 
-                {/* ══ RIGHT: Conversation ══ */}
                 <div style={{ display: 'flex', flexDirection: 'column', background: 'white', borderRadius: 18, border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
                     {!activeTicket ? (
                         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', gap: '1rem' }}>
@@ -302,7 +292,6 @@ const ClientSupport = () => {
                         </div>
                     ) : (
                         <>
-                            {/* ── Ticket Header ── */}
                             <div style={{ padding: '1.1rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', flexShrink: 0 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <div>
@@ -328,7 +317,6 @@ const ClientSupport = () => {
                                 </div>
                             </div>
 
-                            {/* ── Messages ── */}
                             <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', background: '#F5F7FA', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {(!activeTicket.messages || activeTicket.messages.length === 0) && (
                                     <div style={{ textAlign: 'center', padding: '3rem 0', color: '#94a3b8' }}>
@@ -345,7 +333,6 @@ const ClientSupport = () => {
                                             flexDirection: 'column',
                                             alignItems: isClient ? 'flex-end' : 'flex-start'
                                         }}>
-                                            {/* Sender label */}
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                                                 {!isClient && (
                                                     <div style={{
@@ -371,7 +358,6 @@ const ClientSupport = () => {
                                                 )}
                                             </div>
 
-                                            {/* Bubble */}
                                             <div style={{
                                                 maxWidth: '68%',
                                                 padding: '0.85rem 1.1rem',
@@ -397,7 +383,6 @@ const ClientSupport = () => {
                                 <div ref={chatRef} />
                             </div>
 
-                            {/* ── Reply Input ── */}
                             <div style={{ padding: '1.1rem 1.5rem', borderTop: '1px solid #f1f5f9', background: 'white', flexShrink: 0 }}>
                                 {activeTicket.statusSupport === 'closed' ? (
                                     <div style={{ textAlign: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: 10, color: '#94a3b8', fontSize: '0.85rem' }}>

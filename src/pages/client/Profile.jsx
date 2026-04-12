@@ -69,13 +69,10 @@ const ClientProfile = () => {
         twitter: user?.twitter || '',
     });
 
-    // Email settings state
     const [emailForm, setEmailForm] = useState({ email: user?.email || '' });
 
-    // Password state
     const [passForm, setPassForm] = useState({ old_password: '', new_password: '', confirm_password: '' });
 
-    // Avatar local preview
     const [avatarPreview, setAvatarPreview] = useState(user?.avatar ? `http://localhost${user.avatar}` : null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -163,7 +160,6 @@ const ClientProfile = () => {
         <PageTransition>
             <div className="profile-container">
 
-                {/* SIDEBAR */}
                 <div className="profile-sidebar">
                     <h2 style={{ fontSize: '1rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Account settings</h2>
                     <ul className="profile-sidebar-list">
@@ -192,13 +188,10 @@ const ClientProfile = () => {
                     </ul>
                 </div>
 
-                {/* MAIN CONTENT */}
                 <div style={{ flex: 1, maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-                    {/* Flash message */}
                     {flash && <AlertBanner type={flash.type} message={flash.message} onClose={() => setFlash(null)} />}
 
-                    {/* ── EDIT PROFILE TAB ── */}
                     {activeTab === 'edit_profile' && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>
@@ -209,7 +202,6 @@ const ClientProfile = () => {
                             </div>
 
                             <div className="profile-content-wrap">
-                                {/* Avatar */}
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
                                     <div
                                         onClick={() => fileRef.current.click()}
@@ -229,7 +221,6 @@ const ClientProfile = () => {
                                     <small style={{ color: '#94a3b8', fontSize: '0.75rem', textAlign: 'center' }}>Click to change</small>
                                 </div>
 
-                                {/* Form */}
                                 <form onSubmit={handleProfileSubmit} style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                                     <div className="form-row">
                                         <InputField label="First name" value={form.first_name} onChange={e => setForm({ ...form, first_name: e.target.value })} />
@@ -274,7 +265,6 @@ const ClientProfile = () => {
                         </div>
                     )}
 
-                    {/* ── EMAIL SETTINGS TAB ── */}
                     {activeTab === 'email_settings' && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                             <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>
@@ -303,7 +293,6 @@ const ClientProfile = () => {
                         </div>
                     )}
 
-                    {/* ── CHANGE PASSWORD TAB ── */}
                     {activeTab === 'change_password' && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                             <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem' }}>

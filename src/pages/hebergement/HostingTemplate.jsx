@@ -43,9 +43,7 @@ const HostingTemplate = ({ data }) => {
                 zIndex: 1,
               }}
             />
-            {/* Grid pattern */}
             <div className="pattern-grid-tech" style={{ zIndex: 2 }} />
-            {/* Content */}
             <div
               className="container-luxe hero-content"
               style={{ zIndex: 10, position: "relative" }}
@@ -224,7 +222,6 @@ const HostingTemplate = ({ data }) => {
               ))}
             </div>
 
-            {/* Pricing Comparison Table (Mobile hidden for simplicity in this template) */}
             <div
               className="pricing-comparison"
               style={{
@@ -277,7 +274,6 @@ const HostingTemplate = ({ data }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Dynamically extract features for comparison could be complex, using a static sample for consistency */}
                   <tr style={{ borderBottom: "1px solid #F1F5F9" }}>
                     <td style={{ padding: "1.5rem 2rem", fontWeight: 600 }}>
                       Performance

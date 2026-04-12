@@ -1,4 +1,3 @@
-/* AboutUs.css */
 .entreprise-page .hero-background-dark {
     background: linear-gradient(135deg, #0B1F3A 0%, #475569 100%);
     position: relative;
@@ -62,7 +61,6 @@
     line-height: 1.6;
 }
 
-/* ─── Mission / Vision ──────────────────────────────── */
 .entreprise-page .mission-grid {
     max-width: 1100px;
     margin: 0 auto;
@@ -113,7 +111,6 @@
     margin: 0;
 }
 
-/* ─── Stats ─────────────────────────────────────────── */
 .entreprise-page .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -136,7 +133,6 @@
     justify-content: center;
 }
 
-/* ─── Join Us Card ──────────────────────────────────── */
 .entreprise-page .join-container {
     background: white;
     padding: 6rem;
@@ -197,7 +193,6 @@
     justify-content: center;
 }
 
-/* ─── CTA ───────────────────────────────────────────── */
 .entreprise-page .cta-container {
     background: #0B1F3A;
     border-radius: 48px;
@@ -249,7 +244,6 @@
     border-radius: 50%;
 }
 
-/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 1024px) {
     .entreprise-page .join-visual { display: none; }
 }

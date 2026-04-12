@@ -6,7 +6,6 @@ const MarketingHero = ({ title, subtitle, ctaText = "Commencer", onCtaClick = nu
         <section className="hero" style={{
             minHeight: '500px',
             paddingBottom: '4rem',
-            // Vibrant, energetic gradient fitting for marketing and growth
             background: 'linear-gradient(135deg, #4f46e5 0%, #ec4899 100%)',
         }}>
             <div className="hero-background" style={{ opacity: 0.15, backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>

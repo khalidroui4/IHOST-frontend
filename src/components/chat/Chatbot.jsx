@@ -23,7 +23,6 @@ const Chatbot = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
-    // Poll for admin replies every 8s when a ticket is open
     useEffect(() => {
         const userId = user?.id || user?.idU;
         if (activeTicketId && userId) {
@@ -35,7 +34,6 @@ const Chatbot = () => {
     }, [activeTicketId, user, dispatch]);
 
 
-    // Sync new admin messages from Redux to chat bubble list
     useEffect(() => {
         if (!activeTicketId) return;
         const ticket = tickets?.find(t => t.idSupport === activeTicketId);
@@ -66,7 +64,6 @@ const Chatbot = () => {
 
         try {
             if (user) {
-                // Logged-in: create a real ticket linked to the user account
                 const result = await dispatch(createTicket({ subjectSupport: subject, message: userText })).unwrap();
                 if (result?.idTicket) setActiveTicketId(result.idTicket);
                 setMessages(prev => [...prev, {
@@ -74,7 +71,6 @@ const Chatbot = () => {
                     text: `✅ Ticket créé ! Notre équipe vous répondra dès que possible. Consultez la section "Support" pour suivre l'avancement. Je vous notifierai ici si l'admin répond.`
                 }]);
             } else {
-                // Anonymous: create ticket without auth, tagged as Anonyme
                 await dispatch(createAnonymousTicket({ subjectSupport: subject, message: userText })).unwrap();
                 setMessages(prev => [...prev, {
                     role: 'bot',

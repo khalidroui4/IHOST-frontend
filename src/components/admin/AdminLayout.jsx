@@ -66,13 +66,11 @@ const AdminLayout = () => {
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      {/* Sidebar Overlay for Mobile */}
       <div
         className={`sidebar-overlay ${isSidebarOpen ? "" : "hidden"}`}
         onClick={() => setIsSidebarOpen(false)}
       />
 
-      {/* ═══════════ FIXED SIDEBAR ═══════════ */}
       <aside
         className={`app-sidebar ${isSidebarOpen ? "open" : ""}`}
         style={{
@@ -85,7 +83,6 @@ const AdminLayout = () => {
           overflowY: "auto",
         }}
       >
-        {/* Logo */}
         <div
           style={{
             padding: "1.5rem 1.25rem",
@@ -109,7 +106,6 @@ const AdminLayout = () => {
           </Link>
         </div>
 
-        {/* Nav Groups */}
         <nav
           style={{
             flex: 1,
@@ -173,7 +169,6 @@ const AdminLayout = () => {
           ))}
         </nav>
 
-        {/* Logout */}
         <div
           style={{
             padding: "1rem 0.75rem",
@@ -211,7 +206,6 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* ═══════════ MAIN AREA ═══════════ */}
       <div
         style={{
           flex: 1,
@@ -220,7 +214,6 @@ const AdminLayout = () => {
           overflow: "hidden",
         }}
       >
-        {/* ── TOPBAR ── */}
         <header
           className="dashboard-header"
           style={{
@@ -236,7 +229,6 @@ const AdminLayout = () => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            {/* Mobile Toggle */}
             <button
               className="mobile-header-toggle"
               onClick={() => setIsSidebarOpen(true)}
@@ -244,7 +236,6 @@ const AdminLayout = () => {
               <Menu size={24} color="#1B0606" />
             </button>
 
-            {/* Search */}
             <div
               className="dashboard-search-bar"
               style={{
@@ -264,11 +255,9 @@ const AdminLayout = () => {
             ></div>
           </div>
 
-          {/* Right Side */}
           <div
             style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
           >
-            {/* User Avatar */}
             <div
               style={{
                 display: "flex",
@@ -328,7 +317,6 @@ const AdminLayout = () => {
           </div>
         </header>
 
-        {/* ── CONTENT (Outlet renders child pages here) ── */}
         <main
           className="dashboard-main"
           style={{

@@ -16,7 +16,6 @@ body {
   line-height: 1.5;
 }
 
-/* Domain extension dropdown — keep inside viewport on all screen sizes */
 .domain-dropdown-list {
   position: absolute !important;
   top: calc(100% + 8px) !important;
@@ -437,7 +436,6 @@ h4,
   margin: 0 auto;
 }
 
-/* Base Responsive Breakpoints */
 @media (max-width: 1024px) {
   .hero h1 {
     font-size: 3rem;
@@ -456,7 +454,6 @@ h4,
     padding: 1.5rem 1rem;
     min-height: auto !important;
   }
-  /* Domain Search Fixes */
   .domain-search-wrapper {
     padding: 0.5rem !important;
     border-radius: 24px !important;
@@ -521,7 +518,6 @@ h4,
     left: 0;
   }
 
-  /* Cart mobile fixes */
   .cart-layout {
     grid-template-columns: 1fr !important;
   }
@@ -541,7 +537,6 @@ h4,
     right: 1rem !important;
   }
 
-  /* Dashboard Layouts Mobile */
   .app-sidebar {
     position: fixed !important;
     left: -100% !important;
@@ -581,7 +576,6 @@ h4,
     border-radius: 8px;
   }
 
-  /* Hero Fixes */
   .hero {
     padding-top: 5rem !important;
     min-height: 100vh !important;
@@ -720,7 +714,6 @@ h4,
   }
 }
 
-/* Base styles for Hero newly extracted classes */
 .hero-title {
   font-size: 3.8rem;
   color: #fff;
@@ -813,7 +806,7 @@ h4,
   -webkit-overflow-scrolling: touch;
   width: 100%;
   margin-bottom: 1rem;
-  border-radius: 8px; /* Optional aesthetics */
+  border-radius: 8px; 
 }
 
 @media (max-width: 500px) {
@@ -859,12 +852,6 @@ h4,
   background: #f5f7fa;
 }
 
-/* ============================================================
-   EMAIL PAGES — MOBILE FIXES (Microsoft365, AntiSpam,
-   EmailSecurity, EmailArchiving)
-   ============================================================ */
-
-/* --- Hero h1 inline fontSize override --- */
 @media (max-width: 768px) {
   .email-page .hero h1,
   .email-page h1.font-tech {
@@ -872,38 +859,30 @@ h4,
     line-height: 1.2 !important;
     word-break: break-word !important;
   }
-
-  /* Section padding reduction */
+    
   .email-page .section-premium,
   .email-page section {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 
-  /* Section header h2 */
   .email-page h2 {
     font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
     line-height: 1.2 !important;
     letter-spacing: -0.03em !important;
   }
 
-  /* Features grid — single column on mobile */
   .email-page .features-grid {
     grid-template-columns: 1fr !important;
     gap: 1.5rem !important;
   }
-
-  /* Auto-fit grids used inline — force single column */
   .email-page [style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* The EmailArchiving "third card spanning 2 cols" — reset */
   .email-page [style*="gridColumn"] {
     grid-column: auto !important;
   }
-
-  /* Flex split sections (icon card + text) → stack vertically */
   .email-page [style*="display: flex"][style*="gap"],
   .email-page [style*="display:'flex'"] {
     flex-direction: column !important;
@@ -911,7 +890,6 @@ h4,
     align-items: stretch !important;
   }
 
-  /* Large padded CTA/split boxes */
   .email-page [style*="padding: '5rem'"],
   .email-page [style*="padding: '5.5rem'"],
   .email-page [style*="padding: '4rem'"] {
@@ -919,14 +897,12 @@ h4,
     border-radius: 24px !important;
   }
 
-  /* Guarantee feature check-list grid → single column */
   .email-page [style*="gridTemplateColumns: '1fr 1fr'"],
   .email-page [style*='gridTemplateColumns: "1fr 1fr"'] {
     grid-template-columns: 1fr !important;
   }
 }
 
-/* Extra-small screens */
 @media (max-width: 480px) {
   .email-page .hero h1,
   .email-page h1.font-tech {
@@ -946,7 +922,6 @@ h4,
     line-height: 1.65 !important;
   }
 
-  /* CTA boxes */
   .email-page [style*="padding: '5rem'"],
   .email-page [style*="padding: '4rem'"],
   .email-page [style*="padding: '3rem'"] {
@@ -955,9 +930,6 @@ h4,
   }
 }
 
-/* --- Specific structural fixes using class selectors --- */
-
-/* Microsoft365: "Prêt pour l'hybride" two-column split */
 @media (max-width: 768px) {
   .email-page .m365-split-box {
     flex-direction: column !important;
@@ -970,7 +942,6 @@ h4,
     text-align: center !important;
   }
 
-  /* AntiSpam / EmailArchiving: compat box split */
   .email-page .compat-split-box {
     flex-direction: column !important;
     padding: 2.5rem 1.5rem !important;
@@ -982,7 +953,6 @@ h4,
     width: 100% !important;
   }
 
-  /* EmailSecurity: threat row cards (icon left + text right) */
   .email-page .threat-row {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -1006,7 +976,6 @@ h4,
     font-size: 0.95rem !important;
   }
 
-  /* EmailArchiving: audit-split box */
   .email-page .audit-split-box {
     flex-direction: column !important;
     padding: 2.5rem 1.5rem !important;
@@ -1018,13 +987,10 @@ h4,
     width: 100% !important;
   }
 
-  /* 2-col checklist → single column */
   .email-page .m365-checklist {
     grid-template-columns: 1fr !important;
     gap: 1rem !important;
   }
-
-  /* CTA boxes */
   .email-page .email-cta-box {
     padding: 2.5rem 1.25rem !important;
     border-radius: 24px !important;

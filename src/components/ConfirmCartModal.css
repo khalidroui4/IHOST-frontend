@@ -1,4 +1,3 @@
-/* ─── Backdrop ─────────────────────────────────────────────────────────── */
 .ccm-backdrop {
     position: fixed;
     top: 0;
@@ -21,7 +20,6 @@
     to   { opacity: 1; }
 }
 
-/* ─── Panel ──────────────────────────────────────────────────────────────── */
 .ccm-panel {
     background: #fff;
     border-radius: 24px;
@@ -41,7 +39,6 @@
     to   { transform: translateY(0)    scale(1);    opacity: 1; }
 }
 
-/* ─── Close button ───────────────────────────────────────────────────────── */
 .ccm-close {
     position: absolute;
     top: 1.1rem;
@@ -63,7 +60,6 @@
     color: #0B1F3A;
 }
 
-/* ─── Icon wrap ──────────────────────────────────────────────────────────── */
 .ccm-icon-wrap {
     width: 72px;
     height: 72px;
@@ -77,7 +73,6 @@
     box-shadow: 0 8px 24px rgba(30, 107, 255, 0.35);
 }
 
-/* ─── Texts ──────────────────────────────────────────────────────────────── */
 .ccm-title {
     font-size: 1.4rem;
     font-weight: 800;
@@ -93,7 +88,6 @@
     line-height: 1.55;
 }
 
-/* ─── Plan preview card ──────────────────────────────────────────────────── */
 .ccm-plan-card {
     background: linear-gradient(135deg, #f0f7ff 0%, #e8f2ff 100%);
     border: 1px solid #bfdbfe;
@@ -148,7 +142,6 @@
     color: #64748b;
 }
 
-/* ─── Features list ──────────────────────────────────────────────────────── */
 .ccm-plan-features {
     list-style: none;
     padding: 0;
@@ -179,7 +172,6 @@
     font-style: italic;
 }
 
-/* ─── Actions ────────────────────────────────────────────────────────────── */
 .ccm-actions {
     display: flex;
     gap: 0.85rem;

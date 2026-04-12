@@ -120,7 +120,6 @@ function Contact() {
 
             </motion.div>
 
-            {/* FORM SIDE */}
             <motion.div
               className="contact-form-card"
               initial={{ x: 30, opacity: 0 }}

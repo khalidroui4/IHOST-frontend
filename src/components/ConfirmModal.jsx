@@ -10,7 +10,7 @@ const ConfirmModal = ({
     onCancel, 
     confirmText = 'Confirmer', 
     cancelText = 'Annuler',
-    type = 'info' // info, danger, warning
+    type = 'info'
 }) => {
     useEffect(() => {
         const handleKey = (e) => { if (e.key === 'Escape') onCancel(); };

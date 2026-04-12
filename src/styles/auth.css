@@ -257,7 +257,6 @@
         border-radius: 20px;
     }
 
-    /* Override absolute positioning — stack image on top, form below */
     .auth-image-panel,
     .auth-form-panel {
         position: relative !important;

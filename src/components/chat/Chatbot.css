@@ -180,7 +180,6 @@
     color: #94a3b8;
 }
 
-/* User profile in header */
 .chat-user-info {
     display: flex;
     align-items: center;
@@ -221,7 +220,6 @@
     white-space: nowrap;
 }
 
-/* Typing animation */
 .message-bubble.typing {
     display: flex;
     align-items: center;
@@ -230,7 +228,6 @@
     color: #64748b;
 }
 
-/* Spin animation */
 .spin-icon {
     animation: spin 1s linear infinite;
 }

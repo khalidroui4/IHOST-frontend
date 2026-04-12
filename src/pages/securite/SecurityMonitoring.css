@@ -1,4 +1,3 @@
-/* SecurityMonitoring.css */
 .security-page .hero-background-gradient {
     background: linear-gradient(135deg, #0B1F3A 0%, #2563EB 100%);
     position: relative;
@@ -173,7 +172,6 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
-/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 768px) {
     .security-page .hero-title       { font-size: 2.2rem; }
     .security-page .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
@@ -181,7 +179,6 @@
     .security-page .section-subtitle { font-size: 1rem; }
     .security-page .section-padding  { padding: 4rem 1.5rem; }
 
-    /* Benefit cards: stack icon above text */
     .security-page .benefit-card {
         flex-direction: column;
         align-items: flex-start;
@@ -193,7 +190,6 @@
     .security-page .benefit-title { font-size: 1.4rem; }
     .security-page .benefit-desc  { font-size: 1rem; }
 
-    /* MSS split card */
     .security-page .mss-card-container {
         flex-direction: column;
         padding: 2rem 1.5rem;

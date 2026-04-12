@@ -16,12 +16,10 @@ const Checkout = () => {
     const finalTotal = cartTotal;
 
     const handleCheckout = async () => {
-        // 1. Create Order (the backend creates the order and order_items from the native cart)
         const orderRes = await dispatch(createOrder({ totalAmount: finalTotal }));
         if (orderRes.payload?.status === 'success') {
             const orderId = orderRes.payload.orderId;
             
-            // 2. Process Payment (the backend triggers activate_subscription automatically)
             const payRes = await dispatch(processPayment({
                 orderId,
                 amount: finalTotal,
@@ -29,7 +27,6 @@ const Checkout = () => {
             }));
 
             if (payRes.payload?.status === 'success') {
-                // Refresh cart explicitly so badge updates immediately
                 dispatch(fetchCart());
             }
         }
@@ -43,7 +40,6 @@ const Checkout = () => {
                 <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: 1.6 }}>Votre commande a été traitée avec succès.<br/>Vos services sont en cours d'activation.</p>
                 <button 
                     onClick={() => {
-                        // Reset payment state if needed or just navigate
                         navigate('/client/dashboard');
                     }} 
                     style={{ background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '1rem 2rem', borderRadius: '12px', fontSize: '1.05rem', fontWeight: 700, cursor: 'pointer', transition: 'opacity 0.2s', boxShadow: '0 4px 12px rgba(30,107,255,0.3)' }}

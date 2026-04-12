@@ -7,7 +7,6 @@ const Welcome = () => {
     const location = useLocation();
     const userState = location.state?.user;
 
-    // Use passed data or fallback to a demo profile for preview
     const user = userState || {
         first_name: 'Client',
         last_name: 'IHOST',

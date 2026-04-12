@@ -42,7 +42,6 @@ const ClientDashboard = () => {
     return (
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
 
-            {/* ── Welcome Banner ── */}
             <div style={{ position: 'relative', overflow: 'hidden', padding: '2rem 2.5rem', borderRadius: '20px', background: 'linear-gradient(135deg, #0B1F3A 0%, #1a3a6e 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ position: 'absolute', top: '-60px', right: '5%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(30,107,255,0.5) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(50px)' }} />
                 <div style={{ position: 'relative', zIndex: 1 }}>
@@ -61,7 +60,6 @@ const ClientDashboard = () => {
                 </div>
             </div>
 
-            {/* ── Stat Cards ── */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
                 {statCards.map(({ label, value, icon: Icon, bg, color, accent }) => (
                     <div key={label} style={{ ...cardStyle, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderBottom: `3px solid ${accent}`, transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'default' }}
@@ -79,10 +77,8 @@ const ClientDashboard = () => {
                 ))}
             </div>
 
-            {/* ── Main Grid: Activity + Quick Links ── */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.25rem' }}>
 
-                {/* Activity Timeline */}
                 <div style={{ ...cardStyle, padding: '1.75rem', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                         <h3 style={sectionTitleStyle}>Activité Récente</h3>
@@ -115,10 +111,8 @@ const ClientDashboard = () => {
                     )}
                 </div>
 
-                {/* Sidebar: Quick Actions & Support */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
-                    {/* Quick Support */}
                     <div style={{ ...cardStyle, padding: '1.5rem', background: 'linear-gradient(to bottom right, #ffffff, #f0f9ff)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                             <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -137,7 +131,6 @@ const ClientDashboard = () => {
                         </Link>
                     </div>
 
-                    {/* Server Status */}
                     <div style={{ ...cardStyle, padding: '1.5rem' }}>
                         <h3 style={sectionTitleStyle}>État des Services</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -157,7 +150,6 @@ const ClientDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Notifications Panel */}
                     <div style={{ ...cardStyle, padding: '1.5rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                             <h3 style={{ ...sectionTitleStyle, marginBottom: 0 }}>Notifications</h3>

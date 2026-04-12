@@ -41,7 +41,6 @@ const Auth = () => {
         if (isAuthenticated && user) {
             const role = user.role?.toLowerCase() || user.roleU?.toLowerCase();
             const path = role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
-            // Use normal link/redirect to force reload and get data from database
             window.location.href = path;
         }
     }, [isAuthenticated, user]);
@@ -56,7 +55,7 @@ const Auth = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const [isCaptchaVerified, setIsCaptchaVerified] = useState(true); // Default true for login, will update for signup
+    const [isCaptchaVerified, setIsCaptchaVerified] = useState(true); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();

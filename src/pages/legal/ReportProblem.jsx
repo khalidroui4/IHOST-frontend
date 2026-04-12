@@ -20,7 +20,6 @@ const ReportProblem = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would normally dispatch an action or send to an API endpoint
         console.log('Report submitted:', formData);
         setSubmitted(true);
         setTimeout(() => setSubmitted(false), 5000); // Reset after 5s

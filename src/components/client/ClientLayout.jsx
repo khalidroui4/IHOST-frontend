@@ -70,13 +70,11 @@ const ClientLayout = () => {
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', background: '#f0f4f8', zIndex: 9999, overflow: 'hidden', fontFamily: 'Inter, system-ui, sans-serif' }}>
             
-            {/* Sidebar Overlay for Mobile */}
             <div 
                 className={`sidebar-overlay ${isSidebarOpen ? '' : 'hidden'}`} 
                 onClick={() => setIsSidebarOpen(false)}
             />
 
-            {/* ═══════════ FIXED SIDEBAR ═══════════ */}
             <aside className={`app-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ width: '240px', background: '#0B1F3A', height: '100%', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
                 
                 {/* Logo */}
@@ -86,7 +84,6 @@ const ClientLayout = () => {
                     </Link>
                 </div>
 
-                {/* Nav Groups */}
                 <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     {sidebarGroups.map((group) => (
                         <div key={group.label}>
@@ -126,7 +123,6 @@ const ClientLayout = () => {
                     ))}
                 </nav>
 
-                {/* Logout */}
                 <div style={{ padding: '1rem 0.75rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
                     <button
                         onClick={() => setShowLogoutModal(true)}
@@ -140,19 +136,15 @@ const ClientLayout = () => {
                 </div>
             </aside>
 
-            {/* ═══════════ MAIN AREA ═══════════ */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
-                {/* ── TOPBAR ── */}
                 <header className="dashboard-header" style={{ height: '64px', background: '#e3eff6', borderBottom: '1px solid #cbcbcbff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', flexShrink: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        {/* Mobile Toggle */}
                         <button className="mobile-header-toggle" onClick={() => setIsSidebarOpen(true)}>
                             <Menu size={24} color="#0B1F3A" />
                         </button>
 
-                        {/* Search */}
                         <div className="dashboard-search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
                             onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
                             onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
@@ -161,9 +153,7 @@ const ClientLayout = () => {
                         </div>
                     </div>
 
-                    {/* Right Side */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        {/* Notifications */}
                         <Link to="/client/notifications" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
@@ -176,7 +166,6 @@ const ClientLayout = () => {
                             )}
                         </Link>
 
-                        {/* Cart */}
                         <Link to="/client/cart" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
@@ -189,10 +178,8 @@ const ClientLayout = () => {
                             )}
                         </Link>
 
-                        {/* Divider */}
                         <div style={{ width: '1px', height: '24px', background: '#e5eaf0' }} />
 
-                        {/* User Avatar */}
                         <Link to="/client/profile" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '10px', transition: 'background 0.15s' }}
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f6fb'}
                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}

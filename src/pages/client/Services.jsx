@@ -78,7 +78,6 @@ const ClientServices = () => {
     return (
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
             
-            {/* ── Active Subscriptions ── */}
             <section>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                     <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>Mes Services Actifs</h2>
@@ -135,7 +134,6 @@ const ClientServices = () => {
                 )}
             </section>
 
-            {/* ── Catalog ── */}
             <section>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #e5eaf0', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
                     <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>Catalogue des Services</h2>

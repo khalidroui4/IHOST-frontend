@@ -14,7 +14,6 @@ const DomainRegistrationModal = ({
     initialIncludePrivacy = false,
     isEdit = false
 }) => {
-    // Split "mysite.com" into "mysite" and ".com"
     const parts = initialDomain.split('.');
     const initialName = parts[0];
     const initialExt = '.' + parts.slice(1).join('.');
@@ -24,7 +23,7 @@ const DomainRegistrationModal = ({
     const [includePrivacy, setIncludePrivacy] = useState(initialIncludePrivacy);
     const [isChecking, setIsChecking] = useState(false);
     const [availability, setAvailability] = useState({ available: true, domain: initialDomain });
-    const privacyPrice = 50; // DH per year
+    const privacyPrice = 50;
 
     useEffect(() => {
         if (!isOpen) return;
@@ -37,7 +36,6 @@ const DomainRegistrationModal = ({
         };
     }, [isOpen, onClose]);
 
-    // Check availability when extension changes
     useEffect(() => {
         if (!isOpen || selectedExt === initialExt) {
             if (selectedExt === initialExt) setAvailability({ available: true, domain: initialDomain });
@@ -115,7 +113,6 @@ const DomainRegistrationModal = ({
                 </div>
 
                 <div className="drm-body">
-                    {/* Extension Selection */}
                     <div className="drm-section">
                         <label className="drm-section-label">
                             <Globe size={18} /> Choisir l'extension
@@ -139,7 +136,6 @@ const DomainRegistrationModal = ({
                         )}
                     </div>
 
-                    {/* Duration Selection */}
                     <div className="drm-section">
                         <label className="drm-section-label">
                             <Calendar size={18} /> Période d'enregistrement
@@ -158,7 +154,6 @@ const DomainRegistrationModal = ({
                         </div>
                     </div>
 
-                    {/* Options Selection */}
                     <div className="drm-section">
                         <label className="drm-section-label">
                             <Shield size={18} /> Options de Protection

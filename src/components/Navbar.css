@@ -58,7 +58,6 @@
     transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Hide the mobile-only action block on desktop (it lives inside the pill nav on desktop) */
 .navbar-links-wrapper .navbar-action {
     display: none;
 }
@@ -315,7 +314,6 @@
     box-shadow: 0 6px 10px rgba(29, 78, 216, 0.4);
 }
 
-/* Mobile Menu Toggle Button */
 .mobile-menu-btn {
     display: none;
     background: transparent;
@@ -326,7 +324,6 @@
     z-index: 1001;
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 1024px) {
     .navbar-container {
         grid-template-columns: auto 1fr auto;
@@ -334,7 +331,6 @@
         padding: 0 1rem;
     }
 
-    /* Show hamburger button */
     .mobile-menu-btn {
         display: flex;
         align-items: center;
@@ -342,7 +338,6 @@
         margin-left: auto;
     }
 
-    /* HIDE the desktop sign-in button & actions from the top bar on mobile */
     .navbar-container > .navbar-action {
         display: none !important;
     }
@@ -384,7 +379,6 @@
         box-sizing: border-box;
     }
 
-    /* Override flex row from base: make dropdown stack below the nav link */
     .nav-item-dropdown {
         display: flex;
         flex-direction: column;
@@ -444,14 +438,12 @@
         align-items: center;
     }
 
-    /* Text container must stretch to fill remaining width */
     .nav-dropdown-desc-container {
         flex: 1;
         min-width: 0;
         overflow: hidden;
     }
 
-    /* Hide description on mobile - only show title */
     .nav-dropdown-desc {
         display: none;
     }
@@ -473,7 +465,6 @@
         width: 100%;
     }
 
-    /* Sign-in button inside the mobile sidebar panel */
     .navbar-links-wrapper .navbar-action {
         display: flex;
         flex-direction: column;

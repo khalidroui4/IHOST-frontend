@@ -6,7 +6,7 @@ const SecurityHero = ({ title, subtitle, ctaText = "Activer la protection", onCt
         <section className="hero" style={{
             minHeight: '500px',
             paddingBottom: '4rem',
-            background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)', // Dark blue cyber-security theme
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
         }}>
             <div className="hero-background" style={{ opacity: 0.1, backgroundImage: 'radial-gradient(#3b82f6 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
             <div className="hero-content" style={{ position: 'relative', zIndex: 2 }}>

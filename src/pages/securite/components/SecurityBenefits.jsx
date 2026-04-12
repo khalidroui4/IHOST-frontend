@@ -17,7 +17,7 @@ const SecurityBenefits = ({ benefits, title = "Fonctionnalités & Avantages", su
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         textAlign: 'left',
-                        borderTop: '4px solid #3b82f6' // Subtle active border
+                        borderTop: '4px solid #3b82f6' 
                     }}
                         onMouseEnter={(e) => {
                             e.currentTarget.style.transform = 'translateY(-5px)';

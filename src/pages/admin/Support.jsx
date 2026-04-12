@@ -7,7 +7,6 @@ import {
     AlertCircle, Circle
 } from 'lucide-react';
 
-/* ─── Helpers ─── */
 const timeAgo = (dateStr) => {
     if (!dateStr) return '';
     const diff = Date.now() - new Date(dateStr).getTime();
@@ -62,13 +61,12 @@ const UserAvatar = ({ user, size = 40 }) => {
     );
 };
 
-/* ─── Main Component ─── */
 const AdminSupport = () => {
     const dispatch = useDispatch();
     const { tickets, isLoading } = useSelector(state => state.support);
     const [activeId, setActiveId] = useState(null);
     const [msgText, setMsgText] = useState('');
-    const [filter, setFilter] = useState('all'); // all | open | closed
+    const [filter, setFilter] = useState('all'); 
     const [search, setSearch] = useState('');
     const [isSending, setIsSending] = useState(false);
     const messagesEndRef = useRef(null);
@@ -134,10 +132,8 @@ const AdminSupport = () => {
                 </div>
             </div>
 
-            {/* ── 2-Column Layout ── */}
             <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '1.25rem', flex: 1, minHeight: 0 }}>
 
-                {/* ══ LEFT: Ticket List ══ */}
                 <div style={{ display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
                     {/* Search + Filters */}
                     <div style={{ padding: '1rem 1rem 0.75rem', borderBottom: '1px solid #f1f5f9' }}>
@@ -171,7 +167,6 @@ const AdminSupport = () => {
                         </div>
                     </div>
 
-                    {/* Ticket Cards */}
                     <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
                         {isLoading && (
                             <div style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8', fontSize: '0.875rem' }}>Chargement...</div>
@@ -235,7 +230,6 @@ const AdminSupport = () => {
                     </div>
                 </div>
 
-                {/* ══ RIGHT: Conversation Panel ══ */}
                 <div style={{ display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
 
                     {!activeTicket ? (
@@ -248,7 +242,6 @@ const AdminSupport = () => {
                         </div>
                     ) : (
                         <>
-                            {/* ── User Info Header ── */}
                             <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', flexShrink: 0 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -313,7 +306,6 @@ const AdminSupport = () => {
                                 </div>
                             </div>
 
-                            {/* ── Messages Area ── */}
                             <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', background: '#F5F7FA', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {(!activeTicket.messages || activeTicket.messages.length === 0) && (
                                     <div style={{ textAlign: 'center', padding: '3rem 0', color: '#94a3b8' }}>
@@ -360,7 +352,6 @@ const AdminSupport = () => {
                                 <div ref={messagesEndRef} />
                             </div>
 
-                            {/* ── Reply Input ── */}
                             <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid #f1f5f9', background: 'white', flexShrink: 0 }}>
                                 {activeTicket.userId === null ? (
                                     <div style={{
