@@ -53,8 +53,8 @@ const AdminServices = () => {
         e.preventDefault();
         try {
             const url = isEditing 
-                ? `http://localhost/IHOST-backend/services/${currentId}`
-                : 'http://localhost/IHOST-backend/services';
+                ? `/IHOST-backend/services/${currentId}`
+                : '/IHOST-backend/services';
             
             const method = isEditing ? 'put' : 'post';
             
@@ -76,7 +76,7 @@ const AdminServices = () => {
     const confirmDelete = async () => {
         if (!serviceToDelete) return;
         try {
-            await axios.delete(`http://localhost/IHOST-backend/services/${serviceToDelete.idService}`, {
+            await axios.delete(`/IHOST-backend/services/${serviceToDelete.idService}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('iHostToken')}` }
             });
             setIsDeleteModalOpen(false);

@@ -1,1 +1,1 @@
-export const API = "http://localhost/IHOST-backend/api";
+export const API = "/IHOST-backend/api";

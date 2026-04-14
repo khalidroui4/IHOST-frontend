@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/IHOST-backend/cart';
+const API_URL = '/IHOST-backend/cart';
 
 const authHeader = () => {
     const token = localStorage.getItem('iHostToken');
@@ -38,7 +38,7 @@ export const addToCart = createAsyncThunk(
             if (!serviceId && service.nameService) {
                 let errString = "";
                 try {
-                    const catalogRes = await axios.get('http://localhost/IHOST-backend/services');
+                    const catalogRes = await axios.get('/IHOST-backend/services');
                     const catalog = catalogRes.data.data;
                     const queryName = String(service.nameService).trim().toLowerCase();
                     const matched = catalog.find(s => 

@@ -46,7 +46,7 @@ const DomainRegistrationModal = ({
             const domainToCheck = initialName + selectedExt;
             setIsChecking(true);
             try {
-                const res = await axios.get(`http://localhost/IHOST-backend/domains/check/${domainToCheck}`);
+                const res = await axios.get(`/IHOST-backend/domains/check/${domainToCheck}`);
                 setAvailability({ available: res.data.available, domain: domainToCheck });
             } catch (err) {
                 setAvailability({ available: false, domain: domainToCheck, error: true });

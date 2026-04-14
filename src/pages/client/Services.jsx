@@ -53,7 +53,7 @@ const ClientServices = () => {
         setIsRenewing(true);
         try {
             const token = localStorage.getItem('iHostToken');
-            await axios.post('http://localhost/IHOST-backend/subscriptions/renew', 
+            await axios.post('/IHOST-backend/subscriptions/renew', 
                 { idSub }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );

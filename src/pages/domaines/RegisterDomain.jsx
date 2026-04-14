@@ -64,7 +64,7 @@ const RegisterDomain = () => {
         setIsSearching(true);
         setSearchResult(null);
         try {
-            const res = await axios.get(`http://localhost/IHOST-backend/domains/check/${query}`);
+            const res = await axios.get(`/IHOST-backend/domains/check/${query}`);
             setSearchResult({
                 domain: res.data.domain || query,
                 available: res.data.available

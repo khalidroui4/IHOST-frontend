@@ -14,7 +14,7 @@ const AdminOrders = () => {
     const handleApprove = async (idOrder) => {
         setUpdating(true);
         try {
-            await axios.put(`http://localhost/IHOST-backend/orders/${idOrder}`, 
+            await axios.put(`/IHOST-backend/orders/${idOrder}`, 
                 { statusOrder: 'paid' }, 
                 { headers: { Authorization: `Bearer ${localStorage.getItem('iHostToken')}` } }
             );

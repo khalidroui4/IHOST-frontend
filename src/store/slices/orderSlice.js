@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/IHOST-backend/orders';
+const API_URL = '/IHOST-backend/orders';
 
 const authHeader = () => {
     const token = localStorage.getItem('iHostToken');

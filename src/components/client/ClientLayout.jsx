@@ -186,7 +186,7 @@ const ClientLayout = () => {
                         >
                             <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '0.9rem', flexShrink: 0, overflow: 'hidden' }}>
                                 {user?.avatar ? (
-                                    <img src={`http://localhost${user.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 ) : (
                                     user?.username?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'
                                 )}

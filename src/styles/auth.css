@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 6rem 1rem 4rem; 
+    padding: 9rem 1rem 4rem; 
     background: linear-gradient(135deg,
         #0c2446 0%,
         #0e2f67 30%,
@@ -246,7 +246,7 @@
 
 @media (max-width: 900px) {
     .auth-page-wrapper {
-        padding: 5rem 0.75rem 2rem;
+        padding: 8rem 0.75rem 2rem;
         align-items: flex-start;
     }
 
@@ -323,7 +323,7 @@
 
 @media (max-width: 480px) {
     .auth-page-wrapper {
-        padding: 5rem 0.25rem 1.5rem;
+        padding: 7rem 0.25rem 1.5rem;
     }
 
     .auth-container-sliding {

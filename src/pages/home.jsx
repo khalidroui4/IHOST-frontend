@@ -130,13 +130,13 @@ const Home = () => {
             {/* Feature Highlights */}
             <div className="hero-feature-highlights">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Zap size={20} color="#FBBF24" fill="#FBBF24" /> Activation rapide
+                    <Zap size={20} color="#60A5FA" fill="#60A5FA" /> Activation rapide
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Lock size={20} color="#FBBF24" fill="#FBBF24" /> Protection avancée
+                    <Lock size={20} color="#60A5FA" fill="#60A5FA" /> Protection avancée
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <PhoneCall size={20} color="#A1A1AA" fill="#A1A1AA" /> Support 24/7
+                    <PhoneCall size={20} color="#60A5FA" fill="#60A5FA" /> Support 24/7
                 </div>
             </div>
         </div>

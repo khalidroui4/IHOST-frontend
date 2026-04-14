@@ -54,7 +54,7 @@ const UserAvatar = ({ user, size = 40 }) => {
             overflow: 'hidden', border: '2px solid white', boxShadow: '0 2px 8px rgba(220,38,38,0.2)'
         }}>
             {user?.avatar
-                ? <img src={`http://localhost${user.avatar}`} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ? <img src={user.avatar} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 : letter
             }
         </div>

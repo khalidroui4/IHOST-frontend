@@ -73,7 +73,7 @@ const ClientProfile = () => {
 
     const [passForm, setPassForm] = useState({ old_password: '', new_password: '', confirm_password: '' });
 
-    const [avatarPreview, setAvatarPreview] = useState(user?.avatar ? `http://localhost${user.avatar}` : null);
+    const [avatarPreview, setAvatarPreview] = useState(user?.avatar ? user.avatar : null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 

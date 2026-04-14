@@ -109,7 +109,7 @@ const Chatbot = () => {
                                 <div className="chat-user-info">
                                     <div className="chat-user-avatar">
                                         {user.avatar ? (
-                                            <img src={`http://localhost${user.avatar}`} alt="avatar" />
+                                            <img src={user.avatar} alt="avatar" />
                                         ) : (
                                             (user.username || user.first_name || 'U').charAt(0).toUpperCase()
                                         )}
