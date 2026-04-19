@@ -7,42 +7,29 @@ import { fetchNotifications } from '../../store/slices/notificationSlice';
 import {
     LayoutDashboard, Server, Globe, ShoppingCart, CreditCard,
     HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
-    Package, FileText, Menu
+    Package, FileText, Menu,
+    Home,
+    Hand,
+    Indent,
+    Pointer,
+    LayoutDashboardIcon
 } from 'lucide-react';
 import LogoutConfirmModal from '../LogoutConfirmModal';
+import { GrDashboard } from 'react-icons/gr';
 
 const sidebarGroups = [
     {
         label: 'Général',
         items: [
-            { path: '/client/dashboard', icon: LayoutDashboard, label: "Vue d'ensemble" },
-        ]
-    },
-    {
-        label: 'Gestion',
-        items: [
+            { path: '/client/dashboard', icon: LayoutDashboardIcon, label: "Vue d'ensemble" },
             { path: '/client/services', icon: Server, label: 'Mes Services' },
             { path: '/client/domains', icon: Globe, label: 'Domaines' },
             { path: '/client/orders', icon: Package, label: 'Commandes' },
-        ]
-    },
-    {
-        label: 'Facturation',
-        items: [
+
             { path: '/client/invoices', icon: FileText, label: 'Factures' },
             { path: '/client/cart', icon: ShoppingCart, label: 'Panier' },
-        ]
-    },
-    {
-        label: 'Support',
-        items: [
             { path: '/client/support', icon: HelpCircle, label: 'Tickets' },
             { path: '/client/notifications', icon: Bell, label: 'Notifications' },
-        ]
-    },
-    {
-        label: 'Compte',
-        items: [
             { path: '/client/profile', icon: User, label: 'Mon Profil' },
         ]
     }
@@ -84,13 +71,10 @@ const ClientLayout = () => {
                     </Link>
                 </div>
 
-                <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column' }}>
                     {sidebarGroups.map((group) => (
-                        <div key={group.label}>
-                            <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>
-                                {group.label}
-                            </p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                        <div key={group.label} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-evenly' }}>
                                 {group.items.map((item) => {
                                     const isActive = location.pathname === item.path;
                                     const Icon = item.icon;
@@ -105,7 +89,6 @@ const ClientLayout = () => {
                                                 fontSize: '0.875rem', transition: 'all 0.15s',
                                                 color: isActive ? '#ffffff' : 'rgba(255,255,255,0.55)',
                                                 background: isActive ? 'rgba(30,107,255,0.15)' : 'transparent',
-                                                borderLeft: isActive ? '3px solid #1E6BFF' : '3px solid transparent',
                                             }}
                                         >
                                             <Icon size={17} />
@@ -145,12 +128,9 @@ const ClientLayout = () => {
                             <Menu size={24} color="#0B1F3A" />
                         </button>
 
-                        <div className="dashboard-search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.55rem 1rem', borderRadius: '10px', width: '320px', border: '1.5px solid transparent', transition: 'border 0.2s' }}
-                            onFocus={e => (e.currentTarget.style.borderColor = '#1E6BFF')}
-                            onBlur={e => (e.currentTarget.style.borderColor = 'transparent')}
-                        >
-                            
-                        </div>
+                        <Link to="/" style={{ color: '#2e6ec2ff', fontWeight: 600, fontSize: '1.2rem', marginLeft: '0.5rem',marginTop: '0.5rem',textDecoration: 'none'}}>
+                            {'->'}  Découvrir notre site web    
+                        </Link>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -188,7 +168,7 @@ const ClientLayout = () => {
                                 {user?.avatar ? (
                                     <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 ) : (
-                                    user?.username?.charAt(0).toUpperCase() || user?.first_name?.charAt(0).toUpperCase() || 'U'
+                                    <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 )}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>

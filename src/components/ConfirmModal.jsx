@@ -10,7 +10,9 @@ const ConfirmModal = ({
     onCancel, 
     confirmText = 'Confirmer', 
     cancelText = 'Annuler',
-    type = 'info'
+    type = 'info',
+    hideIcon = false,
+    hideClose = false
 }) => {
     useEffect(() => {
         const handleKey = (e) => { if (e.key === 'Escape') onCancel(); };
@@ -33,23 +35,27 @@ const ConfirmModal = ({
     const modalContent = (
         <div className="cm-backdrop" onClick={onCancel}>
             <div className={`cm-panel cm-type-${type}`} onClick={e => e.stopPropagation()}>
-                <button className="cm-close" onClick={onCancel} aria-label="Fermer">
-                    <X size={18} />
-                </button>
+                {(!hideClose && type !== 'logout') && (
+                    <button className="cm-close" onClick={onCancel} aria-label="Fermer">
+                        <X size={18} />
+                    </button>
+                )}
 
-                <div className="cm-icon-wrap">
-                    {getIcon()}
-                </div>
+                {(!hideIcon && type !== 'logout') && (
+                    <div className="cm-icon-wrap">
+                        {getIcon()}
+                    </div>
+                )}
 
                 <h2 className="cm-title">{title}</h2>
                 <p className="cm-subtitle">{message}</p>
 
                 <div className="cm-actions">
-                    <button className="cm-btn-cancel" onClick={onCancel}>
-                        {cancelText}
-                    </button>
-                    <button className={`cm-btn-confirm cm-btn-${type}`} onClick={onConfirm}>
+                    <button className={type === 'logout' ? "cm-btn-logout-confirm" : `cm-btn-confirm cm-btn-${type}`} onClick={onConfirm}>
                         {confirmText}
+                    </button>
+                    <button className={type === 'logout' ? "cm-btn-logout-cancel" : "cm-btn-cancel"} onClick={onCancel}>
+                        {cancelText}
                     </button>
                 </div>
             </div>

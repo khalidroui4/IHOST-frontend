@@ -16,7 +16,7 @@
 }
 
 .profile-container {
-    padding-top: 140px; 
+    padding-top: 60px; 
     min-height: 100vh; 
     max-width: 1100px; 
     margin: 0 auto; 
@@ -56,7 +56,7 @@
     .profile-container {
         flex-direction: column;
         gap: 2rem;
-        padding-top: 100px;
+        padding-top: 40px;
         padding-left: 1rem;
         padding-right: 1rem;
     }

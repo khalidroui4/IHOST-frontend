@@ -17,9 +17,9 @@ const LogoutConfirmModal = ({ isOpen, onClose }) => {
                 window.location.href = '/'; 
             }}
             onCancel={onClose}
-            confirmText="Se déconnecter"
-            cancelText="Rester"
-            type="danger"
+            confirmText="Confirmer"
+            cancelText="Annuler"
+            type="logout"
         />
     );
 };

@@ -183,21 +183,9 @@ const ClientSupport = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexShrink: 0 }}>
                 <div>
-                    <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#0B1F3A' }}>Support Client</h1>
+                    <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 800, color: '#0B1F3A' }}>Support Client</h1>
                     <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.875rem' }}>Vos demandes d'assistance technique</p>
                 </div>
-                <button
-                    onClick={() => setShowModal(true)}
-                    style={{
-                        display: 'flex', alignItems: 'center', gap: '8px',
-                        padding: '0.75rem 1.25rem', borderRadius: 12, border: 'none',
-                        background: 'linear-gradient(135deg,#1E6BFF,#0043C0)', color: 'white',
-                        fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer',
-                        boxShadow: '0 4px 12px rgba(30,107,255,0.3)', transition: 'all 0.2s'
-                    }}
-                >
-                    <Plus size={16} /> Nouveau Ticket
-                </button>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '1.25rem', flex: 1, minHeight: 0 }}>

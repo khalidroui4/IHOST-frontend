@@ -90,7 +90,6 @@ h4,
   letter-spacing: 0.05em;
   padding: 1rem 2rem;
   border-radius: 4px;
-  /* Sharper edges */
   transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
@@ -239,7 +238,6 @@ h4,
   color: #1e6bff;
 }
 
-/* Custom Scrollbar */
 .dropdown-menu-custom::-webkit-scrollbar {
   width: 8px;
 }

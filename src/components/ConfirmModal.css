@@ -126,3 +126,35 @@
 
 .cm-btn-warning { background: #d97706; }
 .cm-btn-warning:hover { background: #b45309; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25); }
+
+/* Logout specific classes */
+.cm-btn-logout-confirm {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: #e11d48;
+    color: white;
+}
+.cm-btn-logout-confirm:hover {
+    background: #be123c;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+}
+
+.cm-btn-logout-cancel {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    color: #059669;
+    border: 1.5px solid #059669;
+}
+.cm-btn-logout-cancel:hover {
+    background: #ecfdf5;
+}

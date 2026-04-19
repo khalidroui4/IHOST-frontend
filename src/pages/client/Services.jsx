@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServices } from '../../store/slices/serviceSlice';
@@ -6,9 +6,10 @@ import { fetchSubscriptions } from '../../store/slices/subscriptionSlice';
 import { addToCart } from '../../store/slices/cartSlice';
 import ConfirmCartModal from '../../components/ConfirmCartModal';
 import { useToast } from '../../context/ToastContext';
-import { Server, ShoppingCart, CheckCircle2, Clock, Check, X, RefreshCw, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import { Server, ShoppingCart, CheckCircle2, Clock, Check, X, RefreshCw, Loader2, ChevronDown } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
+import { navData } from '../../data/navData';
+import '../../components/Navbar.css';
 
 const ClientServices = () => {
     const [confirmItem, setConfirmItem] = useState(null);
@@ -19,11 +20,26 @@ const ClientServices = () => {
     const { items: services, isLoading: catalogLoading } = useSelector(state => state.services);
     const { items: subscriptions, isLoading: subsLoading } = useSelector(state => state.subscriptions);
     const [renewModal, setRenewModal] = useState({ show: false, id: null });
+    const [activeDropdown, setActiveDropdown] = useState(null);
+    const dropRef = useRef(null);
 
     useEffect(() => {
         dispatch(fetchServices());
         if (user?.id) dispatch(fetchSubscriptions(user.id));
+        
+        const handleClickOutside = (event) => {
+            if (dropRef.current && !dropRef.current.contains(event.target)) {
+                setActiveDropdown(null);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [dispatch, user]);
+
+    const toggleDropdown = (e, index) => {
+        e.preventDefault();
+        setActiveDropdown(activeDropdown === index ? null : index);
+    };
 
     const handleAddToCart = async () => {
         if (!confirmItem) return;
@@ -80,7 +96,7 @@ const ClientServices = () => {
             
             <section>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                    <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>Mes Services Actifs</h2>
+                    <h2 style={{ margin: 0, fontSize: '2rem', fontWeight: 800, color: '#0B1F3A' }}>Mes Services Actifs</h2>
                     {isRenewing && <span style={{ fontSize: '0.85rem', color: '#3b82f6', display: 'flex', alignItems: 'center', gap: '0.4rem' }}><RefreshCw size={14} className="animate-spin" /> Renouvellement en cours...</span>}
                 </div>
                 
@@ -91,99 +107,114 @@ const ClientServices = () => {
                         <Link to="/pricing" style={{ color: '#1E6BFF', fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', marginTop: '1rem', display: 'inline-block' }}>Parcourir nos offres</Link>
                     </div>
                 ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
-                        {subscriptions.map(sub => (
-                            <div key={sub.idSub} style={{ background: 'white', border: '1px solid #e2e8f0', padding: '1.75rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(11,31,58,0.03)' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                        <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Server size={20} color="#3b82f6" />
-                                        </div>
-                                        <div>
-                                            <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#0B1F3A' }}>{sub.nameService}</h3>
-                                            <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>#{sub.idSub}</p>
-                                        </div>
-                                    </div>
-                                    <span style={{ background: sub.statusSub === 'active' ? '#ecfdf5' : '#fef2f2', color: sub.statusSub === 'active' ? '#10b981' : '#ef4444', fontSize: '0.7rem', fontWeight: 800, padding: '0.3rem 0.75rem', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                        {sub.statusSub}
-                                    </span>
-                                </div>
+                    <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 15px rgba(11,31,58,0.03)' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                            <thead style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                <tr>
+                                    <th style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600, fontSize: '0.85rem' }}>Service</th>
+                                    <th style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600, fontSize: '0.85rem' }}>Statut</th>
+                                    <th style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600, fontSize: '0.85rem' }}>Date d'expiration</th>
+                                    <th style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600, fontSize: '0.85rem', textAlign: 'right' }}>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {subscriptions.map(sub => (
+                                    <tr key={sub.idSub} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                        <td style={{ padding: '1.25rem 1.5rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                                <div>
+                                                    <div style={{ fontWeight: 700, color: '#0B1F3A', fontSize: '1rem' }}>{sub.nameService}</div>
+                                                    <div style={{ fontSize: '0.8rem', color: '#64748b' }}>#{sub.idSub}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style={{ padding: '1.25rem 1.5rem' }}>
+                                            <span style={{ background: sub.statusSub === 'active' ? '#ecfdf5' : '#fef2f2', color: sub.statusSub === 'active' ? '#10b981' : '#ef4444', fontSize: '0.7rem', fontWeight: 800, padding: '0.4rem 0.75rem', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                                {sub.statusSub}
+                                            </span>
+                                        </td>
+                                        <td style={{ padding: '1.25rem 1.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#0B1F3A' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <Clock size={16} color="#64748b" />
+                                                {new Date(sub.endDate).toLocaleDateString()}
+                                            </div>
+                                        </td>
+                                        <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
+                                            <button 
+                                                onClick={() => handleRenew(sub.idSub)}
+                                                disabled={isRenewing}
+                                                style={{ padding: '0.6rem 1.25rem', borderRadius: '8px', background: '#0B1F3A', color: 'white', border: 'none', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'background 0.2s', opacity: isRenewing ? 0.7 : 1 }}
+                                                onMouseEnter={e => e.currentTarget.style.background = '#1a3a6e'}
+                                                onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
+                                            >
+                                                <RefreshCw size={14} className={isRenewing ? 'animate-spin' : ''} /> Renouveler Service
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </section>
 
-                                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px', marginBottom: '1.25rem' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Date d'expiration</span>
-                                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0B1F3A', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                                            <Clock size={14} color="#64748b" />
-                                            {new Date(sub.endDate).toLocaleDateString()}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <button 
-                                    onClick={() => handleRenew(sub.idSub)}
-                                    disabled={isRenewing}
-                                    style={{ width: '100%', padding: '0.75rem', borderRadius: '10px', background: '#0B1F3A', color: 'white', border: 'none', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', transition: 'background 0.2s' }}
-                                    onMouseEnter={e => e.currentTarget.style.background = '#1a3a6e'}
-                                    onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
+            <section ref={dropRef}>
+                <div style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    background: '#0B1F3A', 
+                    padding: '2.5rem 2rem', 
+                    borderRadius: '16px',
+                    boxShadow: '0 10px 30px rgba(11,31,58,0.15)'
+                }}>
+                    <h3 style={{ 
+                        margin: '0 0 1.5rem 0', 
+                        color: 'white', 
+                        fontSize: '1.35rem', 
+                        fontWeight: 700, 
+                        letterSpacing: '0.5px' 
+                    }}>
+                        Découvrir plus de services
+                    </h3>
+                    <ul className="navbar-links" style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '1.5rem', width: '100%' }}>
+                        {navData.slice(0, 5).map((category, index) => (
+                            <li key={index} className={`nav-item-dropdown ${activeDropdown === index ? 'active' : ''}`}>
+                                <a
+                                    href="#"
+                                    className="nav-link-with-icon"
+                                    onClick={(e) => toggleDropdown(e, index)}
+                                    style={{ color: 'white' }}
                                 >
-                                    <RefreshCw size={16} className={isRenewing ? 'animate-spin' : ''} /> Renouveler Service
-                                </button>
-                            </div>
+                                    {category.title} <ChevronDown size={14} className="dropdown-arrow" />
+                                </a>
+                                <div className="nav-dropdown-menu">
+                                    <div className="nav-dropdown-grid">
+                                        {category.items.map((item, idx) => (
+                                            <Link
+                                                to={item.href}
+                                                key={idx}
+                                                className="nav-dropdown-item"
+                                                onClick={() => setActiveDropdown(null)}
+                                            >
+                                                <div className="nav-dropdown-icon">
+                                                    {item.icon ? <item.icon size={20} /> : <div style={{ width: 20, height: 20 }} />}
+                                                </div>
+                                                <div className="nav-dropdown-desc-container">
+                                                    <span className="nav-dropdown-title">{item.title}</span>
+                                                    <span className="nav-dropdown-desc">{item.desc}</span>
+                                                </div>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            </li>
                         ))}
-                    </div>
-                )}
-            </section>
-
-            <section>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #e5eaf0', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
-                    <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>Catalogue des Services</h2>
+                    </ul>
                 </div>
-                {catalogLoading ? (
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}><Loader2 className="animate-spin" size={30} color="#94a3b8" /></div>
-                ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                        {services.map(srv => (
-                            <div key={srv.idService} style={{ background: '#fff', padding: '1.5rem', borderRadius: '16px', border: '1px solid #e5eaf0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', gap: '1rem', transition: 'transform 0.2s, box-shadow 0.2s' }}
-                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.05)'; }}
-                                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}
-                            >
-                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                                    <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#eff6ff', color: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                        <Server size={22} />
-                                    </div>
-                                    <div>
-                                        <h3 style={{ margin: '0 0 0.3rem 0', fontSize: '1.1rem', fontWeight: 800, color: '#0B1F3A' }}>{srv.nameService}</h3>
-                                        <p style={{ margin: 0, color: '#64748b', fontSize: '0.85rem', lineHeight: 1.5 }}>{srv.descriptionS}</p>
-                                    </div>
-                                </div>
-                                
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', marginTop: 'auto', borderTop: '1px solid #f1f5f9' }}>
-                                    <div>
-                                        <span style={{ display: 'block', fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.2rem' }}>À partir de</span>
-                                        <span style={{ fontWeight: 800, color: '#1E6BFF', fontSize: '1.25rem', letterSpacing: '-0.5px' }}>{parseFloat(srv.price).toFixed(2)} DH</span>
-                                    </div>
-                                    <button
-                                        onClick={() => setConfirmItem({ ...srv, name: srv.nameService })}
-                                        style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'linear-gradient(135deg, #1E6BFF, #0043C0)', color: 'white', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '10px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', transition: 'opacity 0.2s', boxShadow: '0 4px 12px rgba(30,107,255,0.3)' }}
-                                        onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
-                                        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-                                    >
-                                        <ShoppingCart size={16} /> Ajouter
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </section>
-
-            {confirmItem && (
-                <ConfirmCartModal 
-                    item={confirmItem}
-                    onConfirm={handleAddToCart}
-                    onCancel={() => setConfirmItem(null)}
-                />
-            )}
+            
             {renewModal.show && (
                 <ConfirmModal 
                     title="Renouveler le service"

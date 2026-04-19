@@ -153,7 +153,7 @@ const Navbar = () => {
                                         {user?.avatar ? (
                                             <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
-                                            user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')
+                                            <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         )}
                                     </div>
                                     <span>{user?.name?.split(' ')[0] || user?.first_name || 'Mon compte'}</span>
@@ -167,7 +167,7 @@ const Navbar = () => {
                                                 {user?.avatar ? (
                                                     <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 ) : (
-                                                    user?.name ? user.name.charAt(0).toUpperCase() : (user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U')
+                                                    <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 )}
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>

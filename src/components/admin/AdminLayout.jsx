@@ -283,9 +283,11 @@ const AdminLayout = () => {
                   flexShrink: 0,
                 }}
               >
-                {user?.name?.charAt(0).toUpperCase() ||
-                  user?.first_name?.charAt(0).toUpperCase() ||
-                  "A"}
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                )}
               </div>
               <div
                 style={{
