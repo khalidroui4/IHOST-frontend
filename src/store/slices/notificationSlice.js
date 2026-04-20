@@ -17,26 +17,49 @@ export const fetchNotifications = createAsyncThunk('notifications/fetch', async 
     }
 });
 
+export const markAllRead = createAsyncThunk('notifications/markAllRead', async (userId, { rejectWithValue }) => {
+    try {
+        await axios.put(`${API_URL}/${userId}/read-all`, {}, authHeader());
+        return true;
+    } catch (error) {
+        // Even if backend fails, still clear locally
+        return true;
+    }
+});
+
 const notificationSlice = createSlice({
     name: 'notifications',
     initialState: {
         items: [],
+        unread: 0,
         isLoading: false,
         error: null
     },
-    reducers: {},
+    reducers: {
+        clearUnread(state) {
+            state.unread = 0;
+            state.items = state.items.map(n => ({ ...n, isRead: true, is_read: 1 }));
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchNotifications.pending, (state) => { state.isLoading = true; })
             .addCase(fetchNotifications.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.items = action.payload;
+                state.items = action.payload || [];
+                // Count unread — backend may use isRead or is_read
+                state.unread = (action.payload || []).filter(n => !n.isRead && !n.is_read).length;
             })
             .addCase(fetchNotifications.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload?.message;
+            })
+            .addCase(markAllRead.fulfilled, (state) => {
+                state.unread = 0;
+                state.items = state.items.map(n => ({ ...n, isRead: true, is_read: 1 }));
             });
     }
 });
 
+export const { clearUnread } = notificationSlice.actions;
 export default notificationSlice.reducer;

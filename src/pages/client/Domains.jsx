@@ -9,6 +9,8 @@ import { Clock, ShieldAlert, RefreshCw, Globe, ChevronDown, ChevronUp, Lock, Unl
          ShoppingCart, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
+import { addToCart } from '../../store/slices/cartSlice';
+import ConfirmCartModal from '../../components/ConfirmCartModal';
 
 // ─── Tiny Toggle Switch ───────────────────────────────────────────────────────
 const Toggle = ({ value, onToggle, disabled }) => (
@@ -190,7 +192,7 @@ const AddDnsForm = ({ domainId, dispatch, addToast, onClose }) => {
 };
 
 // ─── Full Management Panel (tabs) ─────────────────────────────────────────────
-const ManagePanel = ({ dom, dispatch, addToast }) => {
+const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
     const [tab,        setTab]        = useState('actions');
     const [busy,       setBusy]       = useState({});
     const [eppCode,    setEppCode]    = useState('');
@@ -337,9 +339,12 @@ const ManagePanel = ({ dom, dispatch, addToast }) => {
                             <div style={labelStyle}>Acheter des extensions</div>
                             <div style={subStyle}>SSL, protection WHOIS, email professionnel…</div>
                         </div>
-                        <Link to="/services" style={{ ...primaryBtn, textDecoration: 'none', background: '#0b1f3a' }}>
+                        <button 
+                            onClick={() => onShowAddons(dom)} 
+                            style={{ ...primaryBtn, background: '#0b1f3a', cursor: 'pointer' }}
+                        >
                             <ShoppingCart size={14} /> Voir les offres
-                        </Link>
+                        </button>
                     </div>
                 </div>
             )}
@@ -443,13 +448,73 @@ const ManagePanel = ({ dom, dispatch, addToast }) => {
     );
 };
 
+const AddonsModal = ({ domain, onClose, dispatch, addToast }) => {
+    const addons = [
+        { id: 'ssl',   name: 'Certificat SSL',    price: '20', period: 'mois', duration: 1, features: ['Chiffrement HTTPS', 'Confiance visiteurs', 'Compatible tous navigateurs'], icon: ShieldAlert },
+        { id: 'whois', name: 'Protection WHOIS',  price: '10', period: 'mois', duration: 1, features: ['Masquer vos donn\u00e9es personnelles', '\u00c9viter le spam', 'Protection identit\u00e9'], icon: Shield },
+        { id: 'email', name: 'Email Pro',          price: '30', period: 'mois', duration: 1, features: ['Adresse email professionnelle', 'Anti-spam int\u00e9gr\u00e9', 'Acc\u00e8s webmail'], icon: Globe }
+    ];
+    const [pendingAddon, setPendingAddon] = useState(null);
+    const [busy, setBusy] = useState(false);
+
+    const buyAddon = async (addon) => {
+        setBusy(true);
+        setPendingAddon(null);
+        try {
+            await dispatch(addToCart({ nameService: addon.name, domainName: domain.domainName, durationMonths: addon.duration })).unwrap();
+            addToast(`${addon.name} ajout\u00e9 au panier avec succ\u00e8s !`, 'success');
+            onClose();
+        } catch(e) { addToast(e.message || "Erreur lors de l'ajout", 'error'); }
+        finally { setBusy(false); }
+    };
+
+    return (
+        <>
+            <div style={{ position: 'fixed', inset: 0, background: 'rgba(11,20,26,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, backdropFilter: 'blur(4px)', animation: 'fadeIn 0.3s' }}>
+                <div style={{ background: '#1E293B', borderRadius: 20, width: '100%', maxWidth: '500px', boxShadow: '0 25px 60px rgba(0,0,0,0.18)', animation: 'slideUp 0.2s ease', overflow: 'hidden' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem', borderBottom: '1px solid #0F172A' }}>
+                        <h2 style={{ margin: 0, color: '#e9edef', fontSize: '1.2rem', fontWeight: 800 }}>Extensions pour {domain.domainName}</h2>
+                        <button onClick={onClose} style={{ background: '#334155', color: '#e9edef', border: 'none', cursor: 'pointer', display: 'flex', padding: 6, borderRadius: 8 }}><X size={16} /></button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
+                        {addons.map(a => (
+                            <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', border: '1.5px solid #334155', background: '#0F172A', borderRadius: 10 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                    <div style={{ width: 40, height: 40, borderRadius: '10px', background: '#1E293B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <a.icon color="#1E6BFF" size={20} />
+                                    </div>
+                                    <div>
+                                        <div style={{ fontWeight: 700, color: '#e9edef', fontSize: '0.95rem' }}>{a.name}</div>
+                                        <div style={{ fontSize: '0.75rem', color: '#8696a0', marginTop: '4px' }}>{a.price} Dhs/Mois</div>
+                                    </div>
+                                </div>
+                                <button disabled={busy} onClick={() => setPendingAddon(a)} style={{ background: '#1E6BFF', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 8, fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', fontSize: '0.85rem' }}>
+                                    Ajouter
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {pendingAddon && (
+                <ConfirmCartModal
+                    item={{ name: pendingAddon.name, price: pendingAddon.price, period: pendingAddon.period, features: pendingAddon.features }}
+                    onConfirm={() => buyAddon(pendingAddon)}
+                    onCancel={() => setPendingAddon(null)}
+                />
+            )}
+        </>
+    );
+};
+
 
 const ClientDomains = () => {
     const dispatch = useDispatch();
     const { items: domains, isLoading } = useSelector(state => state.domains);
     const { user } = useSelector(state => state.auth);
     const { addToast } = useToast();
-    const [openPanel, setOpenPanel] = useState(null); 
+    const [openPanel, setOpenPanel] = useState(null);
+    const [addonDomain, setAddonDomain] = useState(null); 
 
     useEffect(() => {
         if (user?.id) dispatch(fetchDomains(user.id));
@@ -547,7 +612,7 @@ const ClientDomains = () => {
                                         {isOpen && (
                                             <tr>
                                                 <td colSpan={5} style={{ padding: 0, borderBottom: '1px solid #e2e8f0' }}>
-                                                    <ManagePanel dom={dom} dispatch={dispatch} addToast={addToast} />
+                                                    <ManagePanel dom={dom} dispatch={dispatch} addToast={addToast} onShowAddons={setAddonDomain} />
                                                 </td>
                                             </tr>
                                         )}
@@ -557,6 +622,9 @@ const ClientDomains = () => {
                         </tbody>
                     </table>
                 </div>
+            )}
+            {addonDomain && (
+                <AddonsModal domain={addonDomain} onClose={() => setAddonDomain(null)} dispatch={dispatch} addToast={addToast} />
             )}
         </div>
     );

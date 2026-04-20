@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchServices } from '../../store/slices/serviceSlice';
 import ConfirmModal from '../../components/ConfirmModal';
+import { X, Server } from 'lucide-react';
 
 const AdminServices = () => {
     const dispatch = useDispatch();
@@ -109,91 +110,130 @@ const AdminServices = () => {
                 </button>
             </div>
 
-            {/* Modal Overlay */}
+            {/* Modern Dark Red Modal Overlay */}
             {isModalOpen && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(27, 6, 6, 0.6)', backdropBlur: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-                    <div style={{ background: 'white', width: '100%', maxWidth: '550px', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative' }}>
-                        <button 
-                            onClick={() => setIsModalOpen(false)}
-                            style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}
-                        >
-                            <span style={{ fontSize: '1.5rem' }}>&times;</span>
-                        </button>
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(27, 6, 6, 0.85)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
+                    <div style={{ background: '#1B0606', width: '100%', maxWidth: '550px', borderRadius: '24px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)', position: 'relative', overflow: 'hidden', animation: 'cm-slide-up 0.3s ease', border: '1px solid #3d1414' }}>
                         
-                        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1B0606', marginBottom: '1.5rem' }}>
-                            {isEditing ? 'Modifier le Service' : 'Ajouter un Nouveau Service'}
-                        </h2>
+                        {/* Modal Header */}
+                        <div style={{ padding: '1.5rem', borderBottom: '1px solid #2d0a0a', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)' }}>
+                            <div>
+                                <h3 style={{ margin: 0, fontWeight: 800, color: '#e9edef', fontSize: '1.25rem' }}>
+                                    {isEditing ? 'Modifier le Service' : 'Ajouter un Nouveau Service'}
+                                </h3>
+                                <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: '#a1a1aa' }}>
+                                    {isEditing ? 'Mettez à jour les détails de votre offre' : 'Configurez les détails de votre nouvelle offre'}
+                                </p>
+                            </div>
+                            <button 
+                                onClick={() => setIsModalOpen(false)}
+                                style={{ background: '#2d0a0a', border: '1px solid #3d1414', borderRadius: '8px', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#e9edef', transition: 'all 0.2s' }}
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
                         
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Nom du Service</label>
+                        <form onSubmit={handleSubmit} style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#e9edef' }}>Nom du Service</label>
                                 <input 
                                     value={formData.nameService} 
                                     onChange={e => setFormData({...formData, nameService: e.target.value})} 
                                     required 
-                                    style={{ padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.95rem' }} 
+                                    placeholder="Ex: Hébergement Pro..."
+                                    style={{ padding: '0.85rem 1rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: '#2d0a0a', color: '#e9edef', outline: 'none', fontSize: '0.95rem', transition: 'all 0.2s' }}
+                                    onFocus={e => e.target.style.borderColor = '#DC2626'}
+                                    onBlur={e => e.target.style.borderColor = '#3d1414'}
                                 />
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Catégorie / Type</label>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#e9edef' }}>Catégorie / Type</label>
                                 <select 
                                     value={formData.typeService}
                                     onChange={e => setFormData({...formData, typeService: e.target.value})}
                                     required
-                                    style={{ padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.95rem', background: 'white' }}
+                                    style={{ padding: '0.85rem 1rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: '#2d0a0a', color: '#e9edef', outline: 'none', fontSize: '0.95rem', cursor: 'pointer' }}
                                 >
                                     {serviceTypes.map(t => (
-                                        <option key={t.value} value={t.value}>{t.label}</option>
+                                        <option key={t.value} value={t.value} style={{ background: '#1B0606' }}>{t.label}</option>
                                     ))}
                                 </select>
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Description</label>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#e9edef' }}>Description</label>
                                 <textarea 
                                     value={formData.descriptionS} 
                                     onChange={e => setFormData({...formData, descriptionS: e.target.value})} 
                                     required 
-                                    style={{ padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.95rem', minHeight: '100px', resize: 'vertical' }} 
+                                    placeholder="Décrivez les avantages du service..."
+                                    style={{ padding: '0.85rem 1rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: '#2d0a0a', color: '#e9edef', outline: 'none', fontSize: '0.95rem', minHeight: '80px', resize: 'vertical' }}
+                                    onFocus={e => e.target.style.borderColor = '#DC2626'}
+                                    onBlur={e => e.target.style.borderColor = '#3d1414'}
                                 />
                             </div>
 
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Prix (DH)</label>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#e9edef' }}>Prix (DH)</label>
                                     <input 
                                         type="number" 
                                         step="0.01"
                                         value={formData.price} 
                                         onChange={e => setFormData({...formData, price: e.target.value})} 
                                         required 
-                                        style={{ padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.95rem' }} 
+                                        style={{ padding: '0.85rem 1rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: '#2d0a0a', color: '#e9edef', outline: 'none', fontSize: '0.95rem' }}
+                                        onFocus={e => e.target.style.borderColor = '#DC2626'}
+                                        onBlur={e => e.target.style.borderColor = '#3d1414'}
                                     />
                                 </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Durée (Mois)</label>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#e9edef' }}>Durée (Mois)</label>
                                     <input 
                                         type="number" 
                                         value={formData.durationMonths} 
                                         onChange={e => setFormData({...formData, durationMonths: e.target.value})} 
                                         required 
-                                        style={{ padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.95rem' }} 
+                                        style={{ padding: '0.85rem 1rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: '#2d0a0a', color: '#e9edef', outline: 'none', fontSize: '0.95rem' }}
+                                        onFocus={e => e.target.style.borderColor = '#DC2626'}
+                                        onBlur={e => e.target.style.borderColor = '#3d1414'}
                                     />
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+                            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'flex-end' }}>
                                 <button 
                                     type="button" 
                                     onClick={() => setIsModalOpen(false)}
-                                    style={{ flex: 1, padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', background: 'white', color: '#64748b', fontWeight: 700, cursor: 'pointer' }}
+                                    style={{ padding: '0.8rem 1.5rem', borderRadius: '10px', border: '1.5px solid #3d1414', background: 'transparent', color: '#e9edef', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }}
+                                    onMouseEnter={e => e.target.style.background = '#2d0a0a'}
+                                    onMouseLeave={e => e.target.style.background = 'transparent'}
                                 >
                                     Annuler
                                 </button>
                                 <button 
                                     type="submit" 
-                                    style={{ flex: 2, padding: '0.85rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #DC2626, #991B1B)', color: 'white', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(220,38,38,0.2)' }}
+                                    disabled={!formData.nameService || !formData.price || !formData.descriptionS}
+                                    style={{ 
+                                        padding: '0.8rem 2rem', 
+                                        borderRadius: '10px', 
+                                        border: 'none', 
+                                        background: (!formData.nameService || !formData.price || !formData.descriptionS) 
+                                            ? '#3d1414' 
+                                            : 'linear-gradient(135deg, #DC2626, #991B1B)', 
+                                        color: (!formData.nameService || !formData.price || !formData.descriptionS) ? '#8696a0' : 'white', 
+                                        fontWeight: 700, 
+                                        cursor: (!formData.nameService || !formData.price || !formData.descriptionS) ? 'not-allowed' : 'pointer', 
+                                        boxShadow: (!formData.nameService || !formData.price || !formData.descriptionS) ? 'none' : '0 4px 12px rgba(220,38,38,0.3)', 
+                                        transition: 'all 0.2s' 
+                                    }}
+                                    onMouseEnter={e => {
+                                        if (formData.nameService && formData.price && formData.descriptionS) {
+                                            e.target.style.transform = 'translateY(-2px)';
+                                        }
+                                    }}
+                                    onMouseLeave={e => e.target.style.transform = 'translateY(0)'}
                                 >
                                     {isEditing ? 'Mettre à jour' : 'Créer le Service'}
                                 </button>
@@ -215,6 +255,7 @@ const AdminServices = () => {
                     confirmText="Désactiver"
                     cancelText="Annuler"
                     type="danger"
+                    theme="dark"
                 />
             )}
             

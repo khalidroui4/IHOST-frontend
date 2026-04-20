@@ -18,26 +18,14 @@ import LogoutConfirmModal from "../LogoutConfirmModal";
 
 const sidebarGroups = [
   {
-    label: "Administration",
+    label: "Menu",
     items: [
-      {
-        path: "/admin/dashboard",
-        icon: LayoutDashboard,
-        label: "Tableau de bord",
-      },
-    ],
-  },
-  {
-    label: "Gestion",
-    items: [
+      { path: "/admin/dashboard", icon: LayoutDashboard, label: "Tableau de bord" },
       { path: "/admin/users", icon: Users, label: "Utilisateurs" },
       { path: "/admin/orders", icon: Package, label: "Commandes" },
       { path: "/admin/services", icon: Server, label: "Catalogue Services" },
+      { path: "/admin/support", icon: HelpCircle, label: "Tickets" },
     ],
-  },
-  {
-    label: "Support",
-    items: [{ path: "/admin/support", icon: HelpCircle, label: "Tickets" }],
   },
 ];
 
@@ -60,7 +48,7 @@ const AdminLayout = () => {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        background: "#fdf8f8",
+        background: "#faf8f8",
         zIndex: 9999,
         overflow: "hidden",
         fontFamily: "Inter, system-ui, sans-serif",
@@ -112,27 +100,11 @@ const AdminLayout = () => {
             padding: "1rem 0.75rem",
             display: "flex",
             flexDirection: "column",
-            gap: "1.5rem",
           }}
         >
           {sidebarGroups.map((group) => (
-            <div key={group.label}>
-              <p
-                style={{
-                  color: "rgba(255,255,255,0.35)",
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "1.2px",
-                  marginBottom: "0.5rem",
-                  paddingLeft: "0.75rem",
-                }}
-              >
-                {group.label}
-              </p>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-              >
+            <div key={group.label} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "space-evenly", gap: "2px" }}>
                 {group.items.map((item) => {
                   const isActive = location.pathname === item.path;
                   const Icon = item.icon;
@@ -154,9 +126,6 @@ const AdminLayout = () => {
                         background: isActive
                           ? "rgba(220,38,38,0.15)"
                           : "transparent",
-                        borderLeft: isActive
-                          ? "3px solid #DC2626"
-                          : "3px solid transparent",
                       }}
                     >
                       <Icon size={17} />
@@ -236,85 +205,22 @@ const AdminLayout = () => {
               <Menu size={24} color="#1B0606" />
             </button>
 
-            <div
-              className="dashboard-search-bar"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                padding: "0.55rem 1rem",
-                borderRadius: "10px",
-                width: "320px",
-                border: "1.5px solid transparent",
-                transition: "border 0.2s",
-              }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#DC2626")}
-              onBlur={(e) =>
-                (e.currentTarget.style.borderColor = "transparent")
-              }
-            ></div>
+            <div style={{ flex: 1 }} />
           </div>
 
           <div
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
           >
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
-                padding: "0.3rem 0.6rem",
-                borderRadius: "10px",
-                transition: "background 0.15s",
+                padding: "0.4rem 0.8rem",
+                gap: "0.5rem"
               }}
             >
-              <div
-                style={{
-                  width: "34px",
-                  height: "34px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #DC2626, #991B1B)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontWeight: 800,
-                  fontSize: "0.9rem",
-                  flexShrink: 0,
-                }}
-              >
-                {user?.avatar ? (
-                  <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  lineHeight: 1.2,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    color: "#1B0606",
-                  }}
-                >
-                  {user?.name?.split(" ")[0] || user?.first_name || "Admin"}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.7rem",
-                    color: "#94a3b8",
-                    fontWeight: 600,
-                  }}
-                >
-                  {user?.role === "admin" ? "IHOST ROOT" : "IHOST STAFF"}
-                </span>
-              </div>
+              <Users size={20} color="#DC2626" />
+              <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "#DC2626" }}>Admin</div>
             </div>
           </div>
         </header>

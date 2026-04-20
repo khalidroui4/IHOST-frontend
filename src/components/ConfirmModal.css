@@ -25,6 +25,40 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
     animation: cm-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Dark Red Theme Support */
+.cm-theme-dark .cm-panel {
+    background: #1B0606;
+    border-color: #3d1414;
+}
+
+.cm-theme-dark .cm-title { color: #e9edef; }
+.cm-theme-dark .cm-subtitle { color: #a1a1aa; }
+
+.cm-theme-dark .cm-close {
+    background: #2d0a0a;
+    border: 1px solid #3d1414;
+    color: #e9edef;
+}
+.cm-theme-dark .cm-close:hover {
+    background: #3d1414;
+    color: #ffffff;
+}
+
+.cm-theme-dark .cm-icon-wrap {
+    background: #2d0a0a;
+    border: 1px solid #3d1414;
+}
+
+.cm-theme-dark .cm-btn-cancel {
+    background: transparent;
+    border: 1px solid #3d1414;
+    color: #e9edef;
+}
+.cm-theme-dark .cm-btn-cancel:hover {
+    background: #2d0a0a;
 }
 
 @keyframes cm-slide-up {

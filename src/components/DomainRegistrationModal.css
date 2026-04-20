@@ -1,8 +1,8 @@
 .drm-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(11, 31, 58, 0.4);
-    backdrop-filter: blur(8px);
+    background: rgba(11,20,26,0.85);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,15 +12,15 @@
 }
 
 .drm-panel {
-    background: white;
+    background: #1E293B;
     width: 100%;
     max-width: 500px;
     max-height: 90vh;
-    border-radius: 28px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1) inset;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.18);
     position: relative;
     overflow: hidden;
-    animation: drmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: drmSlideUp 0.2s ease;
     display: flex;
     flex-direction: column;
 }
@@ -29,38 +29,36 @@
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    background: #f1f5f9;
+    background: #334155;
     border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
+    color: #e9edef;
     cursor: pointer;
     transition: all 0.2s;
     z-index: 10;
 }
 
 .drm-close:hover {
-    background: #e2e8f0;
-    color: #0B1F3A;
-    transform: rotate(90deg);
+    background: #475569;
+    color: #ffffff;
 }
 
 .drm-header {
-    padding: 2.5rem 2rem 1.5rem;
+    padding: 2rem 2rem 1.5rem;
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #0F172A;
 }
 
-.drm-icon-wrap {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    width: 50px;
+    height: 50px;
+    background: #0F172A;
     color: #1E6BFF;
     border-radius: 18px;
     display: flex;
@@ -71,11 +69,11 @@
 
 .drm-title {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    color: #e9edef;
+    letter-spacing: 0px;
+    text-transform: none;
 }
 
 .drm-domain-display {
@@ -86,15 +84,15 @@
 }
 
 .drm-domain-display .name {
-    font-size: 1.6rem;
-    font-weight: 850;
-    color: #0B1F3A;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #e9edef;
     letter-spacing: -0.5px;
 }
 
 .drm-domain-display .ext {
-    font-size: 1.6rem;
-    font-weight: 850;
+    font-size: 1.4rem;
+    font-weight: 800;
     color: #1E6BFF;
     transition: color 0.3s;
 }
@@ -125,9 +123,9 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #0B1F3A;
+    color: #e9edef;
     margin-bottom: 0.75rem;
 }
 
@@ -151,32 +149,34 @@
     flex-direction: column;
     align-items: center;
     padding: 0.75rem;
-    background: #f8fafc;
-    border: 2px solid transparent;
-    border-radius: 12px;
+    background: #0F172A;
+    border: 1.5px solid #334155;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.drm-ext-btn:hover { background: #f1f5f9; }
+.drm-ext-btn:hover { border-color: #1E6BFF; }
 .drm-ext-btn.active {
-    background: #f0f7ff;
+    background: #1E6BFF;
     border-color: #1E6BFF;
 }
 
 .ext-name {
     font-size: 1rem;
     font-weight: 800;
-    color: #0B1F3A;
+    color: #e9edef;
 }
 
-.drm-ext-btn.active .ext-name { color: #1E6BFF; }
+.drm-ext-btn.active .ext-name { color: #ffffff; }
 
 .ext-price {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #64748b;
+    color: #8696a0;
 }
+
+.drm-ext-btn.active .ext-price { color: #bfdbfe; }
 
 .drm-error-msg {
     display: flex;
@@ -203,21 +203,22 @@
     align-items: center;
     justify-content: center;
     padding: 0.75rem 0;
-    background: #f8fafc;
-    border: 2px solid transparent;
-    border-radius: 14px;
+    background: #0F172A;
+    border: 1.5px solid #334155;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
+    color: #e9edef;
 }
 
 .drm-duration-btn:hover {
-    background: #f1f5f9;
+    border-color: #1E6BFF;
 }
 
 .drm-duration-btn.active {
-    background: #f0f7ff;
+    background: #1E6BFF;
     border-color: #1E6BFF;
-    color: #1E6BFF;
+    color: #ffffff;
 }
 
 .year-num {
@@ -236,20 +237,20 @@
     display: flex;
     align-items: center;
     padding: 1.25rem;
-    background: #f8fafc;
-    border: 2px solid transparent;
-    border-radius: 18px;
+    background: #0F172A;
+    border: 1.5px solid #334155;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
     gap: 1rem;
 }
 
 .drm-option-card:hover {
-    background: #f1f5f9;
+    border-color: #1E6BFF;
 }
 
 .drm-option-card.active {
-    background: #f0f7ff;
+    background: rgba(30, 107, 255, 0.1);
     border-color: #1E6BFF;
 }
 
@@ -261,13 +262,13 @@
     margin: 0;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #0B1F3A;
+    color: #e9edef;
 }
 
 .option-desc {
     margin: 0.2rem 0 0;
     font-size: 0.75rem;
-    color: #64748b;
+    color: #8696a0;
     line-height: 1.4;
 }
 
@@ -285,14 +286,14 @@
 
 .price-period {
     font-size: 0.7rem;
-    color: #94a3b8;
+    color: #8696a0;
     font-weight: 600;
 }
 
 .check-empty {
     width: 24px;
     height: 24px;
-    border: 2px solid #cbd5e1;
+    border: 2px solid #334155;
     border-radius: 50%;
 }
 
@@ -313,9 +314,9 @@
 }
 
 .drm-footer {
-    padding: 1.5rem 2rem 2rem;
-    background: #f8fafc;
-    border-top: 1px solid #f1f5f9;
+    padding: 1.5rem 2rem 1.5rem;
+    background: #1E293B;
+    border-top: 1px solid #0F172A;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -324,29 +325,29 @@
 .summary-label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #64748b;
+    color: #8696a0;
     margin-bottom: 0.2rem;
 }
 
 .summary-amount {
     font-size: 1.6rem;
     font-weight: 850;
-    color: #0B1F3A;
+    color: #e9edef;
     letter-spacing: -0.5px;
 }
 
 .summary-amount .currency {
     font-size: 0.9rem;
-    color: #64748b;
+    color: #8696a0;
     font-weight: 600;
 }
 
 .drm-submit-btn {
-    background: linear-gradient(135deg, #1E6BFF, #0043C0);
+    background: #1E6BFF;
     color: white;
     border: none;
-    padding: 1rem 1.75rem;
-    border-radius: 14px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
     font-weight: 700;
     display: flex;
     align-items: center;

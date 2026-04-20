@@ -86,19 +86,21 @@ const Cart = () => {
                             <h2 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 600, color: '#282828' }}>Panier ({cart.length})</h2>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {cart.map((item, idx) => (
+                            {cart.map((item, idx) => {
+                                const isDomainItem = item.nameService && (item.nameService.toLowerCase().includes('domaine') || !!item.nameService.match(/\.(com|ma|net|org|online|info|biz|co)\b/i));
+                                return (
                                 <div key={idx} className="cart-item-row" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderBottom: idx === cart.length - 1 ? 'none' : '1px solid #e5eaf0' }}>
                                     <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                                         <div style={{ flex: 1 }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
                                                 <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 500, color: '#282828', lineHeight: 1.4 }}>
-                                                    {item.domainName ? item.domainName : item.nameService}
+                                                    {isDomainItem ? (item.domainName || item.nameService) : `${item.nameService}${item.domainName ? ` - ${item.domainName}` : ''}`}
                                                 </h3>
                                                 <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
                                                     <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#282828' }}>
-                                                        {item.domainName 
-                                                            ? (item.price * (item.durationMonths / 12)).toFixed(2)
-                                                            : (item.price * item.durationMonths).toFixed(2)} Dhs
+                                                        {isDomainItem 
+                                                            ? (parseFloat(item.price) * (item.durationMonths / 12)).toFixed(2)
+                                                            : (parseFloat(item.price) * item.durationMonths).toFixed(2)} Dhs
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,12 +127,13 @@ const Cart = () => {
                                                 </button>
                                             )}
                                             <div style={{ background: '#f8fafc', padding: '0.4rem 1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '0.95rem', fontWeight: 600, color: '#282828' }}>
-                                                {item.domainName ? (item.durationMonths / 12) + (item.durationMonths / 12 > 1 ? ' Ans' : ' An') : item.durationMonths + ' Mois'}
+                                                {isDomainItem ? (item.durationMonths / 12) + (item.durationMonths / 12 > 1 ? ' Ans' : ' An') : item.durationMonths + ' Mois'}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                         <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid #e5eaf0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
                             <button

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { fetchCart } from '../../store/slices/cartSlice';
-import { fetchNotifications } from '../../store/slices/notificationSlice';
+import { fetchNotifications, markAllRead, clearUnread } from '../../store/slices/notificationSlice';
 import {
     LayoutDashboard, Server, Globe, ShoppingCart, CreditCard,
     HelpCircle, Bell, Search, LogOut, User, Shield, ChevronRight,
@@ -12,10 +12,13 @@ import {
     Hand,
     Indent,
     Pointer,
-    LayoutDashboardIcon
+    LayoutDashboardIcon,
+    BellOff,
+    Clock
 } from 'lucide-react';
 import LogoutConfirmModal from '../LogoutConfirmModal';
 import { GrDashboard } from 'react-icons/gr';
+import { fmtDate, detectType, TYPE_CONFIG } from '../../pages/client/Notifications.jsx';
 
 const sidebarGroups = [
     {
@@ -46,11 +49,31 @@ const ClientLayout = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [showNotifPopup, setShowNotifPopup] = useState(false);
+    const notifRef = useRef(null);
+    const { items: allNotifications } = useSelector(state => state.notifications);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (notifRef.current && !notifRef.current.contains(event.target)) {
+                setShowNotifPopup(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     useEffect(() => {
         if (user?.id) {
             dispatch(fetchCart());
             dispatch(fetchNotifications(user.id));
+
+            // Poll for new notifications every 30 seconds
+            const interval = setInterval(() => {
+                dispatch(fetchNotifications(user.id));
+            }, 30000);
+
+            return () => clearInterval(interval);
         }
     }, [dispatch, user]);
 
@@ -82,6 +105,12 @@ const ClientLayout = () => {
                                         <Link
                                             key={item.path}
                                             to={item.path}
+                                            onClick={() => {
+                                                if (item.path === '/client/notifications') {
+                                                    if (user?.id) dispatch(markAllRead(user.id));
+                                                    dispatch(clearUnread());
+                                                }
+                                            }}
                                             style={{
                                                 display: 'flex', alignItems: 'center', gap: '0.65rem',
                                                 padding: '0.6rem 0.75rem', borderRadius: '8px',
@@ -96,6 +125,11 @@ const ClientLayout = () => {
                                             {item.path === '/client/cart' && cartCount > 0 && (
                                                 <span style={{ marginLeft: 'auto', background: '#ef4444', color: 'white', fontSize: '0.65rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                     {cartCount}
+                                                </span>
+                                            )}
+                                            {item.path === '/client/notifications' && notifCount > 0 && (
+                                                <span style={{ marginLeft: 'auto', background: '#ef4444', color: 'white', fontSize: '0.65rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    {notifCount}
                                                 </span>
                                             )}
                                         </Link>
@@ -134,17 +168,112 @@ const ClientLayout = () => {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <Link to="/client/notifications" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
-                            onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
-                        >
-                            <Bell size={18} />
-                            {notifCount > 0 && (
-                                <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', color: 'white', fontSize: '0.6rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
-                                    {notifCount}
-                                </span>
+                        <div ref={notifRef} style={{ position: 'relative' }}>
+                            <button
+                                onClick={() => {
+                                    setShowNotifPopup(!showNotifPopup);
+                                    if (!showNotifPopup && user?.id && notifCount > 0) {
+                                        dispatch(markAllRead(user.id));
+                                        dispatch(clearUnread());
+                                    }
+                                }}
+                                style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s', cursor: 'pointer', outline: 'none' }}
+                                onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = '#f3f6fb'; e.currentTarget.style.color = '#64748b'; }}
+                            >
+                                <Bell size={18} />
+                                {notifCount > 0 && (
+                                    <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', color: 'white', fontSize: '0.6rem', fontWeight: 800, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                                        {notifCount}
+                                    </span>
+                                )}
+                            </button>
+
+                            {/* Popup des Notifications */}
+                            {showNotifPopup && (
+                                <div style={{
+                                    position: 'absolute',
+                                    top: 'calc(100% + 8px)',
+                                    right: 0,
+                                    width: '380px',
+                                    background: '#0B1F3A',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+                                    border: '1px solid #163967',
+                                    zIndex: 1000,
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}>
+                                    <div style={{ padding: '1rem', borderBottom: '1px solid #163967', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Notifications</h3>
+                                    </div>
+                                    
+                                    <div style={{ maxHeight: '420px', overflowY: 'auto' }}>
+                                        {allNotifications && allNotifications.length > 0 ? (
+                                            allNotifications.slice(0, 5).map(n => {
+                                                const type = detectType(n.message);
+                                                const cfg = TYPE_CONFIG[type];
+                                                const IconComp = cfg.icon;
+                                                const isRead = n.isRead || n.is_read;
+
+                                                return (
+                                                    <div 
+                                                        key={n.idNotification}
+                                                        onClick={() => {
+                                                            setShowNotifPopup(false);
+                                                            if (cfg.link) navigate(cfg.link);
+                                                        }}
+                                                        style={{
+                                                            display: 'flex', alignItems: 'flex-start', gap: '0.8rem',
+                                                            padding: '1rem', borderBottom: '1px solid #163967',
+                                                            cursor: cfg.link ? 'pointer' : 'default',
+                                                            background: isRead ? '#0B1F3A' : '#0F294D',
+                                                            transition: 'background 0.2s'
+                                                        }}
+                                                        onMouseEnter={e => {
+                                                            if (cfg.link) e.currentTarget.style.background = '#13325B';
+                                                        }}
+                                                        onMouseLeave={e => {
+                                                            e.currentTarget.style.background = isRead ? '#0B1F3A' : '#0F294D';
+                                                        }}
+                                                    >
+                                                        <div style={{ width: 36, height: 36, borderRadius: '50%', flexShrink: 0, background: '#08162A', border: '1px solid #163967', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            <IconComp size={16} color="#38bdf8" />
+                                                        </div>
+                                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                                            <p style={{ margin: '0 0 4px', fontSize: '0.85rem', fontWeight: isRead ? 500 : 600, color: isRead ? '#94a3b8' : '#e2e8f0', lineHeight: 1.4 }}>
+                                                                {n.message}
+                                                            </p>
+                                                            <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                                <Clock size={10} /> {fmtDate(n.createdAt || n.created_at)}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <div style={{ padding: '2rem 1rem', textAlign: 'center' }}>
+                                                <div style={{ width: 48, height: 48, borderRadius: '50%', background: '#08162A', border: '1px solid #163967', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 0.5rem' }}>
+                                                    <BellOff size={20} color="#64748b" />
+                                                </div>
+                                                <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#94a3b8' }}>Aucune notification</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <Link 
+                                        to="/client/notifications" 
+                                        onClick={() => setShowNotifPopup(false)}
+                                        style={{ display: 'block', padding: '0.75rem', textAlign: 'center', fontSize: '0.85rem', fontWeight: 600, color: '#38bdf8', textDecoration: 'none', background: '#08162A', borderTop: '1px solid #163967', transition: 'background 0.2s' }}
+                                        onMouseEnter={e => e.currentTarget.style.background = '#0F294D'}
+                                        onMouseLeave={e => e.currentTarget.style.background = '#08162A'}
+                                    >
+                                        Voir toutes les notifications
+                                    </Link>
+                                </div>
                             )}
-                        </Link>
+                        </div>
 
                         <Link to="/client/cart" style={{ position: 'relative', width: '38px', height: '38px', borderRadius: '10px', background: '#f3f6fb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', textDecoration: 'none', border: '1px solid #e5eaf0', transition: 'all 0.2s' }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#eff3fb'; e.currentTarget.style.color = '#0B1F3A'; }}

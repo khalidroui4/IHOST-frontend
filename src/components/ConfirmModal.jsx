@@ -11,6 +11,7 @@ const ConfirmModal = ({
     confirmText = 'Confirmer', 
     cancelText = 'Annuler',
     type = 'info',
+    theme = 'light',
     hideIcon = false,
     hideClose = false
 }) => {
@@ -33,7 +34,7 @@ const ConfirmModal = ({
     };
 
     const modalContent = (
-        <div className="cm-backdrop" onClick={onCancel}>
+        <div className={`cm-backdrop cm-theme-${theme}`} onClick={onCancel}>
             <div className={`cm-panel cm-type-${type}`} onClick={e => e.stopPropagation()}>
                 {(!hideClose && type !== 'logout') && (
                     <button className="cm-close" onClick={onCancel} aria-label="Fermer">
