@@ -9,7 +9,7 @@ const Terms = () => {
                 <div className="legal-page-container">
                     <div className="legal-header">
                         <h1>Conditions d'utilisation</h1>
-                        <p>Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+                        <p>Dernière mise à jour : 03/07/2026</p>
                     </div>
 
                     <div className="legal-content">

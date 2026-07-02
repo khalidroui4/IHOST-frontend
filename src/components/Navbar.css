@@ -13,12 +13,11 @@
 
 .custom-navbar.scrolled {
     padding: 0.75rem 0;
-    background: linear-gradient(to right,
-            rgba(12, 36, 70, 0.6) 0%,
-            rgba(14, 47, 103, 0.6) 25%,
-            rgba(17, 62, 142, 0.6) 50%,
-            rgba(21, 73, 170, 0.6) 75%,
-            rgba(21, 80, 188, 0.6) 100%);
+    background: linear-gradient(135deg,
+            rgba(5, 17, 33, 0.75) 0%,
+            rgba(11, 35, 71, 0.75) 30%,
+            rgba(19, 78, 168, 0.75) 65%,
+            rgba(30, 107, 255, 0.75) 100%);
     backdrop-filter: blur(5px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }

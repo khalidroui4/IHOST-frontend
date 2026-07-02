@@ -326,12 +326,11 @@ h4,
 
 .hero {
   background: linear-gradient(
-    to right,
-    rgba(12, 36, 70) 0%,
-    rgba(14, 47, 103) 25%,
-    rgba(17, 62, 142) 50%,
-    rgba(21, 73, 170) 75%,
-    rgba(21, 80, 188) 100%
+    135deg,
+    #051121 0%,
+    #0b2347 30%,
+    #134ea8 65%,
+    #1e6bff 100%
   );
   position: relative;
   width: 100%;
@@ -417,12 +416,11 @@ h4,
   padding: 8rem 0;
   position: relative;
   background: linear-gradient(
-    to right,
-    rgba(12, 36, 70) 0%,
-    rgba(14, 47, 103) 25%,
-    rgba(17, 62, 142) 50%,
-    rgba(21, 73, 170) 75%,
-    rgba(21, 80, 188) 100%
+    135deg,
+    #051121 0%,
+    #0b2347 30%,
+    #134ea8 65%,
+    #1e6bff 100%
   );
 }
 

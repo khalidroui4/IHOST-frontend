@@ -1,10 +1,9 @@
 .contact-page-wrapper {
-    background: linear-gradient(to right,
-            rgba(12, 36, 70, 0.95) 0%,
-            rgba(14, 47, 103, 0.95) 25%,
-            rgba(17, 62, 142, 0.95) 50%,
-            rgba(21, 73, 170, 0.95) 75%,
-            rgba(21, 80, 188, 0.95) 100%);
+    background: linear-gradient(135deg,
+            rgba(5, 17, 33, 0.95) 0%,
+            rgba(11, 35, 71, 0.95) 30%,
+            rgba(19, 78, 168, 0.95) 65%,
+            rgba(30, 107, 255, 0.95) 100%);
     color: white;
     min-height: 100vh;
 }

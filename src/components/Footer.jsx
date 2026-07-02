@@ -1,3 +1,4 @@
+import React from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, Github, Linkedin,  } from 'lucide-react';
@@ -17,11 +18,47 @@ const Footer = () => {
                         <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: '1.7', marginBottom: '2.5rem', fontSize: '1rem', maxWidth: '400px' }}>
                             Infrastructure cloud souveraine de haute performance. Nous concevons le socle technologique des entreprises leaders au Maroc et à l'international.
                         </p>
-                        <div style={{ display: 'flex', gap: '1.5rem' }}>
-                            <a href="mailto:rouibaa.khalid05@gmail.com" className='footer-social' target="blank"><Mail size={20} /></a>
-                            <a href="https://www.instagram.com/khalid_roui4/" className='footer-social' target="blank"><Instagram size={20} /></a>
-                            <a href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" className='footer-social' target="blank"><Linkedin size={20} /></a>
-                            <a href="https://github.com/khalidroui4" className='footer-social' target="blank"><Github size={20} /></a>
+                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem' }}>
+                            <div className="footer-social-wrapper">
+                                <a 
+                                    href="mailto:rouibaa.khalid05@gmail.com" 
+                                    className='footer-social footer-social-email' 
+                                    target="blank"
+                                >
+                                    <Mail size={20} />
+                                </a>
+                                <span className="footer-social-name footer-name-email">Gmail</span>
+                            </div>
+                            <div className="footer-social-wrapper">
+                                <a 
+                                    href="https://www.instagram.com/khalid_roui4/" 
+                                    className='footer-social footer-social-instagram' 
+                                    target="blank"
+                                >
+                                    <Instagram size={20} />
+                                </a>
+                                <span className="footer-social-name footer-name-instagram">Instagram</span>
+                            </div>
+                            <div className="footer-social-wrapper">
+                                <a 
+                                    href="https://www.linkedin.com/in/mohamed-khalid-rouibaa-601411343/" 
+                                    className='footer-social footer-social-linkedin' 
+                                    target="blank"
+                                >
+                                    <Linkedin size={20} />
+                                </a>
+                                <span className="footer-social-name footer-name-linkedin">LinkedIn</span>
+                            </div>
+                            <div className="footer-social-wrapper">
+                                <a 
+                                    href="https://github.com/khalidroui4" 
+                                    className='footer-social footer-social-github' 
+                                    target="blank"
+                                >
+                                    <Github size={20} />
+                                </a>
+                                <span className="footer-social-name footer-name-github">GitHub</span>
+                            </div>
                         </div>
                     </div>
 
@@ -47,6 +84,7 @@ const Footer = () => {
                             <Link to="/legal/conditions" className="footer-nav-link">Conditions Générales</Link>
                             <Link to="/legal/confidentialite" className="footer-nav-link">Confidentialité (RGPD)</Link>
                             <Link to="/legal/utilisation-acceptable" className="footer-nav-link">Usage Acceptable</Link>
+                            <Link to="/legal/signaler-probleme" className="footer-nav-link">Signaler un problème</Link>
                             <Link to="/contact" className="footer-nav-link">Contact</Link>
                         </div>
                     </div>
