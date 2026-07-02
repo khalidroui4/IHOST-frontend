@@ -32,24 +32,50 @@ const RegisterDomain = () => {
         }
     }, [dispatch, services]);
 
-    const dynamicExtensions = Array.from(new Map(
-        services
-            .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
-            .map(s => {
-                const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
-                const ext = extMatch ? extMatch[0].toLowerCase() : '.com';
+    const fallbackExtensions = [
+        { ext: '.ma', price: '139', trending: true, promo: false },
+        { ext: '.com', price: '119', trending: true, promo: false },
+        { ext: '.net', price: '129', trending: false, promo: false },
+        { ext: '.org', price: '139', trending: false, promo: false },
+        { ext: '.tech', price: '89', trending: false, promo: true },
+        { ext: '.dev', price: '149', trending: false, promo: false },
+        { ext: '.store', price: '79', trending: false, promo: true },
+        { ext: '.co', price: '169', trending: false, promo: false },
+        { ext: '.info', price: '99', trending: false, promo: true },
+        { ext: '.me', price: '109', trending: false, promo: false }
+    ];
+
+    const dynamicExtensionsMap = new Map();
+
+    fallbackExtensions.forEach(f => {
+        const priceVal = parseFloat(f.price);
+        dynamicExtensionsMap.set(f.ext, {
+            ext: f.ext,
+            price: f.price,
+            oldPrice: (priceVal * 1.25).toFixed(0),
+            trending: f.trending,
+            promo: f.promo
+        });
+    });
+
+    services
+        .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
+        .forEach(s => {
+            const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
+            if (extMatch) {
+                const ext = extMatch[0].toLowerCase();
                 const priceVal = parseFloat(s.price);
-                return [ext, {
+                dynamicExtensionsMap.set(ext, {
                     ext,
                     price: s.price,
                     oldPrice: (priceVal * 1.25).toFixed(0),
-                    trending: ext === '.com' || ext === '.ma',
-                    promo: priceVal < 50
-                }];
-            })
-    ).values());
+                    trending: ext === '.com' || ext === '.ma' || ext === '.dev' || ext === '.store',
+                    promo: priceVal < 100
+                });
+            }
+        });
 
-    const popularExtensions = dynamicExtensions;
+    const popularExtensions = Array.from(dynamicExtensionsMap.values());
 
     useEffect(() => {
         const query = new URLSearchParams(location.search).get('q');
@@ -204,8 +230,7 @@ const RegisterDomain = () => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
-                            opacity: 0.15,
-                            mixBlendMode: 'luminosity',
+                            opacity: 0.35,
                             zIndex: 0
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>

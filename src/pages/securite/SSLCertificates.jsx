@@ -69,8 +69,8 @@ const SSLCertificates = () => {
                             position: 'absolute', inset: 0,
                             backgroundImage: 'url(/ssl_certificate.jpg)',
                             backgroundSize: 'cover', backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat', opacity: 0.15,
-                            mixBlendMode: 'luminosity', zIndex: 0
+                            backgroundRepeat: 'no-repeat', opacity: 0.35,
+                            zIndex: 0
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>

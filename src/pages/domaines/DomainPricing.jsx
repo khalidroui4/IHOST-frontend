@@ -25,27 +25,44 @@ const DomainPricing = () => {
     }
   }, [dispatch, services]);
 
-  const dynamicPricingData = Array.from(new Map(
-    services
-      .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
-      .map(s => {
-        const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
-        const ext = extMatch ? extMatch[0].toLowerCase() : null;
-        if (!ext) return null;
+  const fallbackExtensions = [
+    { ext: '.ma', price: '139', reg: '139 DH', ren: '149 DH', trans: '139 DH', trending: true, promo: false },
+    { ext: '.com', price: '119', reg: '119 DH', ren: '129 DH', trans: '119 DH', trending: true, promo: false },
+    { ext: '.net', price: '129', reg: '129 DH', ren: '139 DH', trans: '129 DH', trending: false, promo: false },
+    { ext: '.org', price: '139', reg: '139 DH', ren: '149 DH', trans: '139 DH', trending: false, promo: false },
+    { ext: '.tech', price: '89', reg: '89 DH', ren: '99 DH', trans: '89 DH', trending: false, promo: true },
+    { ext: '.dev', price: '149', reg: '149 DH', ren: '159 DH', trans: '149 DH', trending: false, promo: false },
+    { ext: '.store', price: '79', reg: '79 DH', ren: '89 DH', trans: '79 DH', trending: false, promo: true },
+    { ext: '.co', price: '169', reg: '169 DH', ren: '179 DH', trans: '169 DH', trending: false, promo: false },
+    { ext: '.info', price: '99', reg: '99 DH', ren: '109 DH', trans: '99 DH', trending: false, promo: true },
+    { ext: '.me', price: '109', reg: '109 DH', ren: '119 DH', trans: '109 DH', trending: false, promo: false }
+  ];
+
+  const dynamicPricingDataMap = new Map();
+
+  fallbackExtensions.forEach(f => {
+    dynamicPricingDataMap.set(f.ext, f);
+  });
+
+  services
+    .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
+    .forEach(s => {
+      const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
+      if (extMatch) {
+        const ext = extMatch[0].toLowerCase();
         const priceVal = parseFloat(s.price);
-        return [ext, {
+        dynamicPricingDataMap.set(ext, {
           ext,
           reg: `${priceVal.toFixed(0)} DH`,
           ren: `${(priceVal * 1.05).toFixed(0)} DH`,
           trans: `${priceVal.toFixed(0)} DH`,
-          promo: priceVal < 50,
-          trending: ext === '.com' || ext === ".ma"
-        }];
-      })
-      .filter(Boolean)
-  ).values());
+          promo: priceVal < 100,
+          trending: ext === '.com' || ext === '.ma' || ext === '.dev' || ext === '.store'
+        });
+      }
+    });
 
-  const pricingData = dynamicPricingData;
+  const pricingData = Array.from(dynamicPricingDataMap.values());
 
   return (
     <PageTransition>
@@ -69,8 +86,7 @@ const DomainPricing = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
-                opacity: 0.15,
-                mixBlendMode: "luminosity",
+                opacity: 0.35,
                 zIndex: 0
               }}
             />

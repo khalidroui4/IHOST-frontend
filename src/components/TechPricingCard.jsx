@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { addToCart } from '../store/slices/cartSlice';
 import ConfirmCartModal from './ConfirmCartModal';
 import { useToast } from '../context/ToastContext';
@@ -9,6 +9,7 @@ import './TechPricingCard.css';
 
 const TechPricingCard = ({ 
     idService,
+    id,
     name, 
     desc, 
     price, 
@@ -20,6 +21,7 @@ const TechPricingCard = ({
     buttonLink = null,
  
     addToCartMode = false,
+    domainName = null,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -39,10 +41,11 @@ const TechPricingCard = ({
     const handleConfirm = async () => {
         try {
             await dispatch(addToCart({
-                idService,
+                idService: idService || id,
                 nameService: name,
                 price: parseFloat(price),
                 durationMonths: 1,
+                domainName: domainName,
             })).unwrap();
             
             addToast("L'article a été ajouté à votre panier avec succès !", "success");

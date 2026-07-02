@@ -90,8 +90,7 @@ const WhoisLookup = () => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
-                            opacity: 0.15,
-                            mixBlendMode: 'luminosity',
+                            opacity: 0.35,
                             zIndex: 0
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10 }}>

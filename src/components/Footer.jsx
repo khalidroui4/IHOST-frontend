@@ -36,7 +36,6 @@ const Footer = () => {
                             <Link to="/domaines/register" className="footer-nav-link">Register Domain</Link>
                             <Link to="/email-collaboration/pro" className="footer-nav-link">Professional Email</Link>
                             <Link to="/securite/ssl" className="footer-nav-link">SSL Certificates</Link>
-                            <Link to="/entreprise/datacenters" className="footer-nav-link">Data Centers</Link>
                         </div>
                     </div>
 
@@ -45,9 +44,6 @@ const Footer = () => {
                             <h4 className="font-tech">Compliance</h4>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                            <Link to="/entreprise/about" className="footer-nav-link">À propos</Link>
-                            <Link to="/entreprise/partners" className="footer-nav-link">Partenaires</Link>
-                            <Link to="/entreprise/certifications" className="footer-nav-link">Certifications</Link>
                             <Link to="/legal/conditions" className="footer-nav-link">Conditions Générales</Link>
                             <Link to="/legal/confidentialite" className="footer-nav-link">Confidentialité (RGPD)</Link>
                             <Link to="/legal/utilisation-acceptable" className="footer-nav-link">Usage Acceptable</Link>

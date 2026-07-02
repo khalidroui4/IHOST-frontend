@@ -12,15 +12,16 @@ const Home = () => {
     const dispatch = useDispatch();
     const { items: services, isLoading } = useSelector(state => state.services);
 
-    const dynamicDomainOptions = Array.from(new Set(
-        services
+    const dynamicDomainOptions = Array.from(new Set([
+        ...services
             .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
             .map(s => {
                 const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
                 return extMatch ? extMatch[0].toLowerCase() : null;
             })
-            .filter(Boolean)
-    ));
+            .filter(Boolean),
+        '.ma', '.com', '.net', '.org', '.tech', '.dev', '.store', '.co', '.info', '.me'
+    ]));
     const domainOptionsList = dynamicDomainOptions;
     const [selectedDomain, setSelectedDomain] = useState('.ma');
     const [domainQuery, setDomainQuery] = useState('');
@@ -161,8 +162,7 @@ const Home = () => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
-                            opacity: 0.15,
-                            mixBlendMode: 'luminosity',
+                            opacity: 0.35,
                             zIndex: 0
                         }} />
                         <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%' }}>

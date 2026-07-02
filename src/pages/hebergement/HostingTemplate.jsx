@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -7,12 +7,23 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchServices } from "../../store/slices/serviceSlice";
 import PageTransition from "../../pageTransition";
 import LuxeCard from "../../components/LuxeCard";
 import TechPricingCard from "../../components/TechPricingCard";
 
 const HostingTemplate = ({ data }) => {
   if (!data) return <Navigate to="/" />;
+
+  const dispatch = useDispatch();
+  const { items: dbServices } = useSelector(state => state.services);
+
+  useEffect(() => {
+    if (!dbServices || dbServices.length === 0) {
+      dispatch(fetchServices());
+    }
+  }, [dispatch, dbServices]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,7 +50,7 @@ const HostingTemplate = ({ data }) => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
-                opacity: 0.15,
+                opacity: 0.35,
                 zIndex: 1,
               }}
             />
@@ -85,7 +96,7 @@ const HostingTemplate = ({ data }) => {
                     style={{ justifyContent: "flex-start", gap: "1.5rem" }}
                   >
                     <Link
-                      to="/signup"
+                      to="/pricing"
                       className="btn btn-primary"
                       style={{ padding: "1.2rem 3rem", fontSize: "1rem" }}
                     >
@@ -207,19 +218,26 @@ const HostingTemplate = ({ data }) => {
                 alignItems: "center",
               }}
             >
-              {data.plans.map((plan, index) => (
-                <TechPricingCard
-                  key={index}
-                  name={plan.name}
-                  price={plan.price}
-                  period={plan.period}
-                  features={plan.features}
-                  highlight={plan.highlight}
-                  badge={plan.badge}
-                  buttonText="Ajouter au panier"
-                  addToCartMode={true}
-                />
-              ))}
+              {data.plans.map((plan, index) => {
+                const matchingService = dbServices.find(s => 
+                  s.nameService.toLowerCase() === plan.name.toLowerCase() &&
+                  s.typeService === (data.id === 'cloud' ? 'cloud' : 'hosting')
+                );
+                return (
+                  <TechPricingCard
+                    key={index}
+                    idService={matchingService?.idService}
+                    name={plan.name}
+                    price={plan.price}
+                    period={plan.period}
+                    features={plan.features}
+                    highlight={plan.highlight}
+                    badge={plan.badge}
+                    buttonText="Ajouter au panier"
+                    addToCartMode={true}
+                  />
+                );
+              })}
             </div>
 
             <div
