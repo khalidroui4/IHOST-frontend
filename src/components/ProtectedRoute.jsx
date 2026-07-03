@@ -23,6 +23,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
         return <Navigate to="/client/dashboard" />;
     }
 
+    if (!requireAdmin && user?.role?.toLowerCase() === 'admin') {
+        return <Navigate to="/admin/dashboard" />;
+    }
+
     return children;
 };
 

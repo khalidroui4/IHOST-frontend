@@ -334,10 +334,6 @@ const Checkout = () => {
                       />
                     </div>
                   </div>
-                  <div className="form-info-box">
-                    <Info size={18} />
-                    <p>Ces détails seront affichés sur votre facture officielle et serviront à la validation de vos noms de domaine.</p>
-                  </div>
                   <button type="submit" className="btn btn-primary btn-block" style={{ padding: '0.9rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600 }}>
                     Continuer vers le paiement <ChevronRight size={18} />
                   </button>
@@ -365,10 +361,6 @@ const Checkout = () => {
                   <div className={`method-card ${selectedMethod === 'paypal' ? 'selected' : ''}`} onClick={() => setSelectedMethod('paypal')}>
                     <img src="https://raw.githubusercontent.com/aaronfagan/svg-credit-card-payment-icons/master/flat/paypal.svg" alt="PayPal" className="paypal-logo" />
                     <span>PayPal</span>
-                  </div>
-                  <div className={`method-card ${selectedMethod === 'virement' ? 'selected' : ''}`} onClick={() => setSelectedMethod('virement')}>
-                    <Banknote size={24} color="#64748b" />
-                    <span>Virement</span>
                   </div>
                 </div>
 
@@ -422,31 +414,15 @@ const Checkout = () => {
                         />
                       </div>
                     </div>
-                    <div className="trust-badges">
-                      <ShieldCheck size={16} /> <span>Paiement crypté SSL 256-bit</span>
-                    </div>
                     <button type="submit" className="btn btn-primary btn-block" style={{ padding: '0.9rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600 }}>
                       Payer {finalTotal.toLocaleString('fr-MA', {minimumFractionDigits: 2, maximumFractionDigits: 2})} DH
                     </button>
                   </form>
-                ) : selectedMethod === 'paypal' ? (
+                ) : (
                   <div className="method-placeholder">
                     <p>Vous serez redirigé vers <strong>PayPal</strong> pour valider votre transaction.</p>
                     <button className="btn btn-primary btn-block" style={{ padding: '0.9rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600 }} onClick={nextStep}>
                       Continuer avec PayPal
-                    </button>
-                  </div>
-                ) : (
-                  <div className="method-placeholder">
-                    <p style={{ textAlign: 'left', background: '#f8fafc', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '0.9rem', color: '#334155' }}>
-                      Veuillez effectuer un virement bancaire sur le compte ci-dessous :<br/><br/>
-                      <strong>Banque :</strong> CIH Bank<br/>
-                      <strong>Bénéficiaire :</strong> IHOST S.A.R.L<br/>
-                      <strong>RIB :</strong> 230 555 9876543210 1234 567<br/>
-                      <strong>Note :</strong> Mentionnez votre e-mail de compte en référence. Vos services seront activés dès réception du virement.
-                    </p>
-                    <button className="btn btn-primary btn-block" style={{ padding: '0.9rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600 }} onClick={nextStep}>
-                      Confirmer le mode de virement
                     </button>
                   </div>
                 )}
@@ -577,8 +553,7 @@ const Checkout = () => {
           <div className="checkout-sidebar">
             <div className="summary-card-premium sticky">
               <div className="summary-header">
-                <h3>Résumé</h3>
-                <span className="item-count">{items.length} services</span>
+                <h3>{items.length} service{items.length > 1 ? 's' : ''}</h3>
               </div>
               <div className="summary-items-list">
                 {items.map((item, idx) => {
@@ -588,12 +563,14 @@ const Checkout = () => {
                     <div key={item.idCart || idx} className="summary-product">
                       <div className="summary-product-img">
                         {isDomain ? <Globe size={20} /> : <Server size={20} />}
-                        <span className="qty-badge">
-                          {isDomain ? `${item.durationMonths / 12}A` : `${item.durationMonths}M`}
-                        </span>
                       </div>
                       <div className="summary-product-info">
-                        <p className="name">{isDomain ? (item.domainName || item.nameService) : item.nameService}</p>
+                        <p className="name">
+                          {isDomain ? (item.domainName || item.nameService) : item.nameService}{' '}
+                          <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 500 }}>
+                            {isDomain ? `(${item.durationMonths / 12} An${(item.durationMonths / 12) > 1 ? 's' : ''})` : `(${item.durationMonths} Mois)`}
+                          </span>
+                        </p>
                         <p className="price">{itemTotal.toLocaleString()} DH</p>
                       </div>
                     </div>
@@ -602,21 +579,10 @@ const Checkout = () => {
               </div>
               <div className="summary-divider"></div>
               <div className="summary-totals">
-                <div className="total-row">
-                  <span>Sous-total</span>
-                  <span>{cartTotal.toLocaleString()} DH</span>
-                </div>
-                <div className="total-row">
-                  <span>Mise en service</span>
-                  <span className="free-shipping">Gratuit</span>
-                </div>
                 <div className="total-row grand-total">
                   <span>Total</span>
                   <span>{finalTotal.toLocaleString()} DH</span>
                 </div>
-              </div>
-              <div className="secure-checkout-badge">
-                <Lock size={14} /> <span>Sécurisé par SSL</span>
               </div>
             </div>
           </div>

@@ -24,10 +24,10 @@ const ClientDashboard = () => {
     const displayName = user?.username || user?.first_name || 'Client';
 
     const statCards = [
-        { label: 'MES SERVICES', value: stats.activeServices || 0, icon: Server },
-        { label: 'MES DOMAINES', value: stats.domains || 0, icon: Globe },
-        { label: 'MES DEMANDES', value: stats.totalOrders || 0, icon: MessageCircle },
-        { label: 'FACTURES', value: stats.unpaidInvoices || 0, icon: CreditCard },
+        { label: 'MES SERVICES', value: stats.activeServices || 0, icon: Server, path: '/client/services' },
+        { label: 'MES DOMAINES', value: stats.domains || 0, icon: Globe, path: '/client/domains' },
+        { label: 'MES DEMANDES', value: stats.totalOrders || 0, icon: MessageCircle, path: '/client/support' },
+        { label: 'FACTURES', value: stats.unpaidInvoices || 0, icon: CreditCard, path: '/client/invoices' },
     ];
 
     /* ─── Shared Styles ─── */
@@ -90,8 +90,8 @@ const ClientDashboard = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
-                {statCards.map(({ label, value, icon: Icon }) => (
-                    <div key={label} style={{ ...cardStyle, borderRadius: '16px', position: 'relative', overflow: 'hidden', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '130px', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'default' }}
+                {statCards.map(({ label, value, icon: Icon, path }) => (
+                    <Link key={label} to={path} style={{ ...cardStyle, borderRadius: '16px', position: 'relative', overflow: 'hidden', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '130px', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer', textDecoration: 'none' }}
                         onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.08)'; }}
                         onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}
                     >
@@ -107,7 +107,7 @@ const ClientDashboard = () => {
                             )}
                             <p style={{ margin: 0, fontSize: '0.75rem', color: '#9ca3af', fontWeight: 400, letterSpacing: '0.5px', fontFamily: 'serif' }}>{label}</p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
 

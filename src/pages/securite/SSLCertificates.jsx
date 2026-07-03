@@ -1,12 +1,15 @@
 import React from 'react';
 import { Lock, Search, ShieldCheck, ThumbsUp, CheckCircle2, ArrowRight, LockKeyhole } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PageTransition from '../../pageTransition';
 import LuxeCard from '../../components/LuxeCard';
 import TechPricingCard from '../../components/TechPricingCard';
 import './SSLCertificates.css';
 
 const SSLCertificates = () => {
+    const { isAuthenticated } = useSelector(state => state.auth);
+
     const plans = [
         {
             name: 'Standard SSL (DV)',
@@ -52,6 +55,14 @@ const SSLCertificates = () => {
         }
     ];
 
+    const scrollToPricing = (e) => {
+        e.preventDefault();
+        const element = document.getElementById('ssl-pricing');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <PageTransition>
             <div className="security-page ssl-page">
@@ -80,9 +91,9 @@ const SSLCertificates = () => {
                                     SSL de renommée mondiale. Le standard de sécurité HTTPS pour votre succès.
                                 </p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
-                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>
+                                    <a href="#ssl-pricing" onClick={scrollToPricing} className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem', textDecoration: 'none' }}>
                                         Sécuriser mon site <ArrowRight size={20} />
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +121,7 @@ const SSLCertificates = () => {
                 </section>
 
                 {/* ── Pricing ── */}
-                <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+                <section id="ssl-pricing" className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
                     <div className="container-luxe">
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
                             <h2 className="section-title">Niveaux de Protection SSL</h2>
@@ -128,14 +139,16 @@ const SSLCertificates = () => {
                                     features={plan.features}
                                     highlight={plan.highlight}
                                     badge={plan.badge}
-                                    buttonText="Ajouter au panier"
-                                    addToCartMode={true}
+                                    buttonText="Gérer depuis l'Espace Client"
+                                    addToCartMode={false}
+                                    buttonLink={isAuthenticated ? "/client/dashboard" : "/signUp"}
                                 />
                             ))}
                         </div>
                     </div>
                 </section>
 
+                {/* ── Installation ── */}
                 <section style={{ padding: '6rem 2rem', background: 'white' }}>
                     <div className="container-luxe">
                         <div className="ssl-install-wrapper">
@@ -164,7 +177,7 @@ const SSLCertificates = () => {
                                     <LockKeyhole size={60} color="#1E6BFF" style={{ marginBottom: '1.5rem' }} />
                                     <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1rem' }}>Certitude à 99.9%</h3>
                                     <p style={{ color: '#4B5563', marginBottom: '2rem' }}>Reconnu par tous les navigateurs modernes.</p>
-                                    <button className="btn" style={{ padding: '1.2rem 2.5rem', borderRadius: '100px', fontWeight: 800 }}>
+                                    <button onClick={scrollToPricing} className="btn" style={{ padding: '1.2rem 2.5rem', borderRadius: '100px', fontWeight: 800 }}>
                                         Démarrer Maintenant
                                     </button>
                                 </div>
@@ -173,6 +186,7 @@ const SSLCertificates = () => {
                     </div>
                 </section>
 
+                {/* ── CTA ── */}
                 <section className="cta-split" style={{ padding: '6rem 2rem' }}>
                     <div className="container-luxe">
                         <div className="ssl-cta-box">
@@ -181,9 +195,9 @@ const SSLCertificates = () => {
                                 Découvrez nos solutions Wildcard pour sécuriser l'ensemble de vos
                                 sous-domaines avec une seule licence.
                             </p>
-                            <Link to="/securite/wildcard" className="btn" style={{
+                            <Link to="/client/dashboard" className="btn" style={{
                                 background: 'white',
-                                color: '#0ea5e9',
+                                color: '#1E6BFF',
                                 padding: '1.2rem 3rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,
@@ -192,7 +206,7 @@ const SSLCertificates = () => {
                                 gap: '1rem',
                                 textDecoration: 'none'
                             }}>
-                                Voir les Certificats Wildcard <ArrowRight size={22} />
+                                Gérer via l'Espace Client <ArrowRight size={22} />
                             </Link>
                         </div>
                     </div>

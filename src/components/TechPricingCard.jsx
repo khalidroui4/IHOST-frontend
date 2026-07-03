@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { addToCart } from '../store/slices/cartSlice';
+import { fetchDomains } from '../store/slices/domainSlice';
 import ConfirmCartModal from './ConfirmCartModal';
 import { useToast } from '../context/ToastContext';
 import './TechPricingCard.css';
@@ -22,10 +23,13 @@ const TechPricingCard = ({
  
     addToCartMode = false,
     domainName = null,
+    typeService = null,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, user } = useSelector(state => state.auth);
+    const { items: ownedDomains } = useSelector(state => state.domains || { items: [] });
+    const { items: cart } = useSelector(state => state.cart || { items: [] });
     const [showModal, setShowModal] = useState(false);
     const { addToast } = useToast();
 
@@ -35,17 +39,24 @@ const TechPricingCard = ({
             navigate('/signUp');
             return;
         }
+        if (user?.role === 'admin') {
+            addToast("Les administrateurs ne peuvent pas acheter de services.", "error");
+            return;
+        }
+        if (typeService === 'hosting' || typeService === 'email') {
+            dispatch(fetchDomains(user?.idU || user?.id));
+        }
         setShowModal(true);
     };
 
-    const handleConfirm = async () => {
+    const handleConfirm = async (domainNameInput) => {
         try {
             await dispatch(addToCart({
                 idService: idService || id,
                 nameService: name,
                 price: parseFloat(price),
-                durationMonths: 1,
-                domainName: domainName,
+                durationMonths: typeService === 'domain' ? 12 : 1,
+                domainName: domainNameInput || domainName,
             })).unwrap();
             
             addToast("L'article a été ajouté à votre panier avec succès !", "success");
@@ -106,6 +117,9 @@ const TechPricingCard = ({
             {showModal && (
                 <ConfirmCartModal
                     item={{ name, price, period, features }}
+                    typeService={typeService}
+                    ownedDomains={ownedDomains}
+                    cartItems={cart}
                     onConfirm={handleConfirm}
                     onCancel={() => setShowModal(false)}
                 />

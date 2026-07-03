@@ -15,6 +15,7 @@ import Pricing from "./pages/Pricing";
 import AcceptableUse from "./pages/legal/AcceptableUse";
 import ReportProblem from "./pages/legal/ReportProblem";
 import HostingTemplate from "./pages/hebergement/HostingTemplate";
+import FAQ from "./pages/FAQ";
 import { hostingData } from "./data/hostingData";
 import { ToastProvider } from "./context/ToastContext";
 
@@ -33,6 +34,8 @@ import SSLCertificates from "./pages/securite/SSLCertificates";
 
 // Entreprise Pages
 import Contact from "./pages/entreprise/Contact";
+import AboutUs from "./pages/entreprise/AboutUs";
+import PublicProfile from "./pages/PublicProfile";
 
 
 import Chatbot from "./components/chat/Chatbot";
@@ -88,7 +91,9 @@ function App() {
           {/* ... existing routes ... */}
           <Route path="/" element={<Home />} />
           <Route path="/signUp" element={<Auth />} />
+          <Route path="/signup" element={<Auth />} />
           <Route path="/signIn" element={<Auth />} />
+          <Route path="/signin" element={<Auth />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/pricing" element={<Pricing />} />
 
@@ -96,6 +101,7 @@ function App() {
           <Route path="/legal/confidentialite" element={<Privacy />} />
           <Route path="/legal/utilisation-acceptable" element={<AcceptableUse />} />
           <Route path="/legal/signaler-probleme" element={<ReportProblem />} />
+          <Route path="/faq" element={<FAQ />} />
 
           {/* Hosting pages */}
           <Route path="/hebergement/mutualise" element={<HostingTemplate data={hostingData.mutualise} />} />
@@ -118,6 +124,9 @@ function App() {
 
           {/* Entreprise pages */}
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/profile/public/:userId" element={<PublicProfile />} />
+          <Route path="/user/:username" element={<PublicProfile />} />
 
           {/* Client Routes — nested under ClientLayout */}
           <Route path="/client" element={<ProtectedRoute><ClientLayout /></ProtectedRoute>}>

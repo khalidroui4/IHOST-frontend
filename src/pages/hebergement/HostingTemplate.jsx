@@ -129,52 +129,6 @@ const HostingTemplate = ({ data }) => {
         </section>
 
         <section
-          className="section-premium bg-light"
-          style={{ padding: "8rem 2rem", textAlign: "center" }}
-        >
-          <div className="container-luxe">
-            <div
-              className="section-header"
-              style={{ marginBottom: "5rem", textAlign: "center" }}
-            >
-              <h2
-                style={{
-                  fontSize: "3rem",
-                  fontWeight: 800,
-                  color: "#0B1F3A",
-                  marginBottom: "1rem",
-                  letterSpacing: "-1px",
-                }}
-              >
-                Une architecture pensée pour la performance
-              </h2>
-              <p
-                style={{
-                  fontSize: "1.25rem",
-                  color: "#4B5563",
-                  maxWidth: "700px",
-                  margin: "0 auto",
-                  lineHeight: "1.6",
-                }}
-              >
-                Des infrastructures de pointe pour propulser vos projets web
-                vers de nouveaux sommets.
-              </p>
-            </div>
-            <div className="features-grid">
-              {data.benefits.map((benefit, index) => (
-                <LuxeCard
-                  key={index}
-                  icon={benefit.icon}
-                  title={benefit.title}
-                  desc={benefit.desc}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
           className="section-premium bg-white"
           style={{ padding: "8rem 2rem", textAlign: "center" }}
         >
@@ -337,6 +291,52 @@ const HostingTemplate = ({ data }) => {
           </div>
         </section>
 
+        <section
+          className="section-premium bg-light"
+          style={{ padding: "8rem 2rem", textAlign: "center" }}
+        >
+          <div className="container-luxe">
+            <div
+              className="section-header"
+              style={{ marginBottom: "5rem", textAlign: "center" }}
+            >
+              <h2
+                style={{
+                  fontSize: "3rem",
+                  fontWeight: 800,
+                  color: "#0B1F3A",
+                  marginBottom: "1rem",
+                  letterSpacing: "-1px",
+                }}
+              >
+                Une architecture pensée pour la performance
+              </h2>
+              <p
+                style={{
+                  fontSize: "1.25rem",
+                  color: "#4B5563",
+                  maxWidth: "700px",
+                  margin: "0 auto",
+                  lineHeight: "1.6",
+                }}
+              >
+                Des infrastructures de pointe pour propulser vos projets web
+                vers de nouveaux sommets.
+              </p>
+            </div>
+            <div className="features-grid">
+              {data.benefits.map((benefit, index) => (
+                <LuxeCard
+                  key={index}
+                  icon={benefit.icon}
+                  title={benefit.title}
+                  desc={benefit.desc}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="cta-split" style={{ padding: "6rem 0" }}>
           <div className="container-luxe">
             <div
@@ -392,80 +392,6 @@ const HostingTemplate = ({ data }) => {
           </div>
         </section>
 
-        <section
-          className="section-premium bg-light"
-          style={{ padding: "8rem 2rem", textAlign: "center" }}
-        >
-          <div className="container-luxe">
-            <div
-              className="section-header"
-              style={{ marginBottom: "5rem", textAlign: "center" }}
-            >
-              <h2
-                style={{
-                  fontSize: "3rem",
-                  fontWeight: 800,
-                  color: "#0B1F3A",
-                  marginBottom: "1rem",
-                  letterSpacing: "-1px",
-                }}
-              >
-                Questions Fréquentes
-              </h2>
-              <p
-                style={{
-                  fontSize: "1.25rem",
-                  color: "#4B5563",
-                  maxWidth: "700px",
-                  margin: "0 auto",
-                  lineHeight: "1.6",
-                }}
-              >
-                Tout ce que vous devez savoir sur nos solutions d'hébergement.
-              </p>
-            </div>
-            <div
-              className="faq-list"
-              style={{ maxWidth: "900px", margin: "0 auto", textAlign: "left" }}
-            >
-              {data.faq.map((q, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor: "white",
-                    padding: "2.5rem",
-                    borderRadius: "20px",
-                    marginBottom: "1.5rem",
-                    boxShadow:
-                      "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)",
-                    borderLeft: "6px solid #2563EB",
-                  }}
-                >
-                  <h4
-                    style={{
-                      color: "#1E6BFF",
-                      fontSize: "1.3rem",
-                      marginBottom: "1rem",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {q.question}
-                  </h4>
-                  <p
-                    style={{
-                      color: "#4B5563",
-                      lineHeight: "1.8",
-                      margin: 0,
-                      fontSize: "1.1rem",
-                    }}
-                  >
-                    {q.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
       </div>
     </PageTransition>
   );

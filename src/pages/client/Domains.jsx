@@ -7,10 +7,11 @@ import {
 import { Clock, ShieldAlert, RefreshCw, Globe, ChevronDown, ChevronUp, Lock, Unlock,
          Eye, EyeOff, ArrowRightLeft, PlusCircle, Pencil, Trash2, Check, X,
          ShoppingCart, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
-import { addToCart } from '../../store/slices/cartSlice';
+import { addToCart, fetchCart } from '../../store/slices/cartSlice';
 import ConfirmCartModal from '../../components/ConfirmCartModal';
+import { fetchSubscriptions } from '../../store/slices/subscriptionSlice';
 
 // ─── Tiny Toggle Switch ───────────────────────────────────────────────────────
 const Toggle = ({ value, onToggle, disabled }) => (
@@ -50,6 +51,16 @@ const PanelSection = ({ title, icon: Icon, children }) => (
 );
 
 // ─── DNS Record Row ───────────────────────────────────────────────────────────
+const TYPE_COLORS = {
+    A:     { bg: '#eff6ff', color: '#1d4ed8' },
+    AAAA:  { bg: '#f0f9ff', color: '#0369a1' },
+    CNAME: { bg: '#f0fdf4', color: '#15803d' },
+    MX:    { bg: '#fdf4ff', color: '#9333ea' },
+    TXT:   { bg: '#fff7ed', color: '#c2410c' },
+    NS:    { bg: '#fefce8', color: '#a16207' },
+    SRV:   { bg: '#fdf2f8', color: '#be185d' },
+};
+
 const DnsRow = ({ record, domainId, dispatch, addToast }) => {
     const [editing, setEditing] = useState(false);
     const [form, setForm]       = useState({ name: record.name, value: record.value, priority: record.priority || '', ttl: record.ttl || 3600 });
@@ -75,55 +86,70 @@ const DnsRow = ({ record, domainId, dispatch, addToast }) => {
         finally { setBusy(false); }
     };
 
-    const tdStyle = { padding: '0.6rem 0.75rem', fontSize: '0.82rem', color: '#334155', verticalAlign: 'middle' };
-    const inputStyle = { width: '100%', padding: '0.35rem 0.5rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.8rem', color: '#0B1F3A', outline: 'none' };
+    const typeColor = TYPE_COLORS[record.type] || { bg: '#f1f5f9', color: '#475569' };
+    const tdStyle = { padding: '0.65rem 0.9rem', fontSize: '0.82rem', color: '#334155', verticalAlign: 'middle' };
+    const inputStyle = { width: '100%', padding: '0.35rem 0.6rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.8rem', color: '#0B1F3A', outline: 'none', background: 'white' };
 
     return (
-        <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+        <tr style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.15s' }}
+            onMouseEnter={e => e.currentTarget.style.background = '#f8fafc'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+            {/* Type badge */}
             <td style={tdStyle}>
-                <span style={{ background: record.type === 'A' ? '#eff6ff' : record.type === 'MX' ? '#fdf4ff' : '#f0fdf4',
-                    color: record.type === 'A' ? '#3b82f6' : record.type === 'MX' ? '#a855f7' : '#22c55e',
-                    padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.75rem' }}>
+                <span style={{ background: typeColor.bg, color: typeColor.color,
+                    padding: '0.2rem 0.55rem', borderRadius: '5px', fontWeight: 800, fontSize: '0.72rem', letterSpacing: '0.5px', fontFamily: 'monospace' }}>
                     {record.type}
                 </span>
             </td>
             {editing ? (
                 <>
-                    <td style={tdStyle}><input style={inputStyle} value={form.name}     onChange={e => setForm(f => ({ ...f, name: e.target.value }))} /></td>
-                    <td style={tdStyle}><input style={inputStyle} value={form.value}    onChange={e => setForm(f => ({ ...f, value: e.target.value }))} /></td>
-                    {record.type === 'MX'
-                        ? <td style={tdStyle}><input style={{ ...inputStyle, width: '60px' }} value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))} /></td>
-                        : <td style={tdStyle}><span style={{ color: '#94a3b8' }}>—</span></td>}
-                    <td style={tdStyle}><input style={{ ...inputStyle, width: '70px' }} value={form.ttl} onChange={e => setForm(f => ({ ...f, ttl: e.target.value }))} /></td>
+                    <td style={tdStyle}><input style={inputStyle} value={form.name}  onChange={e => setForm(f => ({ ...f, name: e.target.value }))} /></td>
+                    <td style={tdStyle}><input style={inputStyle} value={form.value} onChange={e => setForm(f => ({ ...f, value: e.target.value }))} /></td>
+                    <td style={tdStyle}>{record.type === 'MX'
+                        ? <input style={{ ...inputStyle, width: '60px' }} type="number" value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))} />
+                        : <span style={{ color: '#94a3b8' }}>—</span>}
+                    </td>
+                    <td style={tdStyle}>
+                        <select style={{ ...inputStyle, width: '90px', cursor: 'pointer' }} value={form.ttl} onChange={e => setForm(f => ({ ...f, ttl: e.target.value }))}>
+                            <option value={60}>1 min</option>
+                            <option value={300}>5 min</option>
+                            <option value={600}>10 min</option>
+                            <option value={1800}>30 min</option>
+                            <option value={3600}>1 heure</option>
+                            <option value={86400}>24 heures</option>
+                        </select>
+                    </td>
                 </>
             ) : (
                 <>
-                    <td style={tdStyle}>{record.name}</td>
-                    <td style={{ ...tdStyle, maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{record.value}</td>
-                    <td style={tdStyle}>{record.priority ?? '—'}</td>
-                    <td style={tdStyle}>{record.ttl}</td>
+                    <td style={{ ...tdStyle, fontFamily: 'monospace', color: '#0B1F3A', fontWeight: 600 }}>{record.name}</td>
+                    <td style={{ ...tdStyle, maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: 'monospace', color: '#475569' }}>
+                        {record.value}
+                    </td>
+                    <td style={tdStyle}>{record.priority != null ? <span style={{ background: '#fdf4ff', color: '#9333ea', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.75rem', fontWeight: 700 }}>{record.priority}</span> : <span style={{ color: '#cbd5e1' }}>—</span>}</td>
+                    <td style={{ ...tdStyle, color: '#64748b' }}>{record.ttl >= 3600 ? `${record.ttl/3600}h` : `${record.ttl}s`}</td>
                 </>
             )}
             <td style={{ ...tdStyle, textAlign: 'right', whiteSpace: 'nowrap' }}>
                 {editing ? (
                     <>
-                        <button onClick={save}  disabled={busy} title="Sauvegarder"
-                            style={{ background: '#10b981', color: 'white', border: 'none', borderRadius: '6px', padding: '0.3rem 0.5rem', cursor: 'pointer', marginRight: '4px' }}>
+                        <button onClick={save} disabled={busy} title="Sauvegarder"
+                            style={{ background: '#10b981', color: 'white', border: 'none', borderRadius: '6px', padding: '0.35rem 0.6rem', cursor: 'pointer', marginRight: '4px' }}>
                             <Check size={13} />
                         </button>
                         <button onClick={() => setEditing(false)} title="Annuler"
-                            style={{ background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '6px', padding: '0.3rem 0.5rem', cursor: 'pointer' }}>
+                            style={{ background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '6px', padding: '0.35rem 0.6rem', cursor: 'pointer' }}>
                             <X size={13} />
                         </button>
                     </>
                 ) : (
                     <>
                         <button onClick={() => setEditing(true)} title="Modifier"
-                            style={{ background: '#f1f5f9', color: '#475569', border: 'none', borderRadius: '6px', padding: '0.3rem 0.5rem', cursor: 'pointer', marginRight: '4px' }}>
+                            style={{ background: '#f1f5f9', color: '#475569', border: 'none', borderRadius: '6px', padding: '0.35rem 0.6rem', cursor: 'pointer', marginRight: '4px' }}>
                             <Pencil size={13} />
                         </button>
                         <button onClick={del} disabled={busy} title="Supprimer"
-                            style={{ background: '#fef2f2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '0.3rem 0.5rem', cursor: 'pointer' }}>
+                            style={{ background: '#fef2f2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '0.35rem 0.6rem', cursor: 'pointer' }}>
                             <Trash2 size={13} />
                         </button>
                     </>
@@ -138,6 +164,13 @@ const AddDnsForm = ({ domainId, dispatch, addToast, onClose }) => {
     const [form, setForm] = useState({ type: 'A', name: '', value: '', priority: '', ttl: 3600 });
     const [busy, setBusy] = useState(false);
 
+    const PLACEHOLDER = {
+        A:     { name: '@ ou sous-domaine', value: '192.168.1.1', hint: 'Pointe vers une adresse IPv4' },
+        CNAME: { name: 'www', value: 'exemple.com', hint: 'Alias vers un autre nom de domaine' },
+        MX:    { name: '@', value: 'mail.exemple.com', hint: 'Serveur de messagerie entrant' },
+    };
+    const ph = PLACEHOLDER[form.type] || { name: 'sous-domaine', value: 'valeur', hint: '' };
+
     const submit = async (e) => {
         e.preventDefault();
         if (!form.name || !form.value) { addToast('Nom et valeur sont requis.', 'error'); return; }
@@ -150,53 +183,89 @@ const AddDnsForm = ({ domainId, dispatch, addToast, onClose }) => {
         finally { setBusy(false); }
     };
 
-    const inputS = { padding: '0.5rem 0.75rem', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '0.85rem', color: '#0B1F3A', outline: 'none', width: '100%' };
-    const selectS = { ...inputS, background: 'white' };
+    const inputS = { padding: '0.5rem 0.75rem', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '0.85rem', color: '#0B1F3A', outline: 'none', width: '100%', background: 'white' };
 
     return (
-        <form onSubmit={submit} style={{ display: 'grid', gridTemplateColumns: '100px 1fr 1fr auto auto', gap: '0.5rem', alignItems: 'end', marginTop: '0.75rem', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px', border: '1px dashed #cbd5e1' }}>
-            <div>
-                <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '4px' }}>TYPE</label>
-                <select style={selectS} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}>
-                    <option>A</option>
-                    <option>CNAME</option>
-                    <option>MX</option>
-                </select>
-            </div>
-            <div>
-                <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '4px' }}>NOM</label>
-                <input style={inputS} placeholder="@ ou sous-domaine" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
-            </div>
-            <div>
-                <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '4px' }}>VALEUR</label>
-                <input style={inputS} placeholder={form.type === 'A' ? '192.168.1.1' : form.type === 'MX' ? 'mail.example.com' : 'target.example.com'} value={form.value} onChange={e => setForm(f => ({ ...f, value: e.target.value }))} />
-            </div>
-            {form.type === 'MX' ? (
-                <div>
-                    <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '4px' }}>PRIORITÉ</label>
-                    <input style={{ ...inputS, width: '70px' }} type="number" placeholder="10" value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))} />
-                </div>
-            ) : <div />}
-            <div style={{ display: 'flex', gap: '0.4rem', paddingTop: '1.2rem' }}>
-                <button type="submit" disabled={busy}
-                    style={{ padding: '0.5rem 1rem', background: '#0B1F3A', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                    {busy ? '...' : 'Ajouter'}
-                </button>
-                <button type="button" onClick={onClose}
-                    style={{ padding: '0.5rem 0.6rem', background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+        <div style={{ marginTop: '1rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden' }}>
+            {/* Form Header */}
+            <div style={{ padding: '0.85rem 1.1rem', background: '#0B1F3A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 700, color: 'white', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <PlusCircle size={14} /> Nouvel enregistrement DNS
+                </span>
+                <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '6px', color: 'white', cursor: 'pointer', padding: '0.25rem 0.5rem' }}>
                     <X size={14} />
                 </button>
             </div>
-        </form>
+            <form onSubmit={submit} style={{ padding: '1rem 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                {/* Type + TTL row */}
+                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '0.75rem' }}>
+                    <div>
+                        <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Type</label>
+                        <select style={{ ...inputS, cursor: 'pointer' }} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}>
+                            <option>A</option>
+                            <option>CNAME</option>
+                            <option>MX</option>
+                        </select>
+                        {ph.hint && <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '4px' }}>{ph.hint}</div>}
+                    </div>
+                    <div>
+                        <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>TTL</label>
+                        <select style={{ ...inputS, cursor: 'pointer' }} value={form.ttl} onChange={e => setForm(f => ({ ...f, ttl: e.target.value }))}>
+                            <option value={60}>1 minute (automatique)</option>
+                            <option value={300}>5 minutes</option>
+                            <option value={600}>10 minutes</option>
+                            <option value={1800}>30 minutes</option>
+                            <option value={3600}>1 heure</option>
+                            <option value={86400}>24 heures</option>
+                        </select>
+                    </div>
+                </div>
+                {/* Name + Value row */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                    <div>
+                        <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Nom</label>
+                        <input style={inputS} placeholder={ph.name} value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+                    </div>
+                    <div>
+                        <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Valeur / Cible</label>
+                        <input style={inputS} placeholder={ph.value} value={form.value} onChange={e => setForm(f => ({ ...f, value: e.target.value }))} />
+                    </div>
+                </div>
+                {/* Priority if MX */}
+                {form.type === 'MX' && (
+                    <div style={{ maxWidth: '130px' }}>
+                        <label style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Priorité</label>
+                        <input style={inputS} type="number" placeholder="10" min="0" max="65535" value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))} />
+                    </div>
+                )}
+                {/* Actions */}
+                <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.25rem' }}>
+                    <button type="submit" disabled={busy}
+                        style={{ padding: '0.55rem 1.25rem', background: '#0B1F3A', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}>
+                        {busy ? '...' : 'Enregistrer'}
+                    </button>
+                    <button type="button" onClick={onClose}
+                        style={{ padding: '0.55rem 0.9rem', background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 
 // ─── Full Management Panel (tabs) ─────────────────────────────────────────────
-const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
+const ManagePanel = ({ dom, dispatch, addToast, onShowAddons, navigate, subscriptions }) => {
+    const activeAddonsForDomain = (subscriptions || []).filter(sub => {
+        const isSameDomain = sub.domainName === dom.domainName;
+        const isNotExpired = sub.endDate && new Date(sub.endDate) > new Date();
+        const isAddon = sub.typeService === 'addon' || ['Certificat SSL', 'Protection WHOIS', 'Email Pro'].includes(sub.nameService);
+        return isSameDomain && isNotExpired && isAddon;
+    });
+    // Also pick up addons that are in the cart (pending payment) for this domain
+    const { items: cartItems } = useSelector(state => state.cart);
     const [tab,        setTab]        = useState('actions');
     const [busy,       setBusy]       = useState({});
-    const [eppCode,    setEppCode]    = useState('');
-    const [showEpp,    setShowEpp]    = useState(false);
     const [showAddDns, setShowAddDns] = useState(false);
     const dnsState = useSelector(state => state.domains.dnsRecords[dom.idDomaine]);
 
@@ -211,8 +280,14 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
     const doRenew = async () => {
         actBusy('renew', true);
         try {
-            await dispatch(renewDomain(dom.idDomaine)).unwrap();
-            addToast('Domaine renouvelé pour 1 an !', 'success');
+            const res = await dispatch(renewDomain(dom.idDomaine)).unwrap();
+            if (res.addedToCart) {
+                dispatch(fetchCart());
+                addToast('Le renouvellement de votre domaine a été ajouté au panier !', 'success');
+                navigate('/client/cart');
+            } else {
+                addToast('Domaine renouvelé pour 1 an !', 'success');
+            }
         } catch (e) { addToast(e.message || 'Erreur', 'error'); }
         finally { actBusy('renew', false); }
     };
@@ -244,16 +319,7 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
         finally { actBusy('priv', false); }
     };
 
-    const doTransfer = async () => {
-        if (!eppCode.trim()) { addToast('Entrez votre code EPP.', 'error'); return; }
-        actBusy('transfer', true);
-        try {
-            await dispatch(transferDomain({ idDomaine: dom.idDomaine, eppCode })).unwrap();
-            addToast('Demande de transfert soumise.', 'success');
-            setEppCode(''); setShowEpp(false);
-        } catch (e) { addToast(e.message || 'Erreur', 'error'); }
-        finally { actBusy('transfer', false); }
-    };
+
 
     const tabs = [
         { id: 'actions',  label: 'Actions',   icon: RefreshCw },
@@ -291,8 +357,28 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
                         <div>
                             <div style={labelStyle}>Renouveler le domaine</div>
                             <div style={subStyle}>Prolonger d'1 an à partir de la date d'expiration actuelle</div>
+                            {!!dom.auto_renew ? (
+                                <div style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: '0.35rem', fontWeight: 600 }}>
+                                    L'auto-renouvellement est activé. Ce domaine se renouvellera automatiquement à expiration.
+                                </div>
+                            ) : (
+                                dom.statusDomaine === 'active' && (
+                                    <div style={{ color: '#ea580c', fontSize: '0.78rem', marginTop: '0.35rem', fontWeight: 600 }}>
+                                        Ce domaine est actif. Le renouvellement manuel est disponible uniquement après expiration.
+                                    </div>
+                                )
+                            )}
                         </div>
-                        <button onClick={doRenew} disabled={busy.renew} style={primaryBtn}>
+                        <button 
+                            onClick={doRenew} 
+                            disabled={busy.renew || !!dom.auto_renew || dom.statusDomaine === 'active'} 
+                            style={(!!dom.auto_renew || dom.statusDomaine === 'active') ? { ...primaryBtn, opacity: 0.5, cursor: 'not-allowed' } : primaryBtn}
+                            title={
+                                !!dom.auto_renew 
+                                    ? "Désactivez l'auto-renouvellement pour renouveler manuellement" 
+                                    : (dom.statusDomaine === 'active' ? "Le domaine est encore actif" : "")
+                            }
+                        >
                             <RefreshCw size={14} /> {busy.renew ? '...' : 'Renouveler'}
                         </button>
                     </div>
@@ -306,32 +392,56 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
                         <Toggle value={!!dom.auto_renew} onToggle={doAutoRenew} disabled={!!busy.ar} />
                     </div>
 
-                    {/* Transfer */}
-                    <div style={{ ...rowStyle, flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <div>
-                                <div style={labelStyle}>Transférer le domaine</div>
-                                <div style={subStyle}>Transférer vers un autre bureau d'enregistrement (requiert code EPP)</div>
+                    {/* Extensions block — active subscriptions + pending cart items */}
+                    {(() => {
+                        const ADDON_NAMES = ['Certificat SSL', 'Protection WHOIS', 'Email Pro'];
+                        const cartAddonsForDomain = (cartItems || []).filter(item =>
+                            item.domainName === dom.domainName &&
+                            ADDON_NAMES.includes(item.nameService)
+                        );
+                        const hasAny = activeAddonsForDomain.length > 0 || cartAddonsForDomain.length > 0;
+                        if (!hasAny) return null;
+                        return (
+                            <div style={{ ...rowStyle, flexDirection: 'column', alignItems: 'flex-start', gap: '0.75rem', marginTop: '0.5rem' }}>
+                                <div style={{ fontWeight: 700, color: '#0B1F3A', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                    Extensions :
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', width: '100%' }}>
+                                    {/* Active subscriptions */}
+                                    {activeAddonsForDomain.map((addon, aIdx) => (
+                                        <div key={`active-${addon.idSub || aIdx}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', fontSize: '0.82rem', color: '#334155', padding: '0.5rem 0.75rem', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                                            <span style={{ fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                                                <Check size={14} color="#10b981" /> {addon.nameService}
+                                            </span>
+                                            <span style={{ color: '#10b981', fontWeight: 600, fontSize: '0.75rem', background: '#dcfce7', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>
+                                                Actif · jusqu'au {new Date(addon.endDate).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    ))}
+                                    {/* Cart-pending addons */}
+                                    {cartAddonsForDomain.map((item, iIdx) => {
+                                        // Skip if this same addon is already shown as an active subscription
+                                        const alreadyShown = activeAddonsForDomain.some(a => a.nameService === item.nameService);
+                                        if (alreadyShown) return null;
+                                        return (
+                                            <div key={`cart-${item.idCart || iIdx}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', fontSize: '0.82rem', color: '#334155', padding: '0.5rem 0.75rem', background: '#eff6ff', borderRadius: '8px', border: '1px solid #bfdbfe' }}>
+                                                <span style={{ fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                                                    <ShoppingCart size={14} color="#3b82f6" /> {item.nameService}
+                                                </span>
+                                                <span style={{ color: '#3b82f6', fontWeight: 600, fontSize: '0.75rem', background: '#dbeafe', padding: '0.2rem 0.6rem', borderRadius: '20px' }}>
+                                                    En attente de paiement
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                            <button onClick={() => setShowEpp(e => !e)} style={ghostBtn}>
-                                <ArrowRightLeft size={14} /> Transférer
-                            </button>
-                        </div>
-                        {showEpp && (
-                            <div style={{ width: '100%', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                                <input style={{ ...inputStyle, flex: 1 }} type="text" placeholder="Code EPP / Auth Code"
-                                    value={eppCode} onChange={e => setEppCode(e.target.value)} />
-                                <button onClick={doTransfer} disabled={busy.transfer} style={primaryBtn}>
-                                    {busy.transfer ? '...' : 'Confirmer'}
-                                </button>
-                            </div>
-                        )}
-                        {dom.is_locked && (
-                            <div style={{ fontSize: '0.8rem', color: '#ef4444', background: '#fef2f2', padding: '0.4rem 0.75rem', borderRadius: '6px', width: '100%' }}>
-                                ⚠ Le domaine est verrouillé. Désactivez le verrou dans l'onglet Sécurité avant de transférer.
-                            </div>
-                        )}
-                    </div>
+                        );
+                    })()}
+
+
+
+
 
                     {/* Buy addons */}
                     <div style={rowStyle}>
@@ -352,7 +462,12 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
             {/* ── DNS TAB ── */}
             {tab === 'dns' && (
                 <div>
-                    {/* DNS Records */}
+                    {/* Propagation info banner */}
+                    <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '10px', padding: '0.75rem 1rem', marginBottom: '1rem', fontSize: '0.8rem', color: '#92400e', display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                        <span style={{ fontSize: '1rem', flexShrink: 0 }}>ℹ️</span>
+                        <span>Les modifications DNS peuvent prendre jusqu'à <strong>48 heures</strong> pour se propager sur internet (généralement 1–4h). TTL = durée de mise en cache par les résolveurs DNS.</span>
+                    </div>
+
                     <PanelSection title="Enregistrements DNS" icon={Globe}>
                         {dnsState?.isLoading ? (
                             <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Chargement des enregistrements...</p>
@@ -361,10 +476,10 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
                                 {dnsState?.records?.length > 0 ? (
                                     <div style={{ background: 'white', borderRadius: '10px', border: '1px solid #e2e8f0', overflow: 'hidden', marginBottom: '0.75rem' }}>
                                         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
-                                            <thead style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                            <thead style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
                                                 <tr>
-                                                    {['Type','Nom','Valeur','Priorité','TTL',''].map((h,i) => (
-                                                        <th key={i} style={{ padding: '0.6rem 0.75rem', color: '#64748b', fontWeight: 600, textAlign: i === 5 ? 'right' : 'left', fontSize: '0.78rem' }}>{h}</th>
+                                                    {['Type', 'Nom', 'Valeur / Cible', 'Priorité', 'TTL', ''].map((h, i) => (
+                                                        <th key={i} style={{ padding: '0.7rem 0.9rem', color: '#64748b', fontWeight: 700, textAlign: i === 5 ? 'right' : 'left', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</th>
                                                     ))}
                                                 </tr>
                                             </thead>
@@ -376,13 +491,16 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
                                         </table>
                                     </div>
                                 ) : (
-                                    <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '0.75rem' }}>Aucun enregistrement DNS. Ajoutez-en un ci-dessous.</p>
+                                    <div style={{ textAlign: 'center', padding: '2rem 1rem', color: '#94a3b8', fontSize: '0.85rem' }}>
+                                        <Globe size={32} color="#cbd5e1" style={{ display: 'block', margin: '0 auto 0.75rem auto' }} />
+                                        Aucun enregistrement DNS configuré pour ce domaine.
+                                    </div>
                                 )}
 
                                 {showAddDns ? (
                                     <AddDnsForm domainId={dom.idDomaine} dispatch={dispatch} addToast={addToast} onClose={() => setShowAddDns(false)} />
                                 ) : (
-                                    <button onClick={() => setShowAddDns(true)} style={ghostBtn}>
+                                    <button onClick={() => setShowAddDns(true)} style={{ ...ghostBtn, marginTop: '0.5rem' }}>
                                         <PlusCircle size={14} /> Ajouter un enregistrement
                                     </button>
                                 )}
@@ -437,18 +555,14 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons }) => {
                         </span>
                     </div>
 
-                    {/* Status summary */}
-                    <div style={{ marginTop: '1rem', padding: '0.85rem 1.1rem', background: '#eff6ff', borderRadius: '10px', border: '1px solid #bfdbfe', fontSize: '0.82rem', color: '#1d4ed8' }}>
-                        <strong>Résumé sécurité :</strong>&nbsp;
-                        {dom.is_locked ? '🔒 Verrouillé' : '🔓 Non verrouillé'} · {dom.whois_privacy ? '👁 WHOIS masqué' : '👁 WHOIS visible'} · 🛡 Protection active
-                    </div>
+
                 </div>
             )}
         </div>
     );
 };
 
-const AddonsModal = ({ domain, onClose, dispatch, addToast }) => {
+const AddonsModal = ({ domain, onClose, dispatch, addToast, subscriptions }) => {
     const addons = [
         { id: 'ssl',   name: 'Certificat SSL',    price: '20', period: 'mois', duration: 1, features: ['Chiffrement HTTPS', 'Confiance visiteurs', 'Compatible tous navigateurs'], icon: ShieldAlert },
         { id: 'whois', name: 'Protection WHOIS',  price: '10', period: 'mois', duration: 1, features: ['Masquer vos donn\u00e9es personnelles', '\u00c9viter le spam', 'Protection identit\u00e9'], icon: Shield },
@@ -456,6 +570,8 @@ const AddonsModal = ({ domain, onClose, dispatch, addToast }) => {
     ];
     const [pendingAddon, setPendingAddon] = useState(null);
     const [busy, setBusy] = useState(false);
+    // Also read current cart items to block adding duplicates before checkout
+    const { items: cartItems } = useSelector(state => state.cart);
 
     const buyAddon = async (addon) => {
         setBusy(true);
@@ -477,22 +593,46 @@ const AddonsModal = ({ domain, onClose, dispatch, addToast }) => {
                         <button onClick={onClose} style={{ background: '#334155', color: '#e9edef', border: 'none', cursor: 'pointer', display: 'flex', padding: 6, borderRadius: 8 }}><X size={16} /></button>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
-                        {addons.map(a => (
-                            <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', border: '1.5px solid #334155', background: '#0F172A', borderRadius: 10 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ width: 40, height: 40, borderRadius: '10px', background: '#1E293B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <a.icon color="#1E6BFF" size={20} />
+                        {addons.map(a => {
+                            const addonIsActive = (subscriptions || []).some(sub => 
+                                sub.domainName === domain.domainName && 
+                                sub.nameService === a.name && 
+                                sub.endDate && 
+                                new Date(sub.endDate) > new Date()
+                            );
+                            // Also block if already in cart (not yet checked out)
+                            const addonInCart = (cartItems || []).some(item =>
+                                item.domainName === domain.domainName &&
+                                item.nameService === a.name
+                            );
+
+                            return (
+                                <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', border: '1.5px solid #334155', background: '#0F172A', borderRadius: 10 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                        <div style={{ width: 40, height: 40, borderRadius: '10px', background: '#1E293B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <a.icon color="#1E6BFF" size={20} />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, color: '#e9edef', fontSize: '0.95rem' }}>{a.name}</div>
+                                            <div style={{ fontSize: '0.75rem', color: '#8696a0', marginTop: '4px' }}>{a.price} Dhs/Mois</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, color: '#e9edef', fontSize: '0.95rem' }}>{a.name}</div>
-                                        <div style={{ fontSize: '0.75rem', color: '#8696a0', marginTop: '4px' }}>{a.price} Dhs/Mois</div>
-                                    </div>
+                                    {addonIsActive ? (
+                                        <button disabled={true} style={{ background: '#334155', color: '#8696a0', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 8, fontWeight: 700, cursor: 'not-allowed', fontSize: '0.85rem' }}>
+                                            Déjà activé
+                                        </button>
+                                    ) : addonInCart ? (
+                                        <button disabled={true} style={{ background: '#1e3a5f', color: '#93c5fd', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 8, fontWeight: 700, cursor: 'not-allowed', fontSize: '0.85rem' }}>
+                                            Dans le panier
+                                        </button>
+                                    ) : (
+                                        <button disabled={busy} onClick={() => setPendingAddon(a)} style={{ background: '#1E6BFF', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 8, fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', fontSize: '0.85rem' }}>
+                                            Ajouter
+                                        </button>
+                                    )}
                                 </div>
-                                <button disabled={busy} onClick={() => setPendingAddon(a)} style={{ background: '#1E6BFF', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 8, fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', fontSize: '0.85rem' }}>
-                                    Ajouter
-                                </button>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -510,14 +650,19 @@ const AddonsModal = ({ domain, onClose, dispatch, addToast }) => {
 
 const ClientDomains = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { items: domains, isLoading } = useSelector(state => state.domains);
+    const { items: subscriptions } = useSelector(state => state.subscriptions || { items: [] });
     const { user } = useSelector(state => state.auth);
     const { addToast } = useToast();
     const [openPanel, setOpenPanel] = useState(null);
     const [addonDomain, setAddonDomain] = useState(null); 
 
     useEffect(() => {
-        if (user?.id) dispatch(fetchDomains(user.id));
+        if (user?.id) {
+            dispatch(fetchDomains(user.id));
+            dispatch(fetchSubscriptions(user.id));
+        }
     }, [dispatch, user]);
 
     const togglePanel = (id) => setOpenPanel(p => p === id ? null : id);
@@ -612,7 +757,7 @@ const ClientDomains = () => {
                                         {isOpen && (
                                             <tr>
                                                 <td colSpan={5} style={{ padding: 0, borderBottom: '1px solid #e2e8f0' }}>
-                                                    <ManagePanel dom={dom} dispatch={dispatch} addToast={addToast} onShowAddons={setAddonDomain} />
+                                                    <ManagePanel dom={dom} dispatch={dispatch} addToast={addToast} onShowAddons={setAddonDomain} navigate={navigate} subscriptions={subscriptions} />
                                                 </td>
                                             </tr>
                                         )}
@@ -624,7 +769,7 @@ const ClientDomains = () => {
                 </div>
             )}
             {addonDomain && (
-                <AddonsModal domain={addonDomain} onClose={() => setAddonDomain(null)} dispatch={dispatch} addToast={addToast} />
+                <AddonsModal domain={addonDomain} onClose={() => setAddonDomain(null)} dispatch={dispatch} addToast={addToast} subscriptions={subscriptions} />
             )}
         </div>
     );

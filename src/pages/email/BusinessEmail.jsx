@@ -18,51 +18,44 @@ const BusinessEmail = () => {
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Collaboration Sans Limites</h1>
                                 <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Propulsez votre équipe vers l'excellence avec une plateforme d'emailing qui favorise le partage, la cohésion et la productivité au quotidien.</p>
                                 <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
-                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>Passer au niveau Business <ArrowRight size={20} /></Link>
+                                    <Link to="/contact" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem', textDecoration: 'none' }}>Passer au niveau Business <ArrowRight size={20} /></Link>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-                    <div className="container-luxe">
+                {/* Fait pour les grands projets Section */}
+                <section className="section-premium" style={{ 
+                    padding: '8rem 2rem', 
+                    textAlign: 'center', 
+                    background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
+                    position: 'relative'
+                }}>
+                    <div className="pattern-grid-tech" style={{ opacity: 0.08 }} />
+                    <div className="container-luxe" style={{ position: 'relative', zIndex: 1 }}>
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>L'Espace de Travail de Demain</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Des outils de collaboration sophistiqués pour transformer votre communication d'entreprise en un moteur de croissance.</p>
-                        </div>
-                        <div className="features-grid">
-                            <LuxeCard icon={Calendar} title="Calendriers Partagés" desc="Visualisez les disponibilités de toute votre équipe en un coup d'œil. Planifiez des réunions sans allers-retours interminables." />
-                            <LuxeCard icon={Users} title="Répertoires Unifiés" desc="Un carnet d'adresses centralisé contenant tous vos collaborateurs et partenaires stratégiques, accessible d'un clic." />
-                            <LuxeCard icon={Network} title="Listes de Diffusion" desc="Créez des groupes illimités (support@, ventes@). Une gestion simplifiée pour une communication client fluide." />
-                            <LuxeCard icon={Shield} title="Gouvernance de Données" desc="Audit complet des accès, archivage légal et contrôles de sécurité granulaires pour protéger votre patrimoine informationnel." />
-                        </div>
-                    </div>
-                </section>
-
-                <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-                    <div className="container-luxe">
-                        <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Fait pour les grands projets</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une infrastructure évolutive qui s'adapte à la structure complexe de votre organisation.</p>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-1px' }}>Fait pour les grands projets</h2>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Une infrastructure évolutive qui s'adapte à la structure complexe de votre organisation.</p>
                         </div>
                         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                             <div style={{
                                 display: 'flex',
                                 gap: '3rem',
                                 alignItems: 'center',
-                                background: 'white',
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                backdropFilter: 'blur(12px)',
                                 padding: '4rem',
                                 borderRadius: '32px',
-                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                border: '1px solid rgba(11, 31, 58, 0.1)',
+                                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
+                                border: '1px solid rgba(255, 255, 255, 0.15)',
                                 transition: 'all 0.4s ease'
                             }} className="hover-lift reseller-feature-card">
                                 <div style={{
                                     width: '100px',
                                     height: '100px',
-                                    background: 'rgba(59, 130, 246, 0.1)',
-                                    color: '#3b82f6',
+                                    background: 'rgba(255, 255, 255, 0.15)',
+                                    color: '#ffffff',
                                     borderRadius: '24px',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -72,8 +65,8 @@ const BusinessEmail = () => {
                                     <Replace size={45} />
                                 </div>
                                 <div style={{ textAlign: 'left' }} className="reseller-feature-content">
-                                    <h3 style={{ fontSize: '1.8rem', color: '#0B1F3A', marginBottom: '1rem', fontWeight: 800 }}>Gestion d'Administration Centralisée</h3>
-                                    <p style={{ color: '#4B5563', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
+                                    <h3 style={{ fontSize: '1.8rem', color: '#ffffff', marginBottom: '1rem', fontWeight: 800 }}>Gestion d'Administration Centralisée</h3>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
                                         Prenez le contrôle total de votre écosystème numérique. Ajoutez des utilisateurs, gérez les quotas, et configurez les alias depuis une interface unique pensée pour les DSI.
                                     </p>
                                 </div>
@@ -83,18 +76,19 @@ const BusinessEmail = () => {
                                 display: 'flex',
                                 gap: '3rem',
                                 alignItems: 'center',
-                                background: 'white',
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                backdropFilter: 'blur(12px)',
                                 padding: '4rem',
                                 borderRadius: '32px',
-                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)',
-                                border: '1px solid rgba(11, 31, 58, 0.1)',
+                                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
+                                border: '1px solid rgba(255, 255, 255, 0.15)',
                                 transition: 'all 0.4s ease'
                             }} className="hover-lift reseller-feature-card">
                                 <div style={{
                                     width: '100px',
                                     height: '100px',
-                                    background: 'rgba(16, 185, 129, 0.1)',
-                                    color: '#10b981',
+                                    background: 'rgba(255, 255, 255, 0.15)',
+                                    color: '#ffffff',
                                     borderRadius: '24px',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -104,8 +98,8 @@ const BusinessEmail = () => {
                                     <Smartphone size={45} />
                                 </div>
                                 <div style={{ textAlign: 'left' }} className="reseller-feature-content">
-                                    <h3 style={{ fontSize: '1.8rem', color: '#0B1F3A', marginBottom: '1rem', fontWeight: 800 }}>Synchronisation PUSH Native</h3>
-                                    <p style={{ color: '#4B5563', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
+                                    <h3 style={{ fontSize: '1.8rem', color: '#ffffff', marginBottom: '1rem', fontWeight: 800 }}>Synchronisation PUSH Native</h3>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.8', margin: 0, fontSize: '1.15rem' }}>
                                         Ne manquez jamais un message crucial. Profitez d'une synchronisation ultra-rapide des emails, contacts et tâches sur Outlook, Apple Mail, Gmail et toutes les apps mobiles IMAP/ActiveSync.
                                     </p>
                                 </div>
@@ -114,20 +108,29 @@ const BusinessEmail = () => {
                     </div>
                 </section>
 
-                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-                    <div className="container-luxe">
+                {/* Pourquoi IHOST Section */}
+                <section className="section-premium" style={{ 
+                    padding: '8rem 2rem', 
+                    textAlign: 'center', 
+                    background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)', 
+                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                    position: 'relative'
+                }}>
+                    <div className="pattern-grid-tech" style={{ opacity: 0.08 }} />
+                    <div className="container-luxe" style={{ position: 'relative', zIndex: 1 }}>
                         <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi IHOST Business ?</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>L'alternative professionnelle aux solutions complexes.</p>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-1px' }}>Pourquoi IHOST Business ?</h2>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>L'alternative professionnelle aux solutions complexes.</p>
                         </div>
                         <div className="features-grid">
-                            <LuxeCard icon={Share2} title="Zéro Conflit DNS" desc="Migration technique assistée par nos administrateurs système pour garantir une transition fluide." />
-                            <LuxeCard icon={Target} title="Délivrabilité Boostée" desc="Utilisation de clusters IP premium pour s'assurer que vos messages n'atterrissent jamais en SPAM." />
-                            <LuxeCard icon={Shield} title="Archives Illimitées" desc="Gardez une trace de toutes les communications de l'entreprise avec nos options d'archivage automatique." />
+                            <LuxeCard variant="dark" icon={Share2} title="Zéro Conflit DNS" desc="Migration technique assistée par nos administrateurs système pour garantir une transition fluide." />
+                            <LuxeCard variant="dark" icon={Target} title="Délivrabilité Boostée" desc="Utilisation de clusters IP premium pour s'assurer que vos messages n'atterrissent jamais en SPAM." />
+                            <LuxeCard variant="dark" icon={Shield} title="Archives Illimitées" desc="Gardez une trace de toutes les communications de l'entreprise avec nos options d'archivage automatique." />
                         </div>
                     </div>
                 </section>
 
+                {/* Final CTA Section */}
                 <section className="cta-split" style={{ padding: '6rem 0' }}>
                     <div className="container-luxe">
                         <div style={{
@@ -136,7 +139,9 @@ const BusinessEmail = () => {
                             padding: '5rem',
                             color: 'white',
                             textAlign: 'center',
-                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
+                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
+                            position: 'relative',
+                            overflow: 'hidden'
                         }} className="email-cta-box">
                             <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Besoins d'une solution sur-mesure ?</h2>
                             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '750px', margin: '0 auto 3rem' }}>
@@ -144,7 +149,7 @@ const BusinessEmail = () => {
                             </p>
                             <Link to="/contact" className="btn" style={{
                                 background: 'white',
-                                color: '#3b82f6',
+                                color: '#1E6BFF',
                                 padding: '1.2rem 3rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,

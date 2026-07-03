@@ -32,9 +32,9 @@
   gap: 1.5rem;
   margin-bottom: 2.5rem;
   padding: 1.2rem 2rem;
-  border-radius: 16px;
-  border: 1px solid #e5eaf0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(11, 31, 58, 0.02);
 }
 
 .step-item {
@@ -52,23 +52,25 @@
 }
 
 .step-num {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 2px solid #cbd5e1;
+  background: #f8fafc;
+  color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   transition: all 0.3s ease;
 }
 
 .step-item.active .step-num {
-  background: #1E6BFF;
-  border-color: #1E6BFF;
+  background: linear-gradient(135deg, #1E6BFF 0%, #0043C0 100%);
+  border-color: transparent;
   color: white;
-  box-shadow: 0 0 12px rgba(30, 107, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(30, 107, 255, 0.25);
 }
 
 .step-sep {
@@ -78,10 +80,10 @@
 /* Card Premium Base */
 .checkout-card {
   background: white; 
-  border: 1px solid #e5eaf0;
-  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  box-shadow: 0 10px 30px rgba(11, 31, 58, 0.02);
 }
 
 .card-header-premium {
@@ -143,19 +145,26 @@
   width: 100%;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 0.85rem 1.1rem;
-  color: #0B1F3A;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  color: #0b1f3a;
   font-size: 0.95rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.form-group-premium input:focus {
+.form-group-premium input:hover,
+.form-group-premium select:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.form-group-premium input:focus,
+.form-group-premium select:focus {
   outline: none;
-  border-color: #1E6BFF;
+  border-color: #1e6bff;
   background: white;
-  box-shadow: 0 0 0 3px rgba(30, 107, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(30, 107, 255, 0.12);
 }
 
 .form-row {
@@ -187,7 +196,7 @@
 /* Payment Methods */
 .payment-methods-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -709,4 +718,38 @@
   .result-actions {
     flex-direction: column;
   }
+}
+
+/* Premium Button & Card Overrides */
+.btn-primary {
+  font-family: "Space Grotesk", sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  background: linear-gradient(135deg, #1e6bff 0%, #0043c0 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px rgba(30, 107, 255, 0.3) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1A5AD4 0%, #00369C 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(30, 107, 255, 0.4) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+.summary-card-premium {
+  background: white !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(11, 31, 58, 0.02) !important;
 }

@@ -63,40 +63,54 @@ const Navbar = () => {
                     <ul className="navbar-links">
                         <li><Link to="/" className="active" onClick={() => setIsMobileMenuOpen(false)}>Accueil</Link></li>
 
-                        {navData.map((category, index) => (
-                            <li key={index} className={`nav-item-dropdown ${activeDropdown === index ? 'active' : ''}`}>
-                                <a
-                                    href="#"
-                                    className="nav-link-with-icon"
-                                    onClick={(e) => toggleDropdown(e, index)}
-                                >
-                                    {category.title} <ChevronDown size={14} className="dropdown-arrow" />
-                                </a>
-                                <div className="nav-dropdown-menu">
-                                    <div className="nav-dropdown-grid">
-                                        {category.items.map((item, idx) => (
-                                            <Link
-                                                to={item.href}
-                                                key={idx}
-                                                className="nav-dropdown-item"
-                                                onClick={() => {
-                                                    setActiveDropdown(null);
-                                                    setIsMobileMenuOpen(false);
-                                                }}
-                                            >
-                                                <div className="nav-dropdown-icon">
-                                                    {item.icon ? <item.icon size={20} /> : <div style={{ width: 20, height: 20 }} />}
-                                                </div>
-                                                <div className="nav-dropdown-desc-container">
-                                                    <span className="nav-dropdown-title">{item.title}</span>
-                                                    <span className="nav-dropdown-desc">{item.desc}</span>
-                                                </div>
-                                            </Link>
-                                        ))}
+                        {navData.map((category, index) => {
+                            if (category.href) {
+                                return (
+                                    <li key={index}>
+                                        <Link
+                                            to={category.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                            {category.title}
+                                        </Link>
+                                    </li>
+                                );
+                            }
+                            return (
+                                <li key={index} className={`nav-item-dropdown ${activeDropdown === index ? 'active' : ''}`}>
+                                    <a
+                                        href="#"
+                                        className="nav-link-with-icon"
+                                        onClick={(e) => toggleDropdown(e, index)}
+                                    >
+                                        {category.title} <ChevronDown size={14} className="dropdown-arrow" />
+                                    </a>
+                                    <div className="nav-dropdown-menu">
+                                        <div className="nav-dropdown-grid">
+                                            {category.items.map((item, idx) => (
+                                                <Link
+                                                    to={item.href}
+                                                    key={idx}
+                                                    className="nav-dropdown-item"
+                                                    onClick={() => {
+                                                        setActiveDropdown(null);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                >
+                                                    <div className="nav-dropdown-icon">
+                                                        {item.icon ? <item.icon size={20} /> : <div style={{ width: 20, height: 20 }} />}
+                                                    </div>
+                                                    <div className="nav-dropdown-desc-container">
+                                                        <span className="nav-dropdown-title">{item.title}</span>
+                                                        <span className="nav-dropdown-desc">{item.desc}</span>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        ))}
+                                </li>
+                            );
+                        })}
                     </ul>
 
                     <div className="navbar-action">
@@ -126,20 +140,22 @@ const Navbar = () => {
                 <div className={`navbar-action ${scrolled ? 'nav-hidden' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     {isAuthenticated ? (
                         <>
-                            <Link
-                                to="/client/cart"
-                                style={{ position: 'relative', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', transition: 'all 0.2s', textDecoration: 'none' }}
-                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(30,107,255,0.2)'}
-                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
-                                title="Mon Panier"
-                            >
-                                <ShoppingCart size={18} />
-                                {cartCount > 0 && (
-                                    <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#ef4444', color: 'white', fontSize: '0.65rem', fontWeight: 800, width: '18px', height: '18px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #0B1F3A' }}>
-                                        {cartCount}
-                                    </span>
-                                )}
-                            </Link>
+                            {!isAdmin && (
+                                <Link
+                                    to="/client/cart"
+                                    style={{ position: 'relative', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', transition: 'all 0.2s', textDecoration: 'none' }}
+                                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(30,107,255,0.2)'}
+                                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
+                                    title="Mon Panier"
+                                >
+                                    <ShoppingCart size={18} />
+                                    {cartCount > 0 && (
+                                        <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#ef4444', color: 'white', fontSize: '0.65rem', fontWeight: 800, width: '18px', height: '18px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #0B1F3A' }}>
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </Link>
+                            )}
 
                             <div style={{ position: 'relative' }}>
                                 <button
@@ -149,13 +165,15 @@ const Navbar = () => {
                                     onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
                                     title="Mon compte"
                                 >
-                                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, overflow: 'hidden' }}>
-                                        {user?.avatar ? (
+                                     <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, overflow: 'hidden' }}>
+                                        {isAdmin ? (
+                                            <img src="/support.png" alt="Admin" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : user?.avatar ? (
                                             <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
                                             <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         )}
-                                    </div>
+                                     </div>
                                     <span>{user?.name?.split(' ')[0] || user?.first_name || 'Mon compte'}</span>
                                     <ChevronDown size={14} />
                                 </button>
@@ -163,13 +181,15 @@ const Navbar = () => {
                                 {profileDropdown && (
                                     <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, background: '#0B1F3A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '14px', minWidth: '220px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', zIndex: 200, overflow: 'hidden', padding: '0.5rem' }}>
                                         <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: 800, overflow: 'hidden', flexShrink: 0 }}>
-                                                {user?.avatar ? (
+                                             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1E6BFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: 800, overflow: 'hidden', flexShrink: 0 }}>
+                                                {isAdmin ? (
+                                                    <img src="/support.png" alt="Admin" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                ) : user?.avatar ? (
                                                     <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 ) : (
                                                     <img src="/user.avif" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 )}
-                                            </div>
+                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                                 <p style={{ margin: 0, fontWeight: 700, color: 'white', fontSize: '0.9rem' }}>{user?.name || user?.first_name || 'Utilisateur'}</p>
                                                 <p style={{ margin: 0, fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{isAdmin ? 'Administrateur' : 'Client'}</p>
@@ -184,15 +204,17 @@ const Navbar = () => {
                                         >
                                             <LayoutDashboard size={16} /> {isAdmin ? 'Admin Dashboard' : 'Espace Client'}
                                         </Link>
-                                        <Link
-                                            to="/client/profile"
-                                            onClick={() => setProfileDropdown(false)}
-                                            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 1rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 500, transition: 'background 0.15s' }}
-                                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                        >
-                                            <Settings size={16} /> Paramètres
-                                        </Link>
+                                        {!isAdmin && (
+                                            <Link
+                                                to="/client/profile"
+                                                onClick={() => setProfileDropdown(false)}
+                                                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 1rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 500, transition: 'background 0.15s' }}
+                                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                            >
+                                                <Settings size={16} /> Paramètres
+                                            </Link>
+                                        )}
                                         <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0.4rem 0' }} />
                                         <button
                                             onClick={() => { setShowLogoutModal(true); setProfileDropdown(false); }}

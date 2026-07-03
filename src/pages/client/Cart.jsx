@@ -90,21 +90,35 @@ const Cart = () => {
                                 const isDomainItem = item.nameService && (item.nameService.toLowerCase().includes('domaine') || !!item.nameService.match(/\.(com|ma|net|org|online|info|biz|co)\b/i));
                                 return (
                                 <div key={idx} className="cart-item-row" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderBottom: idx === cart.length - 1 ? 'none' : '1px solid #e5eaf0' }}>
-                                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                         <div style={{ flex: 1 }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
-                                                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 500, color: '#282828', lineHeight: 1.4 }}>
-                                                    {isDomainItem ? (item.domainName || item.nameService) : `${item.nameService}${item.domainName ? ` - ${item.domainName}` : ''}`}
-                                                </h3>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', width: '100%' }}>
+                                                <div>
+                                                    <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#0B1F3A', lineHeight: 1.2 }}>
+                                                        {(() => {
+                                                            if (isDomainItem && item.domainName) {
+                                                                const ext = '.' + item.domainName.split('.').pop().toUpperCase();
+                                                                return `Domaine ${ext}`;
+                                                            }
+                                                            return item.nameService;
+                                                        })()}
+                                                    </h3>
+                                                    {item.domainName && (
+                                                        <p style={{ margin: '0.35rem 0 0 0', fontSize: '1rem', color: '#64748b', fontWeight: 600 }}>
+                                                            {item.typeService === 'cloud' 
+                                                                ? `OS : ${item.domainName}` 
+                                                                : `Domaine : ${item.domainName}`}
+                                                        </p>
+                                                    )}
+                                                </div>
                                                 <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
-                                                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#282828' }}>
+                                                    <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>
                                                         {isDomainItem 
                                                             ? (parseFloat(item.price) * (item.durationMonths / 12)).toFixed(2)
                                                             : (parseFloat(item.price) * item.durationMonths).toFixed(2)} Dhs
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     
@@ -118,7 +132,7 @@ const Cart = () => {
                                         </button>
 
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                            {item.domainName && (
+                                            {isDomainItem && item.domainName && (
                                                 <button
                                                     onClick={() => setEditingItem(item)}
                                                     style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'none', border: 'none', color: 'green', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 500 }}
@@ -126,9 +140,34 @@ const Cart = () => {
                                                     <Edit2 size={16} /> Modifier
                                                 </button>
                                             )}
-                                            <div style={{ background: '#f8fafc', padding: '0.4rem 1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '0.95rem', fontWeight: 600, color: '#282828' }}>
-                                                {isDomainItem ? (item.durationMonths / 12) + (item.durationMonths / 12 > 1 ? ' Ans' : ' An') : item.durationMonths + ' Mois'}
-                                            </div>
+                                            {isDomainItem ? (
+                                                <div style={{ background: '#f8fafc', padding: '0.4rem 1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '0.95rem', fontWeight: 600, color: '#282828' }}>
+                                                    {(item.durationMonths % 12 === 0) ? (item.durationMonths / 12) + (item.durationMonths / 12 > 1 ? ' Ans' : ' An') : item.durationMonths + ' Mois'}
+                                                </div>
+                                            ) : (
+                                                <select
+                                                    value={item.durationMonths}
+                                                    onChange={e => dispatch(updateCartItem({ idCart: item.idCart, durationMonths: parseInt(e.target.value) }))}
+                                                    style={{
+                                                        background: '#f8fafc',
+                                                        padding: '0.4rem 1.7rem 0.4rem 1rem',
+                                                        borderRadius: '4px',
+                                                        border: '1px solid #e2e8f0',
+                                                        fontSize: '0.95rem',
+                                                        fontWeight: 600,
+                                                        color: '#282828',
+                                                        cursor: 'pointer',
+                                                        outline: 'none',
+                                                        appearance: 'auto'
+                                                    }}
+                                                >
+                                                    <option value={1}>1 Mois</option>
+                                                    <option value={3}>3 Mois</option>
+                                                    <option value={6}>6 Mois</option>
+                                                    <option value={12}>12 Mois</option>
+                                                    <option value={24}>24 Mois</option>
+                                                </select>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

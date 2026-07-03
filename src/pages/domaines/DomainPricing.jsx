@@ -71,7 +71,7 @@ const DomainPricing = () => {
           <div
             className="hero-background"
             style={{
-              background: "transparent",
+              background: "linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)",
               position: "relative",
               border: "1px solid rgba(255,255,255,0.1)",
             }}
@@ -381,7 +381,7 @@ const DomainPricing = () => {
           <div className="container-luxe">
             <div
               style={{
-                background: "#6366F1",
+                background: "linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)",
                 borderRadius: "32px",
                 padding: "5rem",
                 color: "white",
@@ -416,7 +416,7 @@ const DomainPricing = () => {
                 className="btn"
                 style={{
                   background: "white",
-                  color: "#7c3aed",
+                  color: "#1E6BFF",
                   padding: "1.2rem 3rem",
                   borderRadius: "100px",
                   fontWeight: 800,

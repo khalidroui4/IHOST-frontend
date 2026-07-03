@@ -1,6 +1,6 @@
 import {
     Server, Cloud, ShoppingCart, Layers, Globe, ArrowRightLeft,
-    DollarSign, Search, Mail, Briefcase, Lock, PhoneCall
+    DollarSign, Search, Mail, Briefcase, Lock, PhoneCall, Info
 } from 'lucide-react';
 
 export const navData = [
@@ -32,13 +32,12 @@ export const navData = [
     },
     {
         title: 'Sécurité',
-        items: [
-            { title: 'SSL Certificates', desc: 'Sécurisez votre site avec SSL.', icon: Lock, href: '/securite/ssl' },
-        ]
+        href: '/securite/ssl'
     },
     {
         title: 'Entreprise',
         items: [
+            { title: 'À Propos', desc: 'Découvrez l\'histoire et les valeurs de IHOST.', icon: Info, href: '/about-us' },
             { title: 'Contact', desc: 'Besoin d\'aide ? Contactez-nous.', icon: PhoneCall, href: '/contact' },
         ]
     }

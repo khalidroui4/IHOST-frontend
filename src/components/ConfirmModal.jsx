@@ -55,9 +55,11 @@ const ConfirmModal = ({
                     <button className={type === 'logout' ? "cm-btn-logout-confirm" : `cm-btn-confirm cm-btn-${type}`} onClick={onConfirm}>
                         {confirmText}
                     </button>
-                    <button className={type === 'logout' ? "cm-btn-logout-cancel" : "cm-btn-cancel"} onClick={onCancel}>
-                        {cancelText}
-                    </button>
+                    {cancelText && (
+                        <button className={type === 'logout' ? "cm-btn-logout-cancel" : "cm-btn-cancel"} onClick={onCancel}>
+                            {cancelText}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

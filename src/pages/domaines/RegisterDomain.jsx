@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Globe, Shield, Zap, Headphones, CheckCircle2, XCircle, ShoppingCart, ArrowRight, Loader2, Settings, ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Search, Globe, Shield, Zap, Headphones, CheckCircle2, XCircle, ShoppingCart, ArrowRight, Loader2, Settings, ShieldCheck, ChevronDown } from 'lucide-react';
 import DomainRegistrationModal from '../../components/DomainRegistrationModal';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,10 @@ const RegisterDomain = () => {
     const [selectedDomain, setSelectedDomain] = useState(null);
     const { addToast } = useToast();
 
+    const [selectedExtension, setSelectedExtension] = useState('.com');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
     const { items: services, isLoading: isLoadingServices } = useSelector(state => state.services);
     const { isAuthenticated } = useSelector(state => state.auth);
 
@@ -31,6 +35,28 @@ const RegisterDomain = () => {
             dispatch(fetchServices());
         }
     }, [dispatch, services]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const dynamicDomainOptions = Array.from(new Set([
+        ...services
+            .filter(s => s.typeService === 'domain' && parseInt(s.isActive) === 1)
+            .map(s => {
+                const extMatch = s.nameService.match(/\.[a-zA-Z]+/);
+                return extMatch ? extMatch[0].toLowerCase() : null;
+            })
+            .filter(Boolean),
+        '.com', '.ma', '.net', '.org', '.tech', '.dev', '.store', '.co', '.info', '.me'
+    ]));
+    const domainOptionsList = dynamicDomainOptions;
 
     const fallbackExtensions = [
         { ext: '.ma', price: '139', trending: true, promo: false },
@@ -109,7 +135,9 @@ const RegisterDomain = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        performSearch(domainQuery);
+        if (!domainQuery.trim()) return;
+        const fullDomain = domainQuery.includes('.') ? domainQuery : `${domainQuery}${selectedExtension}`;
+        performSearch(fullDomain);
     };
 
     const handleOpenModal = () => {
@@ -118,6 +146,11 @@ const RegisterDomain = () => {
         if (!isAuthenticated) {
             addToast("Veuillez vous inscrire ou vous connecter pour enregistrer un domaine.", "info");
             navigate('/signUp');
+            return;
+        }
+
+        if (user?.role === 'admin') {
+            addToast("Les administrateurs ne peuvent pas acheter de services.", "error");
             return;
         }
         
@@ -173,7 +206,7 @@ const RegisterDomain = () => {
             border: '1px solid rgba(255,255,255,0.3)'
         }}>
             <form onSubmit={handleSearch} style={{ display: 'flex', width: '100%', alignItems: 'center', background: 'white', borderRadius: '100px', padding: '0.25rem' }}>
-                <Search size={24} color="#4B5563" style={{ marginLeft: '1.5rem' }} />
+                <Search size={24} color="#4B5563" style={{ marginLeft: '1.5rem', flexShrink: 0 }} />
                 <input
                     type="text"
                     placeholder="Tapez le nom de domaine de vos rêves..."
@@ -189,9 +222,68 @@ const RegisterDomain = () => {
                         fontSize: '1.2rem',
                         outline: 'none',
                         color: '#1F2937',
-                        background: 'transparent'
+                        background: 'transparent',
+                        minWidth: 0
                     }}
                 />
+                
+                {/* Custom Extension Dropdown */}
+                <div style={{ position: 'relative', marginRight: '0.5rem' }} ref={dropdownRef}>
+                    <button
+                        type="button"
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        style={{
+                            background: '#0B1F3A',
+                            border: 'none',
+                            outline: 'none',
+                            borderRadius: '50px',
+                            color: '#fff',
+                            padding: '0.75rem 1.4rem',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                            fontSize: '1.1rem',
+                            whiteSpace: 'nowrap',
+                            transition: 'background 0.2s ease'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = '#1E3A5F'}
+                        onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
+                    >
+                        {selectedExtension} <ChevronDown size={15} />
+                    </button>
+                    {isDropdownOpen && (
+                        <ul className="domain-dropdown-list" style={{
+                            position: 'absolute',
+                            top: 'calc(100% + 8px)',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            background: '#0B1F3A',
+                            width: '140px',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                            borderRadius: '16px',
+                            padding: '0.5rem',
+                            listStyle: 'none',
+                            zIndex: 500,
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            textAlign: 'left'
+                        }}>
+                            {domainOptionsList.map(opt => (
+                                <li
+                                    key={opt}
+                                    onClick={() => { setSelectedExtension(opt); setIsDropdownOpen(false); }}
+                                    style={{ padding: '0.6rem 1rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 600, color: selectedExtension === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)', borderRadius: '10px', transition: 'all 0.15s ease' }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(30,107,255,0.15)'; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = selectedExtension === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)'; }}
+                                >
+                                    {opt}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
                 <button type="submit" className="btn" style={{
                     margin: '0',
                     padding: '1.2rem 2.5rem',
@@ -217,7 +309,7 @@ const RegisterDomain = () => {
                 <section className="hero">
                     <div className="hero-background"
                         style={{
-                            background: '#6366F1',
+                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             position: 'relative',
                             border: '1px solid rgba(255,255,255,0.1)'
                         }}>
@@ -237,8 +329,27 @@ const RegisterDomain = () => {
                             <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
                                 <h1 className="font-tech" style={{ fontSize: '3.8rem', color: '#fff', marginBottom: '1.5rem' }}>Votre Identité Numérique Commence Ici</h1>
                                 <p className="hero-subtext" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', marginBottom: '4rem', lineHeight: '1.7', fontWeight: 400 }}>Trouvez l'extension parfaite parmi plus de 500 options et assurez votre présence en ligne en quelques clics.</p>
-                                <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem' }}>
-                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem' }}>Enregistrer maintenant <ArrowRight size={20} /></Link>
+                                <div className="hero-buttons" style={{ justifyContent: 'center', gap: '1.5rem', display: 'flex' }}>
+                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '1.2rem 3rem', fontSize: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>Enregistrer maintenant <ArrowRight size={20} /></Link>
+                                    <Link to="/domaines/pricing" className="btn" style={{
+                                        padding: '1.2rem 3rem',
+                                        fontSize: '1rem',
+                                        background: 'rgba(255, 255, 255, 0.08)',
+                                        backdropFilter: 'blur(8px)',
+                                        border: '1px solid rgba(255, 255, 255, 0.25)',
+                                        color: '#ffffff',
+                                        borderRadius: '100px',
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        transition: 'all 0.2s'
+                                    }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
+                                    >
+                                        Voir les tarifs des extensions
+                                    </Link>
                                 </div>
                             </div>
                             <div style={{ marginTop: '4rem' }}>
@@ -383,7 +494,7 @@ const RegisterDomain = () => {
                 <section className="cta-split" style={{ padding: '6rem 0' }}>
                     <div className="container-luxe">
                         <div style={{
-                            background: '#6366F1',
+                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
                             borderRadius: '32px',
                             padding: '5rem',
                             color: 'white',
@@ -396,7 +507,7 @@ const RegisterDomain = () => {
                             </p>
                             <Link to="/domaines/transfer" className="btn" style={{
                                 background: 'white',
-                                color: '#6366F1',
+                                color: '#1E6BFF',
                                 padding: '1.2rem 3rem',
                                 borderRadius: '100px',
                                 fontWeight: 800,

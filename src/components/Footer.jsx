@@ -85,6 +85,7 @@ const Footer = () => {
                             <Link to="/legal/confidentialite" className="footer-nav-link">Confidentialité (RGPD)</Link>
                             <Link to="/legal/utilisation-acceptable" className="footer-nav-link">Usage Acceptable</Link>
                             <Link to="/legal/signaler-probleme" className="footer-nav-link">Signaler un problème</Link>
+                            <Link to="/faq" className="footer-nav-link">FAQ</Link>
                             <Link to="/contact" className="footer-nav-link">Contact</Link>
                         </div>
                     </div>

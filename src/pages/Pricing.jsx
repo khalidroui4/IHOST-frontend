@@ -32,6 +32,13 @@ const Pricing = () => {
             link: '/hebergement/cloud'
         },
         {
+            title: 'Messagerie Professionnelle',
+            icon: Mail,
+            color: '#EC4899',
+            type: 'email',
+            link: '/email-collaboration/pro'
+        },
+        {
             title: 'Noms de Domaine',
             icon: Globe,
             color: '#6366F1',
@@ -93,12 +100,26 @@ const Pricing = () => {
                                                 id={plan.id}
                                                 name={plan.name}
                                                 price={plan.price}
-                                                period="DH / mois"
+                                                period={cat.type === 'domain' ? 'DH / an' : 'DH / mois'}
                                                 features={plan.features}
                                                 highlight={pIdx === 1}
                                                 badge={pIdx === 1 ? 'Populaire' : null}
-                                                buttonText="Ajouter au panier"
-                                                addToCartMode={true}
+                                                buttonText={
+                                                    cat.type === 'domain' 
+                                                        ? 'Enregistrer un domaine' 
+                                                        : cat.type === 'email' 
+                                                            ? 'Configurer l\'email' 
+                                                            : 'Ajouter au panier'
+                                                }
+                                                addToCartMode={cat.type !== 'domain' && cat.type !== 'email'}
+                                                buttonLink={
+                                                    cat.type === 'domain' 
+                                                        ? '/domaines/register' 
+                                                        : cat.type === 'email' 
+                                                            ? '/email-collaboration/pro' 
+                                                            : null
+                                                }
+                                                typeService={cat.type}
                                             />
                                         ))}
                                     </div>
@@ -108,14 +129,31 @@ const Pricing = () => {
                     </div>
                 </section>
 
-                <section style={{ padding: '6rem 0', background: 'white', textAlign: 'center' }}>
+                <section style={{ padding: '6rem 0', background: 'transparent', textAlign: 'center' }}>
                     <div className="container-luxe">
-                        <div style={{ background: '#f8fafc', padding: '4rem', borderRadius: '32px', border: '1px solid #e2e8f0' }}>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1.5rem' }}>Besoin d'une solution sur mesure ?</h2>
-                            <p style={{ fontSize: '1.2rem', color: '#4B5563', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
+                        <div style={{
+                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
+                            padding: '5rem 4rem',
+                            borderRadius: '32px',
+                            color: 'white',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.05)'
+                        }}>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1.5rem' }}>Besoin d'une solution sur mesure ?</h2>
+                            <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '700px', margin: '0 auto 3rem' }}>
                                 Pour les infrastructures complexes ou les grands comptes, nos consultants vous accompagnent dans la définition de votre architecture.
                             </p>
-                            <Link to="/contact" className="btn btn-primary" style={{ padding: '1.2rem 3rem' }}>Demander un Devis Personnalisé</Link>
+                            <Link to="/contact" className="btn" style={{
+                                background: 'white',
+                                color: '#1E6BFF',
+                                padding: '1.2rem 3rem',
+                                borderRadius: '100px',
+                                fontWeight: 800,
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center'
+                            }}>
+                                Demander un Devis Personnalisé
+                            </Link>
                         </div>
                     </div>
                 </section>

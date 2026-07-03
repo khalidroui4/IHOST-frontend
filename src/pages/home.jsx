@@ -51,16 +51,16 @@ const Home = () => {
     };
 
     const domainSearchContent = (
-        <div style={{ maxWidth: '650px', margin: '0 auto', position: 'relative', width: '100%', padding: '0 1rem', overflow: 'visible' }}>
+        <div style={{ maxWidth: '750px', margin: '0 auto', position: 'relative', width: '100%', padding: '0 1rem', overflow: 'visible' }}>
             <form 
                 className="domain-search-form"
                 onSubmit={handleSearch}
                 style={{ overflow: 'visible' }}
             >
-                <Search size={20} color="#1E6BFF" style={{ flexShrink: 0, opacity: 0.7 }} className="search-icon-mobile" />
+                <Search size={20} color="rgba(255, 255, 255, 0.4)" style={{ flexShrink: 0 }} className="search-icon-mobile" />
                 <input
                     type="text"
-                    placeholder="exemple.ma"
+                    placeholder="Trouvez votre nom de domaine..."
                     value={domainQuery}
                     onChange={(e) => setDomainQuery(e.target.value)}
                     className="domain-search-input"
@@ -69,24 +69,7 @@ const Home = () => {
                     <button
                         type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        style={{
-                            background: '#0B1F3A',
-                            border: 'none',
-                            outline: 'none',
-                            borderRadius: '50px',
-                            color: '#fff',
-                            padding: '0.75rem 1.4rem',
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.4rem',
-                            fontSize: '1rem',
-                            whiteSpace: 'nowrap',
-                            transition: 'background 0.2s ease'
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.background = '#1E3A5F'}
-                        onMouseLeave={e => e.currentTarget.style.background = '#0B1F3A'}
+                        className="domain-ext-btn"
                     >
                         {selectedDomain} <ChevronDown size={15} />
                     </button>
@@ -96,23 +79,23 @@ const Home = () => {
                             top: 'calc(100% + 8px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            background: '#0B1F3A',
+                            background: '#0b1f3a',
                             width: '140px',
-                            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                            borderRadius: '16px',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                            borderRadius: '12px',
                             padding: '0.5rem',
                             listStyle: 'none',
                             zIndex: 500,
-                            border: '1px solid rgba(255,255,255,0.1)',
+                            border: '1px solid rgba(255,255,255,0.08)',
                             textAlign: 'left'
                         }}>
                             {domainOptionsList.map(opt => (
                                 <li
                                     key={opt}
                                     onClick={() => { setSelectedDomain(opt); setIsDropdownOpen(false); }}
-                                    style={{ padding: '0.6rem 1rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 600, color: selectedDomain === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)', borderRadius: '10px', transition: 'all 0.15s ease' }}
-                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(30,107,255,0.15)'; e.currentTarget.style.color = '#fff'; }}
-                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = selectedDomain === opt ? '#1E6BFF' : 'rgba(255,255,255,0.8)'; }}
+                                    style={{ padding: '0.6rem 1rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 600, color: selectedDomain === opt ? '#3B82F6' : 'rgba(255,255,255,0.8)', borderRadius: '10px', transition: 'all 0.15s ease' }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(59,130,246,0.15)'; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = selectedDomain === opt ? '#3B82F6' : 'rgba(255,255,255,0.8)'; }}
                                 >
                                     {opt}
                                 </li>
@@ -128,16 +111,19 @@ const Home = () => {
                 </button>
             </form>
 
-            {/* Feature Highlights */}
+            {/* Trust Indicators */}
             <div className="hero-feature-highlights">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Zap size={20} color="#60A5FA" fill="#60A5FA" /> Activation rapide
+                <div className="hero-feature-item">
+                    <CheckCircle2 size={18} color="#60A5FA" className="hero-feature-icon" /> 99.9% Disponibilité
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Lock size={20} color="#60A5FA" fill="#60A5FA" /> Protection avancée
+                <div className="hero-feature-item">
+                    <Shield size={18} color="#60A5FA" className="hero-feature-icon" /> SSL Gratuit
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <PhoneCall size={20} color="#60A5FA" fill="#60A5FA" /> Support 24/7
+                <div className="hero-feature-item">
+                    <Headset size={18} color="#60A5FA" className="hero-feature-icon" /> Support 24/7
+                </div>
+                <div className="hero-feature-item">
+                    <Zap size={18} color="#60A5FA" className="hero-feature-icon" /> Activation Instantanée
                 </div>
             </div>
         </div>
@@ -147,38 +133,25 @@ const Home = () => {
         <PageTransition>
             <div className="home">
                 <section className="hero">
-                    <div className="hero-background"
-                        style={{
-                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
-                            position: 'relative',
-                            border: '1px solid rgba(255,255,255,0.1)'
-                        }}>
-                        <div className="pattern-grid-tech" />
-                        <div className="hero-overlay" />
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            backgroundImage: 'url(/cloud_storage.jpg)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            opacity: 0.35,
-                            zIndex: 0
-                        }} />
-                        <div className="container-luxe hero-content" style={{ zIndex: 10, width: '100%' }}>
-                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '1rem' }}>
+                    <div className="hero-background">
+                        <div className="pattern-grid-tech" style={{ opacity: 0.03 }} />
+                        <div className="hero-radial-glow" />
+                        <div className="hero-image-overlay" />
+                        <div className="hero-network-image" />
+                        <div className="container-luxe hero-content" style={{ width: '100%' }}>
+                            <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '1rem', position: 'relative', zIndex: 10 }}>
                                 <h1 className="font-tech hero-title">Hébergez votre projet en<br className="desktop-br"/>toute confiance avec IHOST</h1>
                                 <p className="hero-subtext">Solutions d'hébergement fiables, noms de domaine et<br className="desktop-br"/>support technique pour particuliers et entreprises au Maroc.</p>
                                 <div className="hero-buttons">
-                                    <Link to="/signup" className="hero-btn">
+                                    <Link to="/signup" className="hero-btn hero-btn-primary">
                                         Commencer maintenant <ArrowUpRight size={20} strokeWidth={2.5} />
                                     </Link>
-                                    <Link to="/pricing" className="hero-btn hero-btn-outline">
+                                    <Link to="/pricing" className="hero-btn hero-btn-secondary">
                                         Voir les offres <ArrowUpRight size={20} strokeWidth={2.5} />
                                     </Link>
                                 </div>
                             </div>
-                            <div style={{ marginTop: '4rem', overflow: 'visible' }}>
+                            <div style={{ marginTop: '2rem', overflow: 'visible', position: 'relative', zIndex: 10 }}>
                                 {domainSearchContent}
                             </div>
                         </div>
@@ -266,7 +239,7 @@ const Home = () => {
                         </p>
                         <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <Link to="/signUp" className="btn btn-primary" style={{ padding: '1.5rem 4rem', fontSize: '1rem' }}>INITIALISER MON COMPTE</Link>
-                            <Link to="/entreprise/about" className="btn btn-outline" style={{ padding: '1.5rem 4rem', fontSize: '1rem', color: 'white', borderColor: 'rgba(255,255,255,0.3)' }}>PARLER À UN EXPERT</Link>
+                            <Link to="/contact" className="btn btn-outline" style={{ padding: '1.5rem 4rem', fontSize: '1rem', color: 'white', borderColor: 'rgba(255,255,255,0.3)' }}>PARLER À UN EXPERT</Link>
                         </div>
                     </div>
                 </section>

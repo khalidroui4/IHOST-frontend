@@ -208,7 +208,7 @@ const TransferDomain = () => {
                             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '700px', margin: '0 auto 3rem' }}>
                                 Nos experts en migration sont disponibles 24/7 pour vous aider à transférer vos services en toute sérénité.
                             </p>
-                            <Link to="/entreprise/partners" className="btn" style={{
+                            <Link to="/contact" className="btn" style={{
                                 background: 'white',
                                 color: '#7c3aed',
                                 padding: '1.2rem 3rem',

@@ -320,22 +320,6 @@ const ProfessionalEmail = () => {
                     </div>
                 </section>
 
-                {/* Features list */}
-                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-                    <div className="container-luxe">
-                        <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>L'Ingénierie de Messagerie</h2>
-                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Un socle technologique robuste conçu pour l'intégrité de vos données.</p>
-                        </div>
-                        <div className="features-grid">
-                            <LuxeCard icon={Globe} title="Identité Souveraine" desc="Communiquez avec une adresse professionnelle qui renforce votre crédibilité institutionnelle." />
-                            <LuxeCard icon={Smartphone} title="Synchronisation Mobile" desc="Accès universel via protocoles sécurisés. Compatibilité native iOS, Android et Desktop." />
-                            <LuxeCard icon={ShieldCheck} title="Protocoles Anti-Spam" desc="Nettoyage chirurgical à la source. Éliminez 99.9% des vecteurs d'intrusion avant réception." />
-                            <LuxeCard icon={Zap} title="Latence Zéro" desc="Flux de données optimisé pour un envoi et une réception ultra-rapide sur l'infrastructure IHOST." />
-                        </div>
-                    </div>
-                </section>
-
                 {/* Pricing / plans Section */}
                 <section className="section-premium bg-light" style={{ padding: '8rem 2rem', textAlign: 'center' }} id="email-plans">
                     <div className="container-luxe">
@@ -384,63 +368,92 @@ const ProfessionalEmail = () => {
                     </div>
                 </section>
 
-                <section style={{ padding: '4rem 0' }}>
+                {/* Features list */}
+                <section className="section-premium bg-white" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
                     <div className="container-luxe">
-                        <div className="bg-tech-dark email-feature-split" style={{
+                        <div className="section-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0B1F3A', marginBottom: '1rem', letterSpacing: '-1px' }}>L'Ingénierie de Messagerie</h2>
+                            <p style={{ fontSize: '1.25rem', color: '#4B5563', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>Un socle technologique robuste conçu pour l'intégrité de vos données.</p>
+                        </div>
+                        <div className="features-grid">
+                            <LuxeCard icon={Globe} title="Identité Souveraine" desc="Communiquez avec une adresse professionnelle qui renforce votre crédibilité institutionnelle." />
+                            <LuxeCard icon={Smartphone} title="Synchronisation Mobile" desc="Accès universel via protocoles sécurisés. Compatibilité native iOS, Android et Desktop." />
+                            <LuxeCard icon={ShieldCheck} title="Protocoles Anti-Spam" desc="Nettoyage chirurgical à la source. Éliminez 99.9% des vecteurs d'intrusion avant réception." />
+                            <LuxeCard icon={Zap} title="Latence Zéro" desc="Flux de données optimisé pour un envoi et une réception ultra-rapide sur l'infrastructure IHOST." />
+                        </div>
+                    </div>
+                </section>
+
+                {/* Puissance Collaborative Section */}
+                <section style={{ padding: '6rem 0' }}>
+                    <div className="container-luxe">
+                        <div style={{
+                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
+                            borderRadius: '32px',
                             padding: '5rem',
+                            color: 'white',
+                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
                             display: 'flex',
                             gap: '4rem',
                             alignItems: 'center',
                             position: 'relative',
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            flexWrap: 'wrap'
                         }}>
                             <div className="pattern-grid-tech" style={{ opacity: 0.1 }} />
-                            <div style={{ flex: 1.5, position: 'relative', zIndex: 1 }}>
-                                <h2 className="font-tech" style={{ fontSize: '3.5rem', color: 'white', marginBottom: '2rem', textTransform: 'uppercase' }}>PUISSANCE COLLABORATIVE</h2>
-                                <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.5)', lineHeight: '1.8' }}>
+                            <div style={{ flex: 1.5, position: 'relative', zIndex: 1, minWidth: '280px' }}>
+                                <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '1.5rem' }}>Puissance Collaborative</h2>
+                                <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.9)', lineHeight: '1.8' }}>
                                     Libérez le potentiel de votre équipe avec des outils mail conçus pour la performance. Centralisez vos calendriers et sécurisez vos protocoles d'échange.
                                 </p>
                             </div>
-                            <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                                <div className="glass-card" style={{ padding: '2rem', flex: 1, minWidth: '200px' }}>
-                                    <Database size={24} color="#1E6BFF" style={{ marginBottom: '1rem' }} />
-                                    <h4 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '0.5rem' }}>STOCKAGE HAUT-DÉBIT</h4>
-                                    <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>NVMe Data-Center</p>
+                            <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', gap: '1rem', flexWrap: 'wrap', minWidth: '280px' }}>
+                                <div style={{ padding: '2rem', flex: 1, minWidth: '200px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '20px' }}>
+                                    <Database size={24} color="#60A5FA" style={{ marginBottom: '1rem' }} />
+                                    <h4 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '0.5rem', fontWeight: 700 }}>STOCKAGE HAUT-DÉBIT</h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', margin: 0 }}>NVMe Data-Center</p>
                                 </div>
-                                <div className="glass-card" style={{ padding: '2rem', flex: 1, minWidth: '200px' }}>
-                                    <Lock size={24} color="#10b981" style={{ marginBottom: '1rem' }} />
-                                    <h4 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '0.5rem' }}>CONFIDENTIALITÉ</h4>
-                                    <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>Encryption End-to-End</p>
+                                <div style={{ padding: '2rem', flex: 1, minWidth: '200px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '20px' }}>
+                                    <Lock size={24} color="#34d399" style={{ marginBottom: '1rem' }} />
+                                    <h4 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '0.5rem', fontWeight: 700 }}>CONFIDENTIALITÉ</h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', margin: 0 }}>Encryption End-to-End</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section style={{ padding: '8rem 0' }}>
+                {/* Expand Your Reach / CTA Section */}
+                <section className="cta-split" style={{ padding: '6rem 0' }}>
                     <div className="container-luxe">
-                        <div className="glass-card email-cta-box" style={{
-                            padding: '6rem',
-                            textAlign: 'center',
-                            background: '#0B1F3A',
+                        <div style={{
+                            background: 'linear-gradient(135deg, #0B1F3A 0%, #1E6BFF 100%)',
+                            borderRadius: '32px',
+                            padding: '5rem',
                             color: 'white',
+                            textAlign: 'center',
+                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
                             position: 'relative',
-                            overflow: 'hidden',
-                            border: '1px solid #1E6BFF'
+                            overflow: 'hidden'
                         }}>
                             <div className="pattern-grid-tech" style={{ opacity: 0.1 }} />
                             <div style={{ position: 'relative', zIndex: 1 }}>
-                                <h2 className="font-tech" style={{ fontSize: '4rem', fontWeight: 700, marginBottom: '2.5rem', textTransform: 'uppercase' }}>EXPAND YOUR REACH</h2>
-                                <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.6)', marginBottom: '4.5rem', maxWidth: '800px', margin: '0 auto 4.5rem' }}>
-                                    Amorcez votre transformation numérique dès aujourd'hui avec nos solutions de messagerie haute disponibilité.
+                                <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Amorcez votre transformation</h2>
+                                <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '700px', margin: '0 auto 3rem', lineHeight: '1.6' }}>
+                                    Rejoignez l'écosystème IHOST et profitez de nos solutions de messagerie haute disponibilité avec un support d'experts 24/7.
                                 </p>
-                                <Link to="/contact" className="btn btn-primary" style={{
-                                    padding: '1.4rem 6rem',
-                                    fontSize: '1rem',
-                                    background: '#00C2FF',
-                                    color: '#0B1F3A'
+                                <Link to="/contact" className="btn" style={{
+                                    background: 'white',
+                                    color: '#1E6BFF',
+                                    padding: '1.2rem 3rem',
+                                    borderRadius: '100px',
+                                    fontWeight: 800,
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '1rem',
+                                    textDecoration: 'none'
                                 }}>
-                                    CONTACTER NOTRE SUPPORT TECHNIQUE <ArrowRight size={24} />
+                                    Contacter notre support <ArrowRight size={22} />
                                 </Link>
                             </div>
                         </div>
