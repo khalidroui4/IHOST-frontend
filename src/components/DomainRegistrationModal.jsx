@@ -26,6 +26,15 @@ const DomainRegistrationModal = ({
     const privacyPrice = 50;
 
     useEffect(() => {
+        if (isOpen) {
+            setSelectedExt(initialExt);
+            setDuration(initialDuration);
+            setIncludePrivacy(initialIncludePrivacy);
+            setAvailability({ available: true, domain: initialDomain });
+        }
+    }, [isOpen, initialExt, initialDuration, initialIncludePrivacy, initialDomain]);
+
+    useEffect(() => {
         if (!isOpen) return;
         const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
         document.addEventListener('keydown', handleKey);

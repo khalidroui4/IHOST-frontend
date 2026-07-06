@@ -48,8 +48,11 @@ const Cart = () => {
             try {
                 await dispatch(removeFromCart(currentItem.idCart)).unwrap();
                 
-                const ext = '.' + data.domainName.split('.').pop();
-                const domainService = services.find(s => s.nameService.toLowerCase().includes(ext)) || services.find(s => s.nameService.toLowerCase().includes('domaine'));
+                const ext = '.' + data.domainName.split('.').pop().toLowerCase();
+                const domainService = services.find(s => {
+                    const sExt = s.nameService.toLowerCase().match(/\.[a-zA-Z]+/)?.[0];
+                    return sExt === ext;
+                }) || services.find(s => s.nameService.toLowerCase().includes(ext)) || services.find(s => s.nameService.toLowerCase().includes('domaine'));
 
                 if (domainService) {
                     await dispatch(addToCart({
@@ -57,7 +60,8 @@ const Cart = () => {
                         domainName: data.domainName,
                         durationMonths: data.durationYears * 12,
                         nameService: `Domaine: ${data.domainName} (${data.durationYears} ${data.durationYears > 1 ? 'Ans' : 'An'}${data.includePrivacy ? ' + Protection WHOIS' : ''})`,
-                        price: data.totalPrice
+                        price: data.totalPrice,
+                        includePrivacy: data.includePrivacy
                     })).unwrap();
                 }
             } catch (err) {
@@ -104,18 +108,32 @@ const Cart = () => {
                                                         })()}
                                                     </h3>
                                                     {item.domainName && (
-                                                        <p style={{ margin: '0.35rem 0 0 0', fontSize: '1rem', color: '#64748b', fontWeight: 600 }}>
-                                                            {item.typeService === 'cloud' 
-                                                                ? `OS : ${item.domainName}` 
-                                                                : `Domaine : ${item.domainName}`}
-                                                        </p>
+                                                        <>
+                                                            <p style={{ margin: '0.35rem 0 0 0', fontSize: '1rem', color: '#64748b', fontWeight: 600 }}>
+                                                                {item.typeService === 'cloud' 
+                                                                    ? `OS : ${item.domainName}` 
+                                                                    : `Domaine : ${item.domainName}`}
+                                                            </p>
+                                                            {(parseInt(item.whois_privacy) === 1 || (item.nameService && item.nameService.toLowerCase().includes('whois'))) && (
+                                                                <span style={{ display: 'inline-block', marginTop: '0.35rem', fontSize: '0.8rem', color: '#1E6BFF', background: '#eff6ff', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
+                                                                    + Protection WHOIS
+                                                                </span>
+                                                            )}
+                                                        </>
                                                     )}
                                                 </div>
                                                 <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
                                                     <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0B1F3A' }}>
-                                                        {isDomainItem 
-                                                            ? (parseFloat(item.price) * (item.durationMonths / 12)).toFixed(2)
-                                                            : (parseFloat(item.price) * item.durationMonths).toFixed(2)} Dhs
+                                                        {(() => {
+                                                            const isWhois = parseInt(item.whois_privacy) === 1 || (item.nameService && item.nameService.toLowerCase().includes('whois'));
+                                                            if (isDomainItem) {
+                                                                const base = parseFloat(item.price) * (item.durationMonths / 12);
+                                                                const privacy = isWhois ? 50.0 * (item.durationMonths / 12) : 0;
+                                                                return (base + privacy).toFixed(2);
+                                                            } else {
+                                                                return (parseFloat(item.price) * item.durationMonths).toFixed(2);
+                                                            }
+                                                        })()} Dhs
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,6 +244,7 @@ const Cart = () => {
                     initialDomain={editingItem.domainName}
                     popularExtensions={popularExtensions}
                     initialDuration={editingItem.durationMonths / (editingItem.domainName ? 12 : 1)}
+                    initialIncludePrivacy={parseInt(editingItem.whois_privacy) === 1 || (editingItem.nameService && editingItem.nameService.toLowerCase().includes('whois'))}
                     isEdit={true}
                 />
             )}

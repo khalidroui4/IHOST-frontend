@@ -28,7 +28,7 @@ const RegisterDomain = () => {
     const dropdownRef = useRef(null);
 
     const { items: services, isLoading: isLoadingServices } = useSelector(state => state.services);
-    const { isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, user } = useSelector(state => state.auth);
 
     useEffect(() => {
         if (!services || services.length === 0) {
@@ -169,8 +169,11 @@ const RegisterDomain = () => {
         const { domainName, durationYears, includePrivacy, totalPrice } = config;
         
         try {
-            const ext = '.' + domainName.split('.').pop();
-            const domainService = services.find(s => s.nameService.toLowerCase().includes(ext)) || services.find(s => s.nameService.toLowerCase().includes('domaine'));
+            const ext = '.' + domainName.split('.').pop().toLowerCase();
+            const domainService = services.find(s => {
+                const sExt = s.nameService.toLowerCase().match(/\.[a-zA-Z]+/)?.[0];
+                return sExt === ext;
+            }) || services.find(s => s.nameService.toLowerCase().includes(ext)) || services.find(s => s.nameService.toLowerCase().includes('domaine'));
 
             if (!domainService) {
                 addToast("Service d'enregistrement pour " + ext + " non trouvé.", "error");
@@ -182,7 +185,8 @@ const RegisterDomain = () => {
                 domainName: domainName,
                 durationMonths: durationYears * 12,
                 nameService: `Domaine: ${domainName} (${durationYears} ${durationYears > 1 ? 'Ans' : 'An'}${includePrivacy ? ' + Protection WHOIS' : ''})`,
-                price: totalPrice
+                price: totalPrice,
+                includePrivacy: includePrivacy
             })).unwrap();
             
             addToast(`${domainName} ajouté au panier`, 'success');

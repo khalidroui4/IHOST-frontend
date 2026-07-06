@@ -41,9 +41,10 @@ export const addToCart = createAsyncThunk(
                     const catalogRes = await axios.get('/IHOST-backend/services');
                     const catalog = catalogRes.data.data;
                     const queryName = String(service.nameService).trim().toLowerCase();
-                    const matched = catalog.find(s => 
-                        String(s.nameService).trim().toLowerCase() === queryName || String(s.nameService).trim().toLowerCase().includes(queryName)
-                    );
+                    const matched = catalog.find(s => {
+                        const sName = String(s.nameService).trim().toLowerCase();
+                        return sName === queryName || queryName.includes(sName) || sName.includes(queryName);
+                    });
                     if (matched) {
                         serviceId = matched.idService;
                     } else {
@@ -68,7 +69,8 @@ export const addToCart = createAsyncThunk(
             const payload = {
                 serviceId: serviceId,
                 durationMonths: service.durationMonths || 1,
-                domainName: service.domainName || null
+                domainName: service.domainName || null,
+                includePrivacy: service.includePrivacy ? 1 : 0
             };
 
             console.log("SENDING DATA:", payload);

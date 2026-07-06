@@ -14,8 +14,6 @@ import LuxeCard from "../../components/LuxeCard";
 import TechPricingCard from "../../components/TechPricingCard";
 
 const HostingTemplate = ({ data }) => {
-  if (!data) return <Navigate to="/" />;
-
   const dispatch = useDispatch();
   const { items: dbServices } = useSelector(state => state.services);
 
@@ -26,8 +24,12 @@ const HostingTemplate = ({ data }) => {
   }, [dispatch, dbServices]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [data.id]);
+    if (data?.id) {
+      window.scrollTo(0, 0);
+    }
+  }, [data?.id]);
+
+  if (!data) return <Navigate to="/" />;
 
   return (
     <PageTransition>

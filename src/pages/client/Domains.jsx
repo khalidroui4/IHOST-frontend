@@ -262,6 +262,14 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons, navigate, subscrip
         const isAddon = sub.typeService === 'addon' || ['Certificat SSL', 'Protection WHOIS', 'Email Pro'].includes(sub.nameService);
         return isSameDomain && isNotExpired && isAddon;
     });
+    const hasWhoisSubscription = activeAddonsForDomain.some(addon => addon.nameService === 'Protection WHOIS');
+    if ((parseInt(dom.whois_privacy) === 1 || !!dom.whois_privacy) && !hasWhoisSubscription) {
+        activeAddonsForDomain.push({
+            nameService: 'Protection WHOIS',
+            endDate: dom.expirationDate,
+            idSub: 'whois-privacy-domain'
+        });
+    }
     // Also pick up addons that are in the cart (pending payment) for this domain
     const { items: cartItems } = useSelector(state => state.cart);
     const [tab,        setTab]        = useState('actions');
@@ -311,6 +319,10 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons, navigate, subscrip
     };
 
     const doPrivacy = async () => {
+        if (!dom.whois_privacy && !hasWhoisSubscription) {
+            addToast("Veuillez d'abord acheter l'extension Protection WHOIS pour activer cette fonctionnalité.", "error");
+            return;
+        }
         actBusy('priv', true);
         try {
             await dispatch(toggleWhoisPrivacy(dom.idDomaine)).unwrap();
@@ -565,7 +577,7 @@ const ManagePanel = ({ dom, dispatch, addToast, onShowAddons, navigate, subscrip
 const AddonsModal = ({ domain, onClose, dispatch, addToast, subscriptions }) => {
     const addons = [
         { id: 'ssl',   name: 'Certificat SSL',    price: '20', period: 'mois', duration: 1, features: ['Chiffrement HTTPS', 'Confiance visiteurs', 'Compatible tous navigateurs'], icon: ShieldAlert },
-        { id: 'whois', name: 'Protection WHOIS',  price: '10', period: 'mois', duration: 1, features: ['Masquer vos donn\u00e9es personnelles', '\u00c9viter le spam', 'Protection identit\u00e9'], icon: Shield },
+        { id: 'whois', name: 'Protection WHOIS',  price: '50', period: 'an',   duration: 12, features: ['Masquer vos donn\u00e9es personnelles', '\u00c9viter le spam', 'Protection identit\u00e9'], icon: Shield },
         { id: 'email', name: 'Email Pro',          price: '30', period: 'mois', duration: 1, features: ['Adresse email professionnelle', 'Anti-spam int\u00e9gr\u00e9', 'Acc\u00e8s webmail'], icon: Globe }
     ];
     const [pendingAddon, setPendingAddon] = useState(null);
@@ -594,12 +606,15 @@ const AddonsModal = ({ domain, onClose, dispatch, addToast, subscriptions }) => 
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
                         {addons.map(a => {
-                            const addonIsActive = (subscriptions || []).some(sub => 
+                            let addonIsActive = (subscriptions || []).some(sub => 
                                 sub.domainName === domain.domainName && 
                                 sub.nameService === a.name && 
                                 sub.endDate && 
                                 new Date(sub.endDate) > new Date()
                             );
+                            if (a.id === 'whois' && (parseInt(domain.whois_privacy) === 1 || !!domain.whois_privacy)) {
+                                addonIsActive = true;
+                            }
                             // Also block if already in cart (not yet checked out)
                             const addonInCart = (cartItems || []).some(item =>
                                 item.domainName === domain.domainName &&
